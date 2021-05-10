@@ -1,2 +1,10 @@
 [build]
   functions = "netlify_functions"
+  publish = "frontend/"
+  
+[dev]
+  dir = "frontend/"
+  command = "live-server --port=5500"
+  targetPort = 5500
+  framework = "#custom"
+  publish = "frontend/"
