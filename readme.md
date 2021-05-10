@@ -4,9 +4,15 @@ todo: prototype link
 
 
 ## development
+### prerequisites:
+
+
 [`netlify-cli`](https://www.npmjs.com/package/netlify-cli) must be installed
+
 [`live-server`](https://www.npmjs.com/package/live-server) must be installed
+
 [`yarn`](https://www.npmjs.com/package/yarn) must be installed
+
 
   - go to the project directory (where you've cloned this repo)
   - run `yarn install`
