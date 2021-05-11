@@ -1,6 +1,5 @@
-var base_endpoint = "/.netlify/functions/cors/";
 async function login() {
-  // todo: form validation
+  // TODO: form validation
   var baseurl = addhttp(document.querySelector("#baseurl").value);
   var post_data = {
     From: "",
@@ -8,6 +7,11 @@ async function login() {
     Username: document.querySelector("#username").value,
     Password: document.querySelector("#password").value
   };
+  
+  // store form data for future speed
+  user.username = post_data.Username;
+  user.baseurl = baseurl;
+  save_data(user);
   
   // parse the response to get the token
   var token_get = await fetch(base_endpoint + baseurl + "/app/");
@@ -17,14 +21,17 @@ async function login() {
   var token = antiforge_div.firstElementChild.value;
   console.log(token);
   
-  
-  fetch(base_endpoint + baseurl + "/api/SignIn", {
+  // this request log you in.
+  await fetch(base_endpoint + baseurl + "/api/SignIn", {
     method: "POST",
     body: JSON.stringify(post_data),
     headers: {
       "RequestVerificationToken": token
     }
-  });
+  }); // TODO: validate response
+  
+  // redirect to page. 
+  location = "assignments.html"; // TODO: implement last page save / default page
 }
 
 // stolen from staccoverflow
@@ -34,4 +41,10 @@ function addhttp(url) {
     }
     url = url.replace(/\/$/, "");
     return url;
+}
+
+async function init() {
+  user = await get_user();
+  document.querySelector("#baseurl").value = user.baseurl;
+  document.querySelector("#username").value = user.username;
 }

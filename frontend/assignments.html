@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>
+      hello world
+    </title>
+    <script src="page_scripts/assignments.js"></script>
+    <script src="common.js"></script>
+    <!--TODO: replace jquery or make a version of dnajs that does not depend on jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/dnajs/dna.js@1.7.7/dist/dna.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dna.js@1.7/dist/dna.css">
+  </head>
+  <body onload="init()">
+    hello world!
+    <div id="assignments" class="dna-template">
+      <div class="assignment">
+        <h1>
+          ~~title~~
+        </h1>
+        <span>
+          ~~class~~
+        </span>
+        <p>
+          ~~desc~~
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

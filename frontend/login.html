@@ -5,12 +5,14 @@
       hello world
     </title>
     <script src="page_scripts/login.js"></script>
+    <script src="common.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
   </head>
-  <body>
+  <body onload="init()">
     <div id="loginform" class="center">
-      <input id="baseurl" placeholder="school.myschoolapp.com">
-      <input id="username" placeholder="firstname.lastname">
-      <input id="password" type="password" placeholder="password...">
+      <input id="baseurl" placeholder="school.myschoolapp.com" name="hostname">
+      <input id="username" placeholder="firstname.lastname" name="username">
+      <input id="password" type="password" placeholder="password..." name="password">
       <div class="button" onclick="login()">
         log in
       </div>
