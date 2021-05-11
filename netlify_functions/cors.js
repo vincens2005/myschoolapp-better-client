@@ -8,11 +8,13 @@ exports.handler = async (event, context) => {
 	for (var i in event.queryStringParameters) {
 		url.searchParams.append(i, event.queryStringParameters[i]);
 	}
-	console.log(url.href);
+	console.log(url.href); // our final URL
 	var cookie_string = event.headers.cookie || "";
 	var useragent = event.headers["user-agent"] || "";
-	var RVC = event.headers.requestverificationtoken || "";
-	console.log(RVC)
+	var RVC = event.headers.requestverificationtoken || ""; // this token is yoinked from the login page
+	
+	//console.log(RVC)
+	
 	var headers_to_send = {
 		"Cookie": cookie_string,
 		"User-Agent": useragent,
@@ -21,14 +23,21 @@ exports.handler = async (event, context) => {
 		"accept": "*/*",
 		"host": url.host
 	};
+	
 	var options = {
 		method: event.httpMethod.toUpperCase(),
 		headers: headers_to_send,
 		body: event.body
 	};
+	
+	// delete body if it's not a POST request
+	if (event.httpMethod.toUpperCase() == "GET" || event.httpMethod.toUpperCase() == "HEAD") {
+		delete options.body;
+	}
+	
 	var response = await fetch(url, options);
 	var response_text = await response.text();
-	var headers = response.headers.raw();
+	var headers = response.headers.raw(); // as Object rather than Headers
 	//console.log(headers);
 	return {
 		statusCode: 200,

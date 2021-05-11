@@ -22,14 +22,21 @@ async function login() {
   console.log(token);
   
   // this request log you in.
-  await fetch(base_endpoint + baseurl + "/api/SignIn", {
+  var login_response = await fetch(base_endpoint + baseurl + "/api/SignIn", {
     method: "POST",
     body: JSON.stringify(post_data),
     headers: {
       "RequestVerificationToken": token
     }
-  }); // TODO: validate response
-  
+  });
+  login_response = await login_response.json();
+  console.log(login_response);
+  if (!login_response.LoginSuccessful) {
+    console.log("Login Unsucessful!");
+    // TODO: tell user something went wrong
+    return;
+  }
+  console.log("Login successful!");
   // redirect to page. 
   location = "assignments.html"; // TODO: implement last page save / default page
 }
