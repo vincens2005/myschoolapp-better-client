@@ -43,8 +43,8 @@ exports.handler = async (event, context) => {
 		statusCode: 200,
 		body: response_text,
 		headers: {
-			"content-type": "text/plain",
-			"set-cookie": headers["set-cookie"] || "no-new-cooks=yes;",
+			"content-type": String(headers["content-type"]) || "text/plain",
+			"set-cookie": String(headers["set-cookie"]) || "no-new-cooks=yes;",
 			"access-control-expose-headers": "set-cookie"
 		}
 	};
