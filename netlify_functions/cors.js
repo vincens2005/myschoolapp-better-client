@@ -39,13 +39,20 @@ exports.handler = async (event, context) => {
 	var response_text = await response.text();
 	var headers = response.headers.raw(); // as Object rather than Headers
 	//console.log(headers);
+	var cook_header = null;
+	if (headers["set-cookie"] != null && headers["set-cookie"] != undefined) {
+		console.log(headers["set-cookie"]);
+		cook_header = headers["set-cookie"];
+	}
 	return {
 		statusCode: 200,
 		body: response_text,
 		headers: {
 			"content-type": String(headers["content-type"]) || "text/plain",
-			"set-cookie": String(headers["set-cookie"]) || "no-new-cooks=yes;",
 			"access-control-expose-headers": "set-cookie"
+		},
+		multiValueHeaders: {
+			"set-cookie": cook_header || ["no-cookie=yes;"]
 		}
 	};
 };
