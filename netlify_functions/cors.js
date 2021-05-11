@@ -29,14 +29,13 @@ exports.handler = async (event, context) => {
 	var response = await fetch(url, options);
 	var response_text = await response.text();
 	var headers = response.headers.raw();
-	console.log(headers);
+	//console.log(headers);
 	return {
 		statusCode: 200,
 		body: response_text,
 		headers: {
 			"content-type": headers["content-type"] || "",
 			"set-cookie": headers["set-cookie"] || "no-new-cooks=yes;",
-			"X-gimme-da-cooks": headers["set-cookie"] || "no-new-cooks=yes;", // looks like we're gonna have to use this lol
 			"access-control-expose-headers": "set-cookie"
 		}
 	};
