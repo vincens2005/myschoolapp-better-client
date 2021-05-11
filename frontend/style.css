@@ -1,0 +1,113 @@
+:root {
+	--theme-button-color: #1b776a;	
+}
+
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overflow-x: hidden;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    background: #2c2c2c;
+    color: white;
+    font-family: sans-serif;
+    margin: 0;
+}
+
+.flex {
+    justify-content: center;
+    display: flex;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+    flex-flow: row wrap;
+}
+
+a {
+    outline: 0;    
+}
+
+.rounded-cont {
+	background: #202020;
+	border-radius: 10px;
+	margin: 10px;
+	filter: drop-shadow(2px 2px 15px rgb(26, 26, 26));
+	transition: 0.3s ease-out;
+	padding: 10px;
+}
+
+#loginform {
+    margin-left: auto;
+    width: auto;
+    margin-right: auto;
+    margin-top: calc(60vh - 200px);
+    padding: 15px 35px 15px 35px;
+    
+}
+
+#loginform > input {
+	margin:0 auto 15px auto;
+}
+
+.input-label {
+	text-align: left;
+	font-size: 14px
+	user-select: none;
+}
+
+.form-title {
+	font-size: 30px;
+	margin-bottom: 0;
+	padding: 0;
+}
+
+#loginform > hr {
+	width: 70%;
+	margin: 5px 0 15px 0;
+}
+
+input {
+	background: transparent;
+	border-top: none;
+	border-left: none;
+	display: block;
+	outline: 0;
+	border-right: none;
+	border-bottom: 1px solid rgb(185, 185, 185);
+	color: white;
+	font-size: 20px;
+	transition: 0.3s;
+}
+
+input:focus {
+	border-bottom: 2px solid white;
+}
+
+.button {
+	background: var(--theme-button-color);
+	cursor: pointer;
+	border-radius: 3px;
+	margin: auto;
+	text-align: center;
+	width: auto;
+	vertical-align: middle;
+	display: inline-block;
+	padding: 5px 20px 5px 20px;
+	transition: 0.4s;
+}
+
+.button:hover {
+	transform: scale(1.05);
+	filter: drop-shadow(0 2px 6px rgb(10, 10, 10));
+}
+
+.button:active {
+	transform: scale(0.93);
+	transition: 0.1s;
+}

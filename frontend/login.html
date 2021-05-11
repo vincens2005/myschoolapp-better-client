@@ -2,19 +2,37 @@
 <html>
   <head>
     <title>
-      hello world
+      Log In - Portal++
     </title>
     <script src="page_scripts/login.js"></script>
     <script src="common.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
     <script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body onload="init()">
-    <div id="loginform" class="center">
-      <input id="baseurl" placeholder="school.myschoolapp.com" name="hostname">
-      <input id="username" placeholder="firstname.lastname" name="username">
-      <input id="password" type="password" placeholder="password..." name="password">
-      <div class="button" onclick="login()">
-        log in
+    <div class="flex flex-wrap">
+      <div id="loginform" class="center rounded-cont">
+
+        <span class="form-title">
+          Log In
+        </span>
+        <hr>
+        <input id="baseurl" placeholder="base URL" name="baseurl">
+
+
+        <input id="username" placeholder="username" name="username">
+
+
+        <input id="password" type="password" placeholder="password" name="password">
+        
+        
+        <div class="flex">
+          <div class="button" onclick="login()">
+            log in
+          </div>
+        </div>
+        
       </div>
     </div>
   </body>
