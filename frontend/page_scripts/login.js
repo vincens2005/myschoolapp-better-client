@@ -50,8 +50,13 @@ function addhttp(url) {
     return url;
 }
 
+function removehttp(url) {
+  url = url.replace(/^(?:f|ht)tps?\:\/\//, "");
+  return url;
+}
+
 async function init() {
   user = await get_user();
-  document.querySelector("#baseurl").value = user.baseurl;
+  document.querySelector("#baseurl").value = removehttp(user.baseurl);
   document.querySelector("#username").value = user.username;
 }

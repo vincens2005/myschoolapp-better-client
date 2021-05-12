@@ -19,11 +19,12 @@ function fill_in_assignments(assignments_raw) {
 			due_date: assign.date_due,
 			title: assign.short_description,
 			type: assign.assignment_type,
-			desc: assign.long_description
+			desc: assign.long_description,
+			id: assign.assignment_id
 		});
 	}
 	console.log(assignments)
-	dna.clone("assignments", assignments, {
-		html: true
+	fill_template("assignment_template", assignments, "assignments", {
+		noEscape: true // there is no escape. this is inevitable
 	});
 }

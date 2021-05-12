@@ -1,5 +1,9 @@
+@import url('http://fonts.cdnfonts.com/css/dejavu-sans');
+
 :root {
-	--theme-button-color: #1b776a;	
+	--theme-button-color: #1b776a;
+	--theme-background-color: #2c2c2c;
+	--theme-darker-color: #202020;
 }
 
 html {
@@ -13,9 +17,9 @@ html {
 }
 
 body {
-    background: #2c2c2c;
+    background: var(--theme-background-color);
     color: white;
-    font-family: sans-serif;
+    font-family: "DejaVu Sans", sans-serif;
     margin: 0;
 }
 
@@ -34,7 +38,7 @@ a {
 }
 
 .rounded-cont {
-	background: #202020;
+	background: var(--theme-darker-color);
 	border-radius: 10px;
 	margin: 10px;
 	filter: drop-shadow(2px 2px 15px rgb(26, 26, 26));
@@ -91,6 +95,7 @@ input:focus {
 
 .button {
 	background: var(--theme-button-color);
+	user-select: none;
 	cursor: pointer;
 	border-radius: 3px;
 	margin: auto;

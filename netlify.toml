@@ -8,3 +8,20 @@
   targetPort = 5500
   framework = "#custom"
   publish = "frontend/"
+  
+[[plugins]]
+  package = "@netlify/plugin-local-install-core"
+[[plugins]]
+  package = "netlify-plugin-minify-html"
+  [plugins.inputs]
+    contexts = [
+      'production',
+      'branch-deploy',
+      'deploy-preview'
+    ]
+  [plugins.inputs.minifierOptions]
+  removeComments = true
+  minifyCSS = true
+  minifyJS = true
+  collapseInlineTagWhitespace = true
+  collapseWhitespace=true

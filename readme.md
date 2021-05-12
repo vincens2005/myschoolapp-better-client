@@ -1,4 +1,4 @@
-# A Better Client for BlackBaud's MySchoolApp Portal
+# Portal++ -  A Better Client for BlackBaud's MySchoolApp Portal
 
 todo: prototype link
 
