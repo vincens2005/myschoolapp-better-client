@@ -2,10 +2,34 @@
 <html>
   <head>
     <title>
-      hello world
+      portal++ - a better client for MySchoolApp
     </title>
+    <script src="https://cdn.jsdelivr.net/npm/ityped@1.0"></script>
+    <script src="page_scripts/index.js"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
-  <body>
-    hello world!
+  <body onload="init()">
+    <div id="landing_page_cont" class="hidden">
+      <h1>
+        <span id="title">
+          portal++
+        </span>
+        <span class="ohidden">
+          invisible span. don't delete.
+        </span>
+      </h1>
+      <div id="desc_cont">
+        <span id="desc_span">
+          a better client for MySchoolApp
+        </span>
+        <span class="ohidden">
+          another invisible span. don't delete.
+        </span>
+      </div>
+      <br>
+      <a class="button big-button" href="login">
+        log in
+      </a>
+    </div>
   </body>
 </html>

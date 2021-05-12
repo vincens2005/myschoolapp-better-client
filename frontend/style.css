@@ -4,6 +4,7 @@
 	--theme-button-color: #1b776a;
 	--theme-background-color: #2c2c2c;
 	--theme-darker-color: #202020;
+	--theme-text-color: white;
 }
 
 html {
@@ -18,19 +19,26 @@ html {
 
 body {
     background: var(--theme-background-color);
-    color: white;
+    color: var(--theme-text-color);
     font-family: "DejaVu Sans", sans-serif;
     margin: 0;
 }
 
 .flex {
-    justify-content: center;
     display: flex;
 }
 
 .flex-wrap {
 	flex-wrap: wrap;
-    flex-flow: row wrap;
+  flex-flow: row wrap;
+}
+
+.flex-center {
+	justify-content: center;
+}
+
+.flex-left {
+	justify-content: start;
 }
 
 a {
@@ -100,11 +108,13 @@ input:focus {
 	border-radius: 3px;
 	margin: auto;
 	text-align: center;
+	text-decoration: none;
+	color: var(--theme-text-color);
 	width: auto;
 	vertical-align: middle;
 	display: inline-block;
 	padding: 5px 20px 5px 20px;
-	transition: 0.4s;
+	transition: 0.4s ease-out;
 }
 
 .button:hover {
@@ -115,4 +125,33 @@ input:focus {
 .button:active {
 	transform: scale(0.93);
 	transition: 0.1s;
+}
+
+.hidden {
+	display: none;
+}
+
+/* landing page stuff */
+
+#landing_page_cont {
+	padding-left: 110px;
+	padding-left: min(110px, 15vw);
+  margin-top: calc(50vh - 200px);
+}
+
+#landing_page_cont > h1 {
+	font-size: 3em;
+	font-size: max(min(50px, 4vw), 30px);
+}
+
+.big-button {
+	font-size: 20px;
+}
+
+.big-button:hover {
+	filter: drop-shadow(0 5px 15px rgb(30, 30, 30));
+}
+
+.ohidden {
+	opacity: 0;
 }
