@@ -131,6 +131,10 @@ input:focus {
 	display: none;
 }
 
+.center {
+	margin: auto;
+}
+
 /* landing page stuff */
 
 #landing_page_cont {

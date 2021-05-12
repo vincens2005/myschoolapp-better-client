@@ -18,7 +18,7 @@ function init() {
 						"Mobile friendly.",
 						"Aesthetically pleasing.",
 						"Are you still reading this?",
-						"Click log in if your school uses BlackBaud's website system.",
+						"Click log in if your school uses BlackBaud's learning management system.",
 						"Fine, whatever.",
 						"This thing is fast though.",
 						"The mobile site is better too.",
