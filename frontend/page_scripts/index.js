@@ -36,6 +36,7 @@ function init() {
 						"pretty please with sugar and ice cream on top?",
 						"pretty please with suger and ice cream and candy on top?",
 						"you don't like ice cream?",
+						"who doesn't like ice cream?",
 						"are you lactose intolerant or something?",
 						"whatever.",
 						"i give up.",
