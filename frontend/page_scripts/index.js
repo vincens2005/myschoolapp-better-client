@@ -3,14 +3,14 @@ function init() {
 	document.querySelector("#title").innerHTML = "";
 
 	console.log("initializing ityped");
-	ityped.init(document.querySelector("#title"), {
+	ityped.init("#title", {
 		strings: ["portal++"],
 		typeSpeed: 155,
 		loop: false,
 		showCursor: false,
 		onFinished: () => {
 			setTimeout(() => {
-				ityped.init(document.querySelector("#desc_span"), {
+				ityped.init("#desc_span", {
 					strings: [
 						"A better client for MySchoolApp.",
 						"Reverse-engineered from the original webapp.",
@@ -44,7 +44,8 @@ function init() {
 					],
 					typeSpeed: 85,
 					backSpeed: 45,
-					backDelay: 780
+					backDelay: 780,
+					loopDelay: 12000
 				});
 			}, 150);
 		}
