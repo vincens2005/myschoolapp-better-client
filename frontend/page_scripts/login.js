@@ -54,4 +54,16 @@ async function init() {
   user = await get_user();
   document.querySelector("#baseurl").value = removehttp(user.baseurl);
   document.querySelector("#username").value = user.username;
+  
+  // grey out login button
+  document.querySelector("#loginbutton").classList.add("greyedout");
+  document.querySelector("#loginbutton").innerHTML = "loading...";
+  
+  var loggedin = await logged_in();
+  if (loggedin) {
+    location = user.last_page || "schedule.html";
+    return;
+  }
+  document.querySelector("#loginbutton").classList.remove("greyedout");
+  document.querySelector("#loginbutton").innerHTML = "log in";
 }

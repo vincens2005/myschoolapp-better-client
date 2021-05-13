@@ -41,7 +41,20 @@ function fill_template(template_id, data, target_id, handlebar_options) {
   document.querySelector("#" + target_id).innerHTML += html;
 }
 
+/** returns whether use is logged in */
+async function logged_in() {
+  if (!user.baseurl) {
+    return false;
+  }
+  var req = await fetch(base_endpoint + user.baseurl + "/api/webapp/userstatus/");
+  var data = await req.json();
+  return data.TokenValid;
+}
+
 // stolen from staccoverflow
+/** takes a url and appends https:// at the beginning
+  * @param {String} url - the url
+*/
 function addhttp(url) {
     if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
         url = "https://" + url;
@@ -50,7 +63,11 @@ function addhttp(url) {
     return url;
 }
 
+/** takes a url and removes http:// or https:// from the beginning
+  * @param {String} url - the url
+*/
 function removehttp(url) {
   url = url.replace(/^(?:f|ht)tps?\:\/\//, "");
   return url;
 }
+

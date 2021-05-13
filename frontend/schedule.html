@@ -5,8 +5,8 @@
 		<title>
 			Schedule - portal++
 		</title>
-		<script src="page_scripts/schedule.js"></script>
 		<script src="common.js"></script>
+		<script src="page_scripts/schedule.js" defer></script>
 		<link rel="stylesheet" href="style.css">
 		<script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
@@ -16,7 +16,7 @@
 		
 		<script id="schedule_template" type="text/x-handlebars-template">
 			{{#each schedule}}
-				<tr>
+				<tr >
 	          <td data-heading="Time">
 	            {{this.start_time}} - {{this.end_time}}
 	          </td>
@@ -46,7 +46,7 @@
     </script>
     <div class="flex flex-center top-offset">
 			<table class="schedule">
-				<tbody id="schedule_tbody">
+				<tbody id="schedule_tbody" class="ohidden">
 					<tr>
 						<th>
 							Time

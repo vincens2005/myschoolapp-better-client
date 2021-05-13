@@ -1,5 +1,15 @@
 async function init() {
 	user = await get_user();
+	user.last_page = location;
+	save_data(user);
+	
+	// check if user is logged in
+	var loggedin = await logged_in();
+	if (!loggedin) {
+		location = "login.html";
+		return;
+	}
+	
 	var request = await fetch(base_endpoint + user.baseurl + "/api/schedule/MyDayCalendarStudentList");
 	var data = await request.json();
 	// TODO: validate response
@@ -20,11 +30,13 @@ async function init() {
 		});
 	}
 	fill_template("schedule_template", {schedule}, "schedule_tbody");
+	document.querySelector("#schedule_tbody").classList.remove("ohidden");
 }
 
 function attendance_to_color(ind) {
 	var indicators = {
-		"1": "good"
+		"1": "good",
+		"0": "blank"
 	}
 	return indicators[String(ind)];
 }

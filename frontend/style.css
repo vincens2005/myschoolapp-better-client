@@ -76,9 +76,7 @@ a {
 }
 
 #loginform {
-	margin-left: auto;
-	width: auto;
-	margin-right: auto;
+	margin: 30px;
 	padding: 15px 35px 15px 35px;
 }
 
@@ -188,6 +186,10 @@ input:focus {
 	margin: 30px;
 }
 
+.schedule * {
+	transition: 0.3s;
+}
+
 .schedule th {
 	padding-top: 12px;
 	padding-bottom: 12px;
@@ -205,14 +207,17 @@ input:focus {
 
 .schedule td {
 	background: var(--theme-lighter-color);
+	display: table-cell;
+	vertical-align: middle;
+	position: relative;
 }
 
 .schedule td::after {
 	width: 100%;
 	margin: auto;
+	position: absolute;
 	bottom: 0;
 	height: 1px;
-	margin-top: 20px;
 	opacity: 0.4;
 	content: "";
 	background: var(--theme-text-color);
@@ -229,7 +234,7 @@ input:focus {
 	margin: 0;
 }
 
-@media (max-width: 559px) {
+@media (max-width: 650px) {
 	.schedule td {
 		display: block;
 	}

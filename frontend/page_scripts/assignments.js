@@ -1,8 +1,15 @@
 async function init() {
-	// TODO: validate user and redirect to login - use /api/webapp/userstatus endpoint
 	user = await get_user();
 	user.last_page = "assignments.html";
 	save_data(user);
+	
+	// check if user is logged in
+	var loggedin = await logged_in();
+	if (!loggedin) {
+		location = "login.html";
+		return;
+	}
+	
 	var date_to_send = dayjs().format("MM/DD/YYYY");
 	// send the request
 	// TODO: figure out what the `persona` param does

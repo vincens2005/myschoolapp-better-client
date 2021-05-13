@@ -52,7 +52,7 @@ exports.handler = async (event, context) => {
 			"access-control-expose-headers": "set-cookie"
 		},
 		multiValueHeaders: {
-			"set-cookie": cook_header || ["no-cookie=yes;"]
+			"set-cookie": cook_header || []
 		}
 	};
 };
