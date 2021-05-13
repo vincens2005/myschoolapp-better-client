@@ -14,17 +14,19 @@
   <body onload="init()">
     hello world!
     <script id="assignment_template" type="text/x-handlebars-template">
-      <div class="assignment">
-        <h1>
-         {{title}}
-        </h1>
-        <span>
-           {{class}}
-        </span>
-        <p>
-          {{desc}}
-        </p>
-      </div>
+      {{#each assignments}}
+        <div class="assignment">
+          <h1>
+           {{this.title}}
+          </h1>
+          <span>
+             {{this.class}}
+          </span>
+          <p>
+            {{this.desc}}
+          </p>
+        </div>
+      {{/each}}
     </script>
     <div id="assignments">
       no assignments

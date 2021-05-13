@@ -9,9 +9,16 @@ async function login() {
   };
   
   // store form data for future speed
+  if(user.username != post_data.Username) {
+    localforage.removeItem("user"); // clear data if different user
+  }
   user.username = post_data.Username;
   user.baseurl = baseurl;
   save_data(user);
+  
+  // grey out login button
+  document.querySelector("#loginbutton").classList.add("greyedout");
+  document.querySelector("#loginbutton").innerHTML = "loading...";
   
   // parse the response to get the token
   var token_get = await fetch(base_endpoint + baseurl + "/app/");
@@ -34,25 +41,13 @@ async function login() {
   if (!login_response.LoginSuccessful) {
     console.log("Login Unsucessful!");
     // TODO: tell user something went wrong
+    document.querySelector("#loginbutton").classList.remove("greyedout");
+    document.querySelector("#loginbutton").innerHTML = "log in";
     return;
   }
   console.log("Login successful!");
   // redirect to page. 
-  location = "assignments.html"; // TODO: implement last page save / default page
-}
-
-// stolen from staccoverflow
-function addhttp(url) {
-    if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
-        url = "https://" + url;
-    }
-    url = url.replace(/\/$/, "");
-    return url;
-}
-
-function removehttp(url) {
-  url = url.replace(/^(?:f|ht)tps?\:\/\//, "");
-  return url;
+  location = user.last_page || "schedule.html";
 }
 
 async function init() {

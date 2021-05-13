@@ -16,7 +16,8 @@ async function get_user() {
   if (!nuser) {
     nuser = {
       baseurl: "",
-      username: ""
+      username: "",
+      last_page: "schedule.html"
     };
   }
   return nuser;
@@ -24,7 +25,7 @@ async function get_user() {
 
 /** automatically fills out handlebars template
  * @param {String} template_id - the id of the template element
- * @param {Object} data - the data to fill. If it's an array it will be looped through
+ * @param {Object} data - the data to fill.
  * @param {String} target_id - the id of the element to put the final HTML
  * @param {Object} handlebar_options - extra handlebars config
  */
@@ -36,15 +37,20 @@ function fill_template(template_id, data, target_id, handlebar_options) {
     handlebar_options = {};
   }
   var template = Handlebars.compile(document.querySelector("#" + template_id).innerHTML, handlebar_options);
-  if (Array.isArray(data)) {
-    document.querySelector("#" + target_id).innerHTML = "";
-    // loop and fill out template
-    for (var entry of data) {
-      let html = template(entry);
-      document.querySelector("#" + target_id).innerHTML += html;
-    }
-    return;
-  }
   var html = template(data);
-  document.querySelector("#" + target_id).innerHTML = html;
+  document.querySelector("#" + target_id).innerHTML += html;
+}
+
+// stolen from staccoverflow
+function addhttp(url) {
+    if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+        url = "https://" + url;
+    }
+    url = url.replace(/\/$/, "");
+    return url;
+}
+
+function removehttp(url) {
+  url = url.replace(/^(?:f|ht)tps?\:\/\//, "");
+  return url;
 }

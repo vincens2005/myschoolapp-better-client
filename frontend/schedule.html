@@ -1,13 +1,75 @@
 <!doctype html>
 <html>
-  <head>
-    <title>
-      hello world
-    </title>
-    <script src="page_scripts/schedule.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
-  </head>
-  <body onload="init()">
-    hello world!
-  </body>
+
+	<head>
+		<title>
+			Schedule - portal++
+		</title>
+		<script src="page_scripts/schedule.js"></script>
+		<script src="common.js"></script>
+		<link rel="stylesheet" href="style.css">
+		<script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+	</head>
+
+	<body onload="init()">
+		
+		<script id="schedule_template" type="text/x-handlebars-template">
+			{{#each schedule}}
+				<tr>
+	          <td data-heading="Time">
+	            {{this.start_time}} - {{this.end_time}}
+	          </td>
+	          <td data-heading="Block">
+	            {{this.block}}
+	          </td>
+	          <td data-heading="Class">
+	          	<a href="class.html?class={{this.class_id}}" class="link">
+	            	{{this.class_name}}
+	            </a>
+	          </td>
+	          <td data-heading="Contact">
+	          	<a href="mailto:{{this.contact_email}}" class="link" target="_blank">
+	            	{{this.contact}}
+	            </a>
+	          </td>
+	          <td data-heading="Location">
+	            {{this.room_number}} - {{this.building}}
+	          </td>
+	          <td data-heading="Attendance">
+	            <span class="round-indicator indicator-{{indicator_class}}">
+	              {{this.indicator_text}}
+	            </span>
+	          </td>
+	        </tr>
+        {{/each}}
+    </script>
+    <div class="flex flex-center top-offset">
+			<table class="schedule">
+				<tbody id="schedule_tbody">
+					<tr>
+						<th>
+							Time
+						</th>
+						<th>
+							Block
+						</th>
+						<th>
+							Class
+						</th>
+						<th>
+							Contact
+						</th>
+						<th>
+							Location
+						</th>
+						<th>
+							Attendance
+						</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+
 </html>
