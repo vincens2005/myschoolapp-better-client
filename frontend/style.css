@@ -75,13 +75,19 @@ a {
 	padding: 10px;
 }
 
+.fixed-center {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	position: fixed;
+}
+
 #loginform {
-	margin: 30px;
 	padding: 15px 35px 15px 35px;
 }
 
 
-#loginform>input {
+#loginform input {
 	margin: 0 auto 15px auto;
 }
 
@@ -96,7 +102,7 @@ a {
 	padding: 0;
 }
 
-#loginform>hr {
+#loginform hr {
 	width: 70%;
 	margin: 5px 0 15px 0;
 }

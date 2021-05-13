@@ -11,10 +11,9 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body onload="init()">
-    <div class="flex flex-wrap flex-center">
-      <!-- form tag to appease password managers. DO NOT SUBMIT -->
-      <form method="POST" action="/fake/endpoint/login">
-        <div id="loginform" class="center rounded-cont top-offset">
+      <div id="loginform" class="fixed-center rounded-cont">
+        <!-- form tag to appease password managers. DO NOT SUBMIT -->
+        <form method="POST" action="/fake/endpoint/login">
 
           <span class="form-title">
             Log In
@@ -28,16 +27,13 @@
   
           <input id="password" type="password" placeholder="password" name="password" autocomplete="current-password" label="password" />
           
-          
-          <div class="flex">
-            <div class="button" onclick="login()" id="loginbutton">
-              log in
-            </div>
+          <div class="button" onclick="login()" id="loginbutton">
+            log in
           </div>
+
           <!-- appease password managers -->
           <input type="submit" class="hidden" value="LOGIN" />
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
   </body>
 </html>

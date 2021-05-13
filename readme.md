@@ -1,7 +1,19 @@
-# Portal++ -  A Better Client for BlackBaud's MySchoolApp Portal
+# Portal++ -  A Better Client for BlackBaud's learning management system
 
-todo: prototype link
+## Prototype
+[portalplus.tech](https://portalplus.tech/)
 
+## Features/Goals
+  - Faster load speed
+  - Kanban-style assignment center
+  - Dark mode
+  - Better mobile UI
+  - No jQuery
+  - Remembers last visited page
+  - username autofill
+  - no two-step login page
+  - API Docs
+  - Open-Source (GPLv3)
 
 ## development
 ### prerequisites:

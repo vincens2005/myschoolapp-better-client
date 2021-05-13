@@ -38,3 +38,12 @@ function fill_in_assignments(assignments_raw) {
 		noEscape: true // there is no escape. this is inevitable
 	});
 }
+
+function status_to_color(ind) {
+	var indicators = {
+		"4": "good",
+		"0": "okay",
+		"-1": "todo"
+	}
+	return indicators[String(ind)] || "blank";
+}

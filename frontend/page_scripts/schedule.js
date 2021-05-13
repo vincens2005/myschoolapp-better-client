@@ -38,5 +38,5 @@ function attendance_to_color(ind) {
 		"1": "good",
 		"0": "blank"
 	}
-	return indicators[String(ind)];
+	return indicators[String(ind)] || "blank";
 }
