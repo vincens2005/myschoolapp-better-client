@@ -1,4 +1,9 @@
+var current_view_date = new Date();
 async function init() {
+	var url = new URL(location);
+	var schedule_date = url.searchParams.get("date");
+	schedule_date = safe_decode(schedule_date);
+	
 	user = await get_user();
 	user.last_page = location;
 	save_data(user);
@@ -10,7 +15,18 @@ async function init() {
 		return;
 	}
 	
-	var request = await fetch(base_endpoint + user.baseurl + "/api/schedule/MyDayCalendarStudentList");
+	var endpoint_url = "/api/schedule/MyDayCalendarStudentList";
+	
+	if (schedule_date) {
+		current_view_date = dayjs(schedule_date, "MM/DD/YYYY");
+		if (current_view_date.isValid()) {
+			endpoint_url += "?scheduleDate=" + schedule_date;
+		}
+		else {
+			current_view_date = new Date();
+		}
+	}
+	var request = await fetch(base_endpoint + user.baseurl + endpoint_url);
 	var data = await request.json();
 	// TODO: validate response
 	var schedule = [];

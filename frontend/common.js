@@ -1,4 +1,4 @@
-var base_endpoint = "/.netlify/functions/cors/";
+const base_endpoint = "/.netlify/functions/cors/"; // this is a const because we don't want the risk of a man in the middle attack
 var user;
 
 /** saves data 

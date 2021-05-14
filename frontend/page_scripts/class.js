@@ -55,7 +55,7 @@ async function fetch_class_stuff(id) {
 			url: `/api/datadirect/SectionInfoView/?format=json&SectionId=${id}&associationId=1`,
 			handler: data => {
 				document.title = data[0].GroupName + " - portal++"
-				document.querySelector("#title").innerHTML = data[0].GroupName + " - " + data[0].Identifier + `(${data[0].Block})`;
+				document.querySelector("#title").innerHTML = data[0].GroupName + " - " + data[0].Identifier + ` (${data[0].Block})`;
 				document.querySelector("#title").classList.remove("ohidden");
 				current_class.name = data[0].GroupName;
 				current_class.block = data[0].Block;
@@ -73,7 +73,7 @@ async function fetch_class_stuff(id) {
 				var forsection = { // what is a forsection?
 					title: data[0].Description,
 					desc: data[0].LongText
-				}
+				}; // i have no idea
 				
 				fill_template("main-template", {data: forsection}, "top-bulletin-sections", {
 					noEscape: true // there is no escape
