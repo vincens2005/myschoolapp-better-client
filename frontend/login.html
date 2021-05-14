@@ -15,8 +15,8 @@
   </head>
   <body onload="init()">
       <div id="loginform" class="fixed-center rounded-cont">
-        <!-- form tag to appease password managers. DO NOT SUBMIT -->
-        <form method="POST" action="/fake/endpoint/login">
+        <!-- form tag to appease password managers. -->
+        <form onsubmit="login(); return false;" id="actual_form">
 
           <span class="form-title">
             Log In
@@ -25,16 +25,12 @@
 
           <input id="baseurl" placeholder="school.myschoolapp.com" name="baseurl" autocomplete="off" label="baseurl" type="text" />
   
-          <input id="username" placeholder="username" name="username" autocomplete="username" label="username" type="email" />
+          <input id="username" placeholder="username" name="username" autocomplete="username" label="username" type="text" />
   
           <input id="password" type="password" placeholder="password" name="password" autocomplete="current-password" label="password" />
           
-          <div class="button" onclick="login()" id="loginbutton">
-            log in
-          </div>
-
-          <!-- appease password managers -->
-          <input type="submit" class="hidden" value="LOGIN" />
+          <input type="submit" value="log in" id="loginbutton" class="button">
+          <!-- actually, it is helpful in that it submits on enter-keypress, so that's cool i guess -->
         </form>
       </div>
   </body>

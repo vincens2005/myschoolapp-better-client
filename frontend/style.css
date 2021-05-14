@@ -91,7 +91,7 @@ a {
 }
 
 
-#loginform input {
+#loginform input:not([type=submit]) {
 	margin: 0 auto 15px auto;
 }
 
@@ -111,7 +111,7 @@ a {
 	margin: 5px 0 15px 0;
 }
 
-input {
+input:not([type=submit]) {
 	background: transparent;
 	border-top: none;
 	border-left: none;
@@ -124,7 +124,7 @@ input {
 	transition: 0.3s;
 }
 
-input:focus {
+input:not([type=submit]):focus {
 	border-bottom: 2px solid white;
 }
 
@@ -142,6 +142,12 @@ input:focus {
 	display: inline-block;
 	padding: 5px 20px 5px 20px;
 	transition: 0.4s ease-out;
+	border: none;
+	font-size: 16px;
+}
+
+input.button {
+	padding: 3px 20px 3px 20px
 }
 
 .button:hover:not(.greyedout):not(.grayedout) {
@@ -428,4 +434,15 @@ input:focus {
 	padding: 20px 35px;
 	margin-bottom: 20px;
 	margin-right: 20px;
+}
+
+/* stolen from staccoverflow */
+@keyframes shake {
+    0%, 100% {}
+    10%, 70%{margin-left: -10px;}
+    40% {margin-left: 10px;}
+}
+
+.shake {
+    animation: shake 0.3s;
 }

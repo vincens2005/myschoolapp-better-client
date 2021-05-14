@@ -22,7 +22,7 @@ async function login() {
   
   // grey out login button
   document.querySelector("#loginbutton").classList.add("greyedout");
-  document.querySelector("#loginbutton").innerHTML = "loading...";
+  document.querySelector("#loginbutton").value = "loading...";
   
   // parse the response to get the token
   var token_get = await fetch(base_endpoint + baseurl + "/app/");
@@ -41,12 +41,16 @@ async function login() {
     }
   });
   login_response = await login_response.json();
-  console.log(login_response);
+  
   if (!login_response.LoginSuccessful) {
     console.log("Login Unsucessful!");
-    // TODO: tell user something went wrong
+    // shake login box if something goes wrong
+    document.querySelector("#loginform").classList.add("shake");
+    setTimeout(() => {
+      document.querySelector("#loginform").classList.remove("shake");
+    }, 550);
     document.querySelector("#loginbutton").classList.remove("greyedout");
-    document.querySelector("#loginbutton").innerHTML = "log in";
+    document.querySelector("#loginbutton").value = "log in";
     return;
   }
   console.log("Login successful!");
@@ -61,7 +65,7 @@ async function init() {
   
   // grey out login button
   document.querySelector("#loginbutton").classList.add("greyedout");
-  document.querySelector("#loginbutton").innerHTML = "loading...";
+  document.querySelector("#loginbutton").value = "loading...";
   
   var loggedin = await logged_in();
   if (loggedin) {
@@ -69,7 +73,7 @@ async function init() {
     return;
   }
   document.querySelector("#loginbutton").classList.remove("greyedout");
-  document.querySelector("#loginbutton").innerHTML = "log in";
+  document.querySelector("#loginbutton").value = "log in";
 }
 
 
