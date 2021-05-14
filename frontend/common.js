@@ -2,25 +2,25 @@ const base_endpoint = "/.netlify/functions/cors/"; // this is a const because we
 var user;
 
 /** saves data 
-* @param {Object} user - the `user` object
-*/
+ * @param {Object} user - the `user` object
+ */
 function save_data(nuser) {
-  localforage.setItem("user", nuser).then(() => {
+	localforage.setItem("user", nuser).then(() => {
 		console.log("saved stuff");
 	});
 }
 
 /** returns a user object */
 async function get_user() {
-  nuser = await localforage.getItem("user");
-  if (!nuser) {
-    nuser = {
-      baseurl: "",
-      username: "",
-      last_page: "schedule.html"
-    };
-  }
-  return nuser;
+	nuser = await localforage.getItem("user");
+	if (!nuser) {
+		nuser = {
+			baseurl: "",
+			username: "",
+			last_page: "schedule.html"
+		};
+	}
+	return nuser;
 }
 
 /** automatically fills out handlebars template
@@ -30,25 +30,25 @@ async function get_user() {
  * @param {Object} handlebar_options - extra handlebars config
  */
 function fill_template(template_id, data, target_id, handlebar_options) {
-  if (typeof data != "object") {
-    return;
-  }
-  if (!handlebar_options) {
-    handlebar_options = {};
-  }
-  var template = Handlebars.compile(document.querySelector("#" + template_id).innerHTML, handlebar_options);
-  var html = template(data);
-  document.querySelector("#" + target_id).innerHTML += html;
+	if (typeof data != "object") {
+		return;
+	}
+	if (!handlebar_options) {
+		handlebar_options = {};
+	}
+	var template = Handlebars.compile(document.querySelector("#" + template_id).innerHTML, handlebar_options);
+	var html = template(data);
+	document.querySelector("#" + target_id).innerHTML += html;
 }
 
 /** returns whether use is logged in */
 async function logged_in() {
-  if (!user.baseurl) {
-    return false;
-  }
-  var req = await fetch(base_endpoint + user.baseurl + "/api/webapp/userstatus/");
-  var data = await req.json();
-  return data.TokenValid;
+	if (!user.baseurl) {
+		return false;
+	}
+	var req = await fetch(base_endpoint + user.baseurl + "/api/webapp/userstatus/");
+	var data = await req.json();
+	return data.TokenValid;
 }
 
 /** decodes uri without throwing errors */
@@ -62,4 +62,12 @@ function safe_decode(uri) {
 	catch (err) {
 		return decodeURIComponent(uri);
 	}
+}
+
+/** makes horizontal overflow scroll with mouse wheel */
+function scroll_horizontally(e) {
+	console.log("AAAAAAA")
+	e = window.event || e;
+	 e.currentTarget.scrollLeft += e.deltaY / 2;
+	e.preventDefault();
 }

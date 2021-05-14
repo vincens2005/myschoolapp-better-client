@@ -417,6 +417,46 @@ a:not(.button):hover {
 	user-select: none;
 }
 
+.flipped-tab {
+	border-radius: 0 0 5px 5px;
+}
+
+#header {
+	top: 0;
+	left: 0;
+	position: fixed;
+	width: 100%;
+	overflow-x: scroll;
+	scrollbar-width: thin;
+	scrollbar-color: transparent transparent;
+	white-space: nowrap;
+	transition: 0.2s;
+}
+
+#header:hover {
+	scrollbar-color: var(--theme-muted-highlight) transparent;
+}
+
+/*
+	why does webkit still not support the standard??
+*/
+
+#header:hover::-webkit-scrollbar-thumb {
+	background: var(--theme-muted-highlight);
+}
+
+#header::-webkit-scrollbar-thumb {
+	background: transparent;
+	transition: 0.2s; /* for some reason this doesn't work in chrome, so sorry chrome users */
+}
+
+#header::-webkit-scrollbar {
+	display: block;
+	height: 6px;
+	/* browsers should just support the standard, this sucks */
+	transition: 0.2s;
+}
+
 #bulletin-sidebar {
 	flex: 0.9 1 auto;
 	justify-content: flex-end;
