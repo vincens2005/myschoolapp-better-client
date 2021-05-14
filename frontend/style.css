@@ -350,13 +350,13 @@ input.button {
 	border-bottom-right-radius: 10px;
 }
 
-.link {
+a:not(.button) {
 	font-weight: bold;
 	color: var(--theme-link-color);
 	text-decoration: none;
 }
 
-.link:hover {
+a:not(.button):hover {
 	filter: brightness(1.1);
 }
 
