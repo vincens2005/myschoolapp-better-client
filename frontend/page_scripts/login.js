@@ -1,4 +1,8 @@
 async function login() {
+  var url = new URL(location);
+	var redirect = url.searchParams.get("redirect");
+	redirect = safe_decode(redirect);
+  
   // TODO: form validation
   var baseurl = addhttp(document.querySelector("#baseurl").value);
   var post_data = {
@@ -47,7 +51,7 @@ async function login() {
   }
   console.log("Login successful!");
   // redirect to page. 
-  location = user.last_page || "schedule.html";
+  location = redirect || user.last_page || "schedule.html";
 }
 
 async function init() {
@@ -66,4 +70,25 @@ async function init() {
   }
   document.querySelector("#loginbutton").classList.remove("greyedout");
   document.querySelector("#loginbutton").innerHTML = "log in";
+}
+
+
+// stolen from staccoverflow
+/** takes a url and appends https:// at the beginning
+  * @param {String} url - the url
+*/
+function addhttp(url) {
+    if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+        url = "https://" + url;
+    }
+    url = url.replace(/\/$/, "");
+    return url;
+}
+
+/** takes a url and removes http:// or https:// from the beginning
+  * @param {String} url - the url
+*/
+function removehttp(url) {
+  url = url.replace(/^(?:f|ht)tps?\:\/\//, "");
+  return url;
 }

@@ -1,0 +1,42 @@
+{
+    "short_name": "portal++",
+    "name": "portal++",
+    "icons": [
+      {
+        "src": "images/rounded/rounded_24.png",
+        "type": "image/png",
+        "sizes": "24x24"
+      },
+      {
+        "src": "images/rounded/rounded_48.png",
+        "type": "image/png",
+        "sizes": "48x48"
+      },
+      {
+        "src": "images/rounded/rounded_96.png",
+        "type": "image/png",
+        "sizes": "96x96"
+      },
+      {
+        "src": "images/rounded/rounded_192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "images/rounded/rounded_256.png",
+        "type": "image/png",
+        "sizes": "256x256"
+      },
+      {
+        "src": "images/rounded/rounded_512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/login.html",
+    "background_color": "#2c2c2c",
+    "orientation": "portrait",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#456a65"
+  }

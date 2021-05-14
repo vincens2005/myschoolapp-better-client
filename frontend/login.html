@@ -4,11 +4,14 @@
     <title>
       Log In - Portal++
     </title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="shortcut icon" href="favicon.ico">
     <script src="page_scripts/login.js"></script>
     <script src="common.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
     <script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">    <link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
+    <meta name="apple-mobile-web-app-capable" content="yes">
   </head>
   <body onload="init()">
       <div id="loginform" class="fixed-center rounded-cont">
@@ -19,11 +22,10 @@
             Log In
           </span>
           <hr>
+
           <input id="baseurl" placeholder="school.myschoolapp.com" name="baseurl" autocomplete="off" label="baseurl" type="text" />
   
-  
           <input id="username" placeholder="username" name="username" autocomplete="username" label="username" type="email" />
-  
   
           <input id="password" type="password" placeholder="password" name="password" autocomplete="current-password" label="password" />
           

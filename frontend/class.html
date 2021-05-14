@@ -1,16 +1,80 @@
 <!doctype html>
 <html>
   <head>
+    <title>
+      class - portal++
+    </title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
     <link rel="stylesheet" href="style.css">
     <script src="common.js"></script>
     <script src="page_scripts/class.js"></script>
-    <title>class - portal++</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
+    <meta name="apple-mobile-web-app-capable" content="yes">    
+		<script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
   </head>
   
-  <body>
-    the class page doesn't exist yet.
-    <div class="button" onclick="history.back()">
-      go back
+  <body onload="init()">
+    <script id="links_template" type="text/x-handlebars-template">
+      {{#each links}}
+        <div class="bulletin_link">
+          <a class="link" href="{{this.url}}" target="_blank">
+            {{this.short_desc}}
+          </a>
+          <br>
+          {{this.desc}}
+        </div>
+      {{/each}}
+    </script>
+    
+    <script id="main-template" type="text/x-handlebars-template">
+      {{! this template is used by multiple bulletin sections, including news and forsection. I don't know what a forsection is. }}
+      <div class="rounded-cont bulletin-item no-shadow">
+        <h3 class="title center">
+          {{data.title}}
+        </h3>
+        <p>
+          {{data.desc}}
+        </p>
+      </div>
+    </script>
+    
+    <div class="flex flex-left flex-wrap" id="page-cont">
+      <h1 class="title ohidden" id="title">
+        loading...
+      </h1>
+      <div class="flex flex-left flex-wrap flex-top-align">
+        <div id="class-display">
+          
+          <span class="tab current-tab">
+            Bulletin Board
+          </span>
+          <span class="tab">
+            Topics
+          </span>
+          <span class="tab">
+            AAAAAAAAAAAAAAa
+          </span>
+          <span class="tab">
+            FYI this page is still not totally functional but I decided to publish it anyway cuz links work
+          </span>
+          
+          <div id="bulletin-board" class="flex flex-left flex-wrap">
+            <div id="top-bulletin-sections">
+              <!-- top sections (details, news) will go here -->
+            </div>
+            <div id="bulletin-sidebar">
+              <div id="links" class="rounded-cont hidden bulletin-item no-shadow">
+                <h3 class="title">
+                  Links
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

@@ -51,23 +51,15 @@ async function logged_in() {
   return data.TokenValid;
 }
 
-// stolen from staccoverflow
-/** takes a url and appends https:// at the beginning
-  * @param {String} url - the url
-*/
-function addhttp(url) {
-    if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
-        url = "https://" + url;
-    }
-    url = url.replace(/\/$/, "");
-    return url;
+/** decodes uri without throwing errors */
+function safe_decode(uri) {
+	if (!uri) {
+		return uri;
+	}
+	try {
+		return decodeURIComponent(uri.replace(/%(?![0-9][0-9a-fA-F]+)/gi, '%25'));
+	}
+	catch (err) {
+		return decodeURIComponent(uri);
+	}
 }
-
-/** takes a url and removes http:// or https:// from the beginning
-  * @param {String} url - the url
-*/
-function removehttp(url) {
-  url = url.replace(/^(?:f|ht)tps?\:\/\//, "");
-  return url;
-}
-

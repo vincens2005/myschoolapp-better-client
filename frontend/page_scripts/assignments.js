@@ -35,7 +35,7 @@ function fill_in_assignments(assignments_raw) {
 	console.log(assignments);
 	document.querySelector("#assignments").innerHTML = "";
 	fill_template("assignment_template", {assignments}, "assignments", {
-		noEscape: true // there is no escape. this is inevitable
+		noEscape: true // there is no escape.
 	});
 }
 

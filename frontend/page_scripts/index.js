@@ -8,6 +8,7 @@ function init() {
 		typeSpeed: 155,
 		loop: false,
 		showCursor: false,
+		startDelay: 100,
 		onFinished: () => {
 			setTimeout(() => {
 				ityped.init("#desc_span", {

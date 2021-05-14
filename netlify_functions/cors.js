@@ -41,7 +41,7 @@ exports.handler = async (event, context) => {
 	//console.log(headers);
 	var cook_header = null;
 	if (headers["set-cookie"] != null && headers["set-cookie"] != undefined) {
-		console.log(headers["set-cookie"]);
+		//console.log(headers["set-cookie"]);
 		cook_header = headers["set-cookie"];
 	}
 	return {

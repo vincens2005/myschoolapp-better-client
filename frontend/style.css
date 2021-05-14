@@ -59,6 +59,10 @@ body {
 	justify-content: start;
 }
 
+.flex-top-align {
+	align-items: start;
+}
+
 a {
 	outline: 0;
 }
@@ -157,6 +161,7 @@ input:focus {
 .center {
 	margin-left: auto;
 	margin-right: auto;
+	text-align: center;
 }
 
 /* landing page stuff */
@@ -167,7 +172,7 @@ input:focus {
 	margin-top: calc(50vh - 200px);
 }
 
-#landing_page_cont>h1 {
+#landing_page_cont > h1 {
 	font-size: 3em;
 	font-size: max(min(50px, 4vw), 30px);
 }
@@ -378,4 +383,49 @@ input:focus {
 
 .indicator-todo {
 	background: var(--theme-indicator-todo);
+}
+
+/* class page stuff */
+.title {
+	transition: 0.3s;
+	font-weight: 400;
+	margin-top: 0;
+}
+
+#page-cont {
+	padding: max(20px, 10vh) max(10vw, 10px) 20px;
+}
+
+#page-cont > #title {
+	width: 100%;
+}
+
+.tab {
+	background: var(--theme-lighter-color);
+	border-radius: 5px 5px 0 0;
+	display: inline-block;
+	padding: 5px 10px;
+	margin-right: -2px;
+	margin-bottom: 3px;
+	cursor: pointer;
+	user-select: none;
+}
+
+#bulletin-sidebar {
+	flex: 0.9 1 auto;
+	justify-content: flex-end;
+}
+
+.current-tab {
+	background: var(--theme-muted-highlight);
+}
+
+.no-shadow {
+	filter: none;
+}
+
+.bulletin-item {
+	padding: 20px 35px;
+	margin-bottom: 20px;
+	margin-right: 20px;
 }
