@@ -17,6 +17,9 @@ w<!doctype html>
   </head>
   
   <body onload="init()">
+    <div id="header" onwheel="scroll_horizontally(event)">
+			<!-- this will be filled with the template from templates/header.hbs -->
+		</div>
     <script id="links_template" type="text/x-handlebars-template">
       {{#each links}}
         <div class="bulletin_link">

@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="favicon.ico">
     <script src="common.js"></script>
     <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
     <script src="page_scripts/assignments.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
     <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script> 
@@ -16,6 +17,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head>
   <body onload="init()">
+		<div id="header" onwheel="scroll_horizontally(event)">
+			<!-- this will be filled with the template from templates/header.hbs -->
+		</div>
     hello world!
     <script id="assignment_template" type="text/x-handlebars-template">
       {{#each assignments}}

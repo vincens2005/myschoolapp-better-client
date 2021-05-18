@@ -10,6 +10,8 @@ async function init() {
 		return;
 	}
 	
+	get_header();
+	
 	var date_to_send = dayjs().format("MM/DD/YYYY");
 	// send the request
 	// TODO: figure out what the `persona` param does

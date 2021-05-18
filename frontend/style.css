@@ -418,8 +418,7 @@ a:not([class]):hover {
 	border-radius: 5px 5px 0 0;
 	display: inline-block;
 	padding: 5px 10px;
-	margin-right: -2px;
-	margin-bottom: 3px;
+	margin: 0 3px 3px 0;
 	cursor: pointer;
 	text-decoration: none;
 	color: var(--theme-text-color);
@@ -441,6 +440,10 @@ a:not([class]):hover {
 	white-space: nowrap;
 	transition: 0.2s;
 	padding-left: 3px;
+}
+
+#header .tab {
+	margin: 0;
 }
 
 #header:hover {
