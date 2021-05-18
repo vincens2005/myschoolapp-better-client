@@ -75,7 +75,7 @@ async function fetch_class_stuff(id) {
 					desc: data[0].LongText
 				}; // i have no idea
 				
-				fill_template("main-template", {data: forsection}, "top-bulletin-sections", {
+				fill_template("main-template", forsection, "top-bulletin-sections", {
 					noEscape: true // there is no escape
 				});
 				current_class.forsection = forsection;

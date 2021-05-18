@@ -18,83 +18,9 @@
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
 	</head>
 
-	<body onload="//init()">
+	<body onload="init()">
 		<div id="header" onwheel="scroll_horizontally(event)">
-			<span class="tab current-tab flipped-tab">
-				schedule
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
-			<span class="tab flipped-tab">
-				other tab
-			</span>
+			<!-- this will be filled with the template from templates/header.hbs -->
 		</div>
 		<script id="schedule_template" type="text/x-handlebars-template">
 			{{#each schedule}}

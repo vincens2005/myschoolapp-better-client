@@ -16,6 +16,8 @@ async function init() {
 		return;
 	}
 	
+	get_header();
+	
 	var endpoint_url = "/api/schedule/MyDayCalendarStudentList";
 	if (schedule_date) {
 		current_view_date = dayjs(schedule_date, "MM/DD/YYYY");

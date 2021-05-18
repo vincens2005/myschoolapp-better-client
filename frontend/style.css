@@ -26,6 +26,14 @@ html {
 *::-webkit-scrollbar {
 	display: none;
 }
+/*
+	get rid of stupid safari garbage
+*/
+input[type=submit] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
 
 body {
 	background: var(--theme-background-color);
@@ -89,7 +97,6 @@ a {
 #loginform {
 	padding: 15px 35px 15px 35px;
 }
-
 
 #loginform input:not([type=submit]) {
 	margin: 0 auto 15px auto;
@@ -350,13 +357,13 @@ input.button {
 	border-bottom-right-radius: 10px;
 }
 
-a:not(.button) {
+a:not([class]) {
 	font-weight: bold;
 	color: var(--theme-link-color);
 	text-decoration: none;
 }
 
-a:not(.button):hover {
+a:not([class]):hover {
 	filter: brightness(1.1);
 }
 
@@ -414,6 +421,8 @@ a:not(.button):hover {
 	margin-right: -2px;
 	margin-bottom: 3px;
 	cursor: pointer;
+	text-decoration: none;
+	color: var(--theme-text-color);
 	user-select: none;
 }
 
@@ -431,6 +440,7 @@ a:not(.button):hover {
 	scrollbar-color: transparent transparent;
 	white-space: nowrap;
 	transition: 0.2s;
+	padding-left: 3px;
 }
 
 #header:hover {

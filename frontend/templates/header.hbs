@@ -1,0 +1,6 @@
+{{#each tabs}}
+  {{! the class name thing is either an empty string or "current-tab"}}
+  <a class="tab flipped-tab {{this.class_name}}" href="{{this.url}}">
+    {{this.title}}
+	</a>
+{{/each}}

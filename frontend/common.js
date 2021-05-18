@@ -66,8 +66,43 @@ function safe_decode(uri) {
 
 /** makes horizontal overflow scroll with mouse wheel */
 function scroll_horizontally(e) {
-	console.log("AAAAAAA")
 	e = window.event || e;
 	 e.currentTarget.scrollLeft += e.deltaY / 2;
 	e.preventDefault();
+}
+
+/** fills in the header from the template */
+async function get_header() {
+	var template_data = await fetch("templates/header.hbs").then(a => a.text());
+	var tabs = [
+		{
+			title: "schedule", // the text that goes in the tab
+			url: "schedule.html",
+			url_matches: ["schedule"]
+		},
+		{
+			title: "classes",
+			url: "classes.html",
+			url_matches: ["classes","class"]
+		},
+		{
+			title: "assignments",
+			url: "assignments.html",
+			url_matches: ["assignments"]
+		}
+	]
+	for (var tab of tabs) {
+		var cur_url = new URL(location);
+		var cur_path = cur_url.pathname.split("/");
+		cur_path = cur_path[cur_path.length - 1];
+		cur_path = cur_path.split(".")[0];
+		cur_path = cur_path.toLowerCase();
+		tab.class_name = "";
+		if (tab.url_matches.some((a) => a == cur_path)) {
+			tab.class_name = "current-tab"; // add class name if URL matches the `url_matches` key
+		}
+	}
+	var template = Handlebars.compile(template_data);
+	var html = template({tabs});
+	document.querySelector("#header").innerHTML = html;
 }
