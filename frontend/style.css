@@ -157,14 +157,18 @@ input.button {
 	padding: 3px 20px 3px 20px
 }
 
-.button:hover:not(.greyedout):not(.grayedout) {
+.button:hover:not(.greyedout):not(.grayedout):not(.simple-button) {
 	transform: scale(1.05);
 	filter: drop-shadow(0 2px 6px rgb(10, 10, 10));
 }
 
-.button:active:not(.greyedout):not(.grayedout) {
+.button:active:not(.greyedout):not(.grayedout):not(.simple-button) {
 	transform: scale(0.93);
 	transition: 0.1s;
+}
+
+.standard_transition {
+	transition: 0.3s;
 }
 
 .hidden {
@@ -355,6 +359,10 @@ input.button {
 
 .schedule tr:last-child th:last-child {
 	border-bottom-right-radius: 10px;
+}
+
+#date {
+	font-size: max(min(25px, 2vw), 12px);
 }
 
 a:not([class]) {

@@ -4,20 +4,20 @@ async function init() {
 	var url = new URL(location);
 	var schedule_date = url.searchParams.get("date");
 	schedule_date = safe_decode(schedule_date);
-	
+
 	user = await get_user();
 	user.last_page = location;
 	save_data(user);
-	
+
 	// check if user is logged in
 	var loggedin = await logged_in();
 	if (!loggedin) {
 		location = "login.html";
 		return;
 	}
-	
+
 	get_header();
-	
+
 	var endpoint_url = "/api/schedule/MyDayCalendarStudentList";
 	if (schedule_date) {
 		current_view_date = dayjs(schedule_date, "MM/DD/YYYY");
@@ -28,17 +28,23 @@ async function init() {
 			current_view_date = dayjs();
 		}
 	}
-	
+	document.querySelector("#date").innerHTML = "Schedule for " + current_view_date.format("MM/DD/YYYY");
 	var request = await fetch(base_endpoint + user.baseurl + endpoint_url);
 	var data = await request.json();
-	
+
 	if (!data.length) {
 		console.log("no data!")
-		fill_template("nodata_template", {date: current_view_date.format("MM/DD/YYYY")}, "schedule_tbody");
-		document.querySelector("#schedule_tbody").classList.remove("ohidden");
+		if (!schedule_header) {
+			schedule_header = document.querySelector("#schedule_tbody").innerHTML;
+		}
+		document.querySelector("#schedule_tbody").innerHTML = schedule_header;
+		fill_template("nodata_template", {
+			date: current_view_date.format("MM/DD/YYYY")
+		}, "schedule_tbody");
+		document.querySelector("#schedule_cont").classList.remove("ohidden");
 		return;
 	}
-	
+
 	var schedule = [];
 	for (var item of data) {
 		schedule.push({
@@ -55,14 +61,16 @@ async function init() {
 			indicator_class: attendance_to_color(item.AttendanceInd)
 		});
 	}
-	
+
 	if (!schedule_header) {
 		schedule_header = document.querySelector("#schedule_tbody").innerHTML;
 	}
 	document.querySelector("#schedule_tbody").innerHTML = schedule_header; // replace current schedule with header if it exists
-	
-	fill_template("schedule_template", {schedule}, "schedule_tbody");
-	document.querySelector("#schedule_tbody").classList.remove("ohidden");
+
+	fill_template("schedule_template", {
+		schedule
+	}, "schedule_tbody");
+	document.querySelector("#schedule_cont").classList.remove("ohidden");
 }
 
 function attendance_to_color(ind) {
@@ -74,8 +82,8 @@ function attendance_to_color(ind) {
 }
 
 /** changes the current view date
-* @param {Number} fac - factor in days to change the date by
-*/
+ * @param {Number} fac - factor in days to change the date by
+ */
 function chschedule_date(fac) {
 	current_view_date = current_view_date.set("date", current_view_date.get("date") + fac);
 	var formatted_date = current_view_date.format("MM/DD/YYYY");

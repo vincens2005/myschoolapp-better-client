@@ -75,13 +75,23 @@
     	</tr>
     </script>
     
-    <div class="flex flex-center top-offset">
+    <div class="flex flex-center top-offset flex-wrap ohidden standard_transition" id="schedule_cont">
     	<div>
-    		<h2> This is a thingy </h2>
+    		<h2>
+    			<span class="button simple-button" onclick="chschedule_date(-1)">
+    				&lt
+    			</span>
+    			<span id="date">
+    				<!-- nothing -->
+    			</span>
+    			<span class="button simple-button" onclick="chschedule_date(1)">
+    				&gt
+    			</span>
+    		</h2>
     	</div>
     	<div>
 				<table class="schedule">
-					<tbody id="schedule_tbody" class="ohidden">
+					<tbody id="schedule_tbody">
 						<tr>
 							<th>
 								Time

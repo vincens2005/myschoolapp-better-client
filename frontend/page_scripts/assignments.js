@@ -1,3 +1,5 @@
+// TODO: for full assign details fetch /api/assignment2/read/ASSIGN_ID/?format=json
+
 async function init() {
 	user = await get_user();
 	user.last_page = "assignments.html";
