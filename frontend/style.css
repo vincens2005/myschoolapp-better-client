@@ -384,7 +384,7 @@ input.button {
 }
 
 #date {
-	font-size: max(min(25px, 2vw), 12px);
+	font-size: max(min(25px, 2vw), 15px);
 }
 
 a:not([class]) {
