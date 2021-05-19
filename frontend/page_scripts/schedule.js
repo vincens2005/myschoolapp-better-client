@@ -28,7 +28,7 @@ async function init() {
 			current_view_date = dayjs();
 		}
 	}
-	document.querySelector("#date").innerHTML = "Schedule for " + current_view_date.format("MM/DD/YYYY");
+	document.querySelector("#date").innerHTML = "schedule for " + current_view_date.format("MM/DD/YYYY");
 	var request = await fetch(base_endpoint + user.baseurl + endpoint_url);
 	var data = await request.json();
 

@@ -19,11 +19,11 @@
 
 html {
 	scroll-behavior: smooth;
-	scrollbar-width: none;
+	scrollbar-width: thin;
 	overflow-x: hidden;
 }
 
-*::-webkit-scrollbar {
+*:not(html)::-webkit-scrollbar {
 	display: none;
 }
 /*
@@ -135,6 +135,28 @@ input:not([type=submit]):focus {
 	border-bottom: 2px solid white;
 }
 
+.round-button {
+	background: var(--theme-button-color);
+	user-select: none;
+	cursor: pointer;
+	margin: 5px;
+	border-radius: 2em;
+	padding: 3px;
+	width: 15px;
+	height: 15px;
+	line-height: 15px;
+	vertical-align: middle;
+	display: inline-block;
+	font-size: 13px;
+	text-align: center;
+	transition: 0.3s;
+	cursor: pointer;
+}
+
+.round-button:hover {
+	filter: brightness(1.25); 
+}
+
 .button {
 	background: var(--theme-button-color);
 	user-select: none;
@@ -157,12 +179,12 @@ input.button {
 	padding: 3px 20px 3px 20px
 }
 
-.button:hover:not(.greyedout):not(.grayedout):not(.simple-button) {
+.button:hover:not(.greyedout):not(.grayedout) {
 	transform: scale(1.05);
 	filter: drop-shadow(0 2px 6px rgb(10, 10, 10));
 }
 
-.button:active:not(.greyedout):not(.grayedout):not(.simple-button) {
+.button:active:not(.greyedout):not(.grayedout) {
 	transform: scale(0.93);
 	transition: 0.1s;
 }
