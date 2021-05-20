@@ -67,9 +67,7 @@ async function init() {
 	}
 	document.querySelector("#schedule_tbody").innerHTML = schedule_header; // replace current schedule with header if it exists
 
-	fill_template("schedule_template", {
-		schedule
-	}, "schedule_tbody");
+	fill_template("schedule_template", {schedule}, "schedule_tbody");
 	document.querySelector("#schedule_cont").classList.remove("ohidden");
 }
 

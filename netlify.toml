@@ -1,7 +1,20 @@
 [build]
   functions = "netlify_functions"
   publish = "frontend/"
-  
+
+[build.processing]
+  skip_processing = false
+[build.processing.css]
+  bundle = true
+  minify = true
+[build.processing.js]
+  bundle = false
+  minify = true
+[build.processing.html]
+  pretty_urls = false
+[build.processing.images]
+  compress = true
+
 [dev]
   dir = "frontend/"
   command = "live-server --port=5500 --no-browser"

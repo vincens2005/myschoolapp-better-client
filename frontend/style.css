@@ -23,9 +23,10 @@ html {
 	overflow-x: hidden;
 }
 
-*:not(html)::-webkit-scrollbar {
-	display: none;
+*:not(body)::-webkit-scrollbar {
+	display: none; /* webkit, please, support the standard */
 }
+
 /*
 	get rid of stupid safari garbage
 */
@@ -71,12 +72,25 @@ body {
 	align-items: start;
 }
 
+.flex-break {
+	flex-basis: 100%;
+	height: 0;
+	margin: 0;
+	border: 0;
+	width: 100%;
+}
+
 a {
 	outline: 0;
 }
 
 .top-offset {
 	margin-top: calc(60vh - 200px);
+}
+
+.left-offset {
+	padding-left: 110px;
+	padding-left: min(110px, 15vw);
 }
 
 .rounded-cont {
@@ -206,8 +220,6 @@ input.button {
 /* landing page stuff */
 
 #landing_page_cont {
-	padding-left: 110px;
-	padding-left: min(110px, 15vw);
 	margin-top: calc(50vh - 200px);
 }
 
@@ -391,6 +403,7 @@ a:not([class]) {
 	font-weight: bold;
 	color: var(--theme-link-color);
 	text-decoration: none;
+	transition: 0.1s;
 }
 
 a:not([class]):hover {
@@ -459,6 +472,15 @@ a:not([class]):hover {
 	border-radius: 0 0 5px 5px;
 }
 
+.list_thingy {
+	margin: 10px;
+	margin-left: 0;
+}
+
+.header-offset {
+	margin-top: 35px;
+}
+
 #header {
 	top: 0;
 	left: 0;
@@ -480,12 +502,17 @@ a:not([class]):hover {
 	scrollbar-color: var(--theme-muted-highlight) transparent;
 }
 
+html {
+	scrollbar-color: var(--theme-muted-highlight) transparent;
+}
+
 /*
 	why does webkit still not support the standard??
 */
 
-#header:hover::-webkit-scrollbar-thumb {
+#header:hover::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
 	background: var(--theme-muted-highlight);
+	/* webkit bad. use firefox */
 }
 
 #header::-webkit-scrollbar-thumb {
@@ -498,6 +525,11 @@ a:not([class]):hover {
 	height: 6px;
 	/* browsers should just support the standard, this sucks */
 	transition: 0.2s;
+}
+
+body::-webkit-scrollbar {
+	width: 6px;
+	display: block;
 }
 
 #bulletin-sidebar {

@@ -1,8 +1,5 @@
+var redirect;
 async function login() {
-  var url = new URL(location);
-	var redirect = url.searchParams.get("redirect");
-	redirect = safe_decode(redirect);
-  
   // TODO: form validation
   var baseurl = addhttp(document.querySelector("#baseurl").value);
   var post_data = {
@@ -59,6 +56,10 @@ async function login() {
 }
 
 async function init() {
+  var url = new URL(location);
+  redirect = url.searchParams.get("redirect");
+	redirect = safe_decode(redirect);
+	
   user = await get_user();
   document.querySelector("#baseurl").value = removehttp(user.baseurl);
   document.querySelector("#username").value = user.username;
@@ -69,7 +70,7 @@ async function init() {
   
   var loggedin = await logged_in();
   if (loggedin) {
-    location = user.last_page || "schedule.html";
+    location = redirect || user.last_page || "schedule.html";
     return;
   }
   document.querySelector("#loginbutton").classList.remove("greyedout");
