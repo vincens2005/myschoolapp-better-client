@@ -23,20 +23,24 @@
     hello world!
     <script id="assignment_template" type="text/x-handlebars-template">
       {{#each assignments}}
-        <div class="assignment">
-          <h1>
+        <div class="assignment rounded-cont no-shadow list_thingy" id="assignment-{{this.id}}" data-assign-id="{{this.id}}">
+          <h3>
            {{this.title}}
-          </h1>
+          </h3>
           <span>
              {{this.class}}
           </span>
           <p>
             {{this.desc}}
           </p>
+          <span class="round-indicator indicator-{{this.indicator.class}}">
+            {{this.indicator.text}}
+          </span>
+          {{! this html sucks, i promise i will fix it soon}}
         </div>
       {{/each}}
     </script>
-    <div id="assignments">
+    <div id="assignments" class="top-offset">
       no assignments
     </div>
   </body>
