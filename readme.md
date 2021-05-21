@@ -1,4 +1,4 @@
-# Portal++ -  A Better Client for BlackBaud's learning management system
+# Portal++ -  A Better Client for BlackBaud's OnCampus System
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2631dc5b-1742-4a40-885a-68cb125afa24/deploy-status)](https://app.netlify.com/sites/myschoolapp-better/deploys)
 
