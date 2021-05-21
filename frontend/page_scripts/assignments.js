@@ -35,9 +35,9 @@ async function init() {
 }
 
 function fill_in_assignments(assignments_raw) {
-	var assignments = [];
+	var assignments_tmp = [];
 	for (var assign of assignments_raw) {
-		assignments.push({
+		assignments_tmp.push({
 			class: assign.groupname,
 			assign_date: assign.date_assigned,
 			due_date: assign.date_due,
@@ -49,10 +49,37 @@ function fill_in_assignments(assignments_raw) {
 		});
 	}
 	
-	document.querySelector("#assignments").innerHTML = "";
-	fill_template("assignment_template", {assignments}, "assignments", {
-		noEscape: true // there is no escape.
-	});
+	var assignments = {
+		todo: [],
+		progress: [],
+		done: []
+	};
+	for (var assign of assignments_tmp) {
+		if (assign.indicator.class == "good") {
+			assignments.done.push(assign);
+			continue;
+		}
+		
+		else if (assign.indicator.class == "okay") {
+			assignments.progress.push(assign);
+			continue;
+		}
+		
+		else {
+			assignments.todo.push(assign);
+			continue;
+		}
+	}
+	
+	document.querySelector("#todo").innerHTML = "";
+	document.querySelector("#progress").innerHTML = "";
+	document.querySelector("#done").innerHTML = "";
+	
+	for (var i in assignments) {
+		fill_template("assignment_template", {assignments: assignments[i]}, i, {
+			noEscape: true // there is no escape.
+		});
+	}
 }
 
 function status_to_readable(ind) {
@@ -60,6 +87,7 @@ function status_to_readable(ind) {
 	
 	var indicators = { // css class .indicator- + indicator
 		"4": "good",
+		"1": "good",
 		"0": "okay",
 		"-1": "todo",
 		"2": "bad"
@@ -67,6 +95,7 @@ function status_to_readable(ind) {
 	
 	var text_indicators = { // the actual text to display
 		"4": "completed",
+		"1": "completed",
 		"0": "in progress",
 		"-1": "todo",
 		"2": "overdue"

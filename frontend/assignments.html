@@ -4,17 +4,17 @@
     <title>
       Assignments - portal++
     </title>
-    <link rel="shortcut icon" href="favicon.ico">
-    <script src="common.js"></script>
-    <link rel="manifest" href="manifest.webmanifest">
-    <link rel="stylesheet" href="style.css">
-    <script src="page_scripts/assignments.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
-    <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/dayjs"></script>
-    <script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
     <link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
+    <script src="common.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script> 
+    <script src="page_scripts/assignments.js"></script>
   </head>
   <body onload="init()">
 		<div id="header" onwheel="scroll_horizontally(event)">
@@ -40,8 +40,28 @@
         </div>
       {{/each}}
     </script>
-    <div id="assignments" class="top-offset">
-      no assignments
+    
+    <div class="top-offset flex flex-center">
+      <div>
+        <h3> todo </h3>
+        <div id="todo">
+          
+        </div>
+      </div>
+      
+      <div>
+        <h3> in progress </h3>
+        <div id="progress">
+          
+        </div>
+      </div>
+      
+      <div>
+        <h3> done </h3>
+        <div id="done">
+            
+        </div>
+      </div>
     </div>
   </body>
 </html>
