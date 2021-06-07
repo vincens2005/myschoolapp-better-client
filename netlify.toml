@@ -37,4 +37,5 @@
   minifyCSS = true
   minifyJS = true
   collapseInlineTagWhitespace = true
-  collapseWhitespace=true
+  collapseWhitespace = true
+  removeOptionalTags = false

@@ -1,5 +1,3 @@
-@import url('http://fonts.cdnfonts.com/css/dejavu-sans');
-
 :root {
 	--theme-button-color: #1b776a;
 	--theme-muted-highlight: #456a65;
@@ -27,6 +25,11 @@ html {
 	display: none; /* webkit, please, support the standard */
 }
 
+/* override broken css returned by endpoints */
+*[style] {
+	background: transparent !important;
+}
+
 /*
 	get rid of stupid safari garbage
 */
@@ -39,7 +42,7 @@ input[type=submit] {
 body {
 	background: var(--theme-background-color);
 	color: var(--theme-text-color);
-	font-family: "DejaVu Sans", sans-serif;
+	font-family: sans-serif;
 	margin: 0;
 }
 
@@ -82,6 +85,11 @@ body {
 
 a {
 	outline: 0;
+}
+
+.circle {
+	border-radius: 100%;
+	display: block;
 }
 
 .top-offset {
@@ -450,6 +458,7 @@ a:not([class]):hover {
 
 #page-cont {
 	padding: max(20px, 10vh) max(10vw, 10px) 20px;
+	display: block;
 }
 
 #page-cont > #title {
@@ -481,24 +490,27 @@ a:not([class]):hover {
 	margin-top: 35px;
 }
 
+.tab-cont {
+	width: 100%;
+	transition: 0.2s;
+	white-space: nowrap;
+	scrollbar-width: thin;
+	scrollbar-color: transparent transparent;
+	overflow-x: scroll;
+}
+
 #header {
 	top: 0;
 	left: 0;
 	position: fixed;
-	width: 100%;
-	overflow-x: scroll;
-	scrollbar-width: thin;
-	scrollbar-color: transparent transparent;
-	white-space: nowrap;
-	transition: 0.2s;
 	padding-left: 3px;
 }
 
-#header .tab {
+.tab-cont .tab {
 	margin: 0;
 }
 
-#header:hover {
+.tab-cont:hover {
 	scrollbar-color: var(--theme-muted-highlight) transparent;
 }
 
@@ -510,17 +522,17 @@ html {
 	why does webkit still not support the standard??
 */
 
-#header:hover::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+.tab-cont:hover::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
 	background: var(--theme-muted-highlight);
 	/* webkit bad. use firefox */
 }
 
-#header::-webkit-scrollbar-thumb {
+.tab-cont::-webkit-scrollbar-thumb {
 	background: transparent;
 	transition: 0.2s; /* for some reason this doesn't work in chrome, so sorry chrome users */
 }
 
-#header::-webkit-scrollbar {
+.tab-cont::-webkit-scrollbar {
 	display: block;
 	height: 6px;
 	/* browsers should just support the standard, this sucks */
@@ -549,6 +561,24 @@ body::-webkit-scrollbar {
 	padding: 20px 35px;
 	margin-bottom: 20px;
 	margin-right: 20px;
+}
+
+.person * {
+	padding: 10px;
+}
+
+.person {
+	margin: 10px;
+}
+
+.person img {
+	object-fit: cover; /* crop to square */
+	
+	width: 150px;
+	width: max(min(20vw, 150px), 75px);
+	
+	height: 150px;
+	height: max(min(20vw, 150px), 75px);
 }
 
 /* stolen from staccoverflow */

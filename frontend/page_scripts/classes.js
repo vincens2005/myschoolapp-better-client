@@ -1,4 +1,3 @@
-// TODO: use /api/webapp/context to get list of classes
 async function init() {
 	user = await get_user();
 	user.last_page = location;

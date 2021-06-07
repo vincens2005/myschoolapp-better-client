@@ -21,12 +21,45 @@ async function init() {
 
 	user.last_page = location;
 	save_data(user);
-
-	fetch_class_stuff(classid);
+	
+	var tab = url.hash.replace(/#/gi, "");
+	tab = tab.toLowerCase();
+	
+	var tabs = [
+		{
+			hash: "bboard",
+			label: "Bulletin Board",
+			class_name: ((tab == "bboard" || !tab) ? "current-tab" : "")
+		},
+		{
+			hash: "topics",
+			label: "Topics",
+			class_name: ((tab == "topics") ? "current-tab" : "")
+		},
+		{
+			hash: "roster",
+			label: "Roster",
+			class_name:  ((tab == "roster") ? "current-tab" : "")
+		}
+	]
+	
+	empty_all(document.querySelector("#class-display"))
+	fill_template("tab-template", {tabs}, "tabs");
+	
+	switch(tab) {
+		case "topics":
+			document.querySelector("#top-bulletin-sections").innerHTML = "i haven't bothered to make this yet"
+			break;
+		case "roster":
+			fetch_roster(classid);
+			break;
+		default:
+			fetch_bulletin(classid);
+	}
 }
 
 
-async function fetch_class_stuff(id) {
+async function fetch_bulletin(id) {
 	var endpoints = [
 		// links endpoint
 		{
@@ -43,12 +76,9 @@ async function fetch_class_stuff(id) {
 						desc: item.Description
 					});
 				}
-				fill_template("links_template", {
-					links
-				}, "links", {
+				fill_template("links_template", {links}, "bulletin-sidebar", {
 					noEscape: true
 				});
-				document.querySelector("#links").classList.remove("hidden");
 				current_class.links = links;
 			}
 		},
@@ -86,8 +116,30 @@ async function fetch_class_stuff(id) {
 	]
 	
 	for (var endpoint of endpoints) {
+		// in this case, use .then rather than await so that these happen simultaniouesutly
 		fetch(base_endpoint + user.baseurl + endpoint.url)
 		.then(a => a.json())
 		.then(endpoint.handler)
 	}
+}
+
+async function fetch_roster(id) {
+	var pattern = /(?<=\"FtpImagePath\"\s*:\s*\")([^\'*\"*\,*\}*]*)/g;
+	
+	var rosterpage = await fetch(base_endpoint + user.baseurl + `/app/student#academicclass/${id}/0/roster`).then(a => a.text());
+	var ftp_image_path = rosterpage.match(pattern);
+	ftp_image_path = ftp_image_path[0];
+	console.log(ftp_image_path)
+	
+	var roster = await fetch(base_endpoint + user.baseurl + `/api/datadirect/sectionrosterget/${id}/?format=json`).then(a => a.json());
+	var people = [];
+	
+	for (var person of roster) {
+		people.push({
+			name: person.name,
+			image: ftp_image_path + "/user/" + person.userPhotoLarge
+		})
+	}
+	
+	fill_template("roster-template", {people}, "roster");
 }

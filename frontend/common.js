@@ -106,3 +106,17 @@ async function get_header() {
 	var html = template({tabs});
 	document.querySelector("#header").innerHTML = html;
 }
+
+/** empties element while preserving children with ids
+	* @param {Object} element - the element to empty
+*/
+function empty_all(element) {
+	var children = Array.from(element.childNodes); // Array.from makes it so indexes won't change during deletion
+	for (var node of children) {
+		if (!node.id) {
+			node.remove();
+			continue;
+		}
+		empty_all(node)
+	}
+}

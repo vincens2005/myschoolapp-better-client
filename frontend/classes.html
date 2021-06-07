@@ -17,7 +17,7 @@
     <script src="page_scripts/classes.js"></script>
   </head>
   <body onload="init()">
-    <div id="header" onwheel="scroll_horizontally(event)">
+    <div id="header" onwheel="scroll_horizontally(event)" class="tab-cont">
 			<!-- this will be filled with the template from templates/header.hbs -->
 		</div>
 		
@@ -25,7 +25,7 @@
 		  {{#each classes}}
 		    <div class="no-shadow rounded-cont list_thingy">
 		       <div>
-		        <a href="class.html?class{{this.id}}">{{this.name}}</a>
+		        <a href="class.html?class={{this.id}}">{{this.name}}</a>
 		      </div>
 		      <div>
 		        <span>
