@@ -6,7 +6,7 @@
   skip_processing = false
 [build.processing.css]
   bundle = false
-  minify = true
+  minify = false
 [build.processing.js]
   bundle = false
   minify = true
@@ -24,6 +24,7 @@
   
 [[plugins]]
   package = "@netlify/plugin-local-install-core"
+  
 [[plugins]]
   package = "netlify-plugin-minify-html"
   [plugins.inputs]
@@ -39,3 +40,14 @@
   collapseInlineTagWhitespace = true
   collapseWhitespace = true
   removeOptionalTags = false
+  
+[[plugins]]
+  package = "./plugins/css_minify"
+  [plugins.inputs]
+    contexts = [
+      'production',
+      'branch-deploy',
+      'deploy-preview'
+    ]
+  [plugins.inputs.minifierOptions]
+  restructure = true
