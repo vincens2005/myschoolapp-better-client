@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "node-minify": "^3.6.0"
+  }
+}
