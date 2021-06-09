@@ -201,8 +201,7 @@ input.button {
 }
 
 .button:hover:not(.greyedout):not(.grayedout) {
-	transform: scale(1.05);
-	filter: drop-shadow(0 2px 6px rgb(10, 10, 10));
+	filter: brightness(1.15);
 }
 
 .button:active:not(.greyedout):not(.grayedout) {
@@ -237,10 +236,6 @@ input.button {
 
 .big-button {
 	font-size: 20px;
-}
-
-.big-button:hover {
-	filter: drop-shadow(0 5px 15px rgb(30, 30, 30));
 }
 
 .ohidden {
@@ -403,7 +398,7 @@ input.button {
 }
 
 #date {
-	font-size: max(min(25px, 2vw), 15px);
+	font-size: max(min(22px, 2vw), 15px);
 }
 
 a:not([class]) {
@@ -467,6 +462,7 @@ a:not([class]):hover {
 .tab {
 	background: var(--theme-lighter-color);
 	border-radius: 5px 5px 0 0;
+	transition: 0.193s; /* one has to be very precise with these things */
 	display: inline-block;
 	padding: 5px 10px;
 	margin: 0 3px 3px 0;
@@ -474,6 +470,10 @@ a:not([class]):hover {
 	text-decoration: none;
 	color: var(--theme-text-color);
 	user-select: none;
+}
+
+.tab:hover:not(.current-tab) {
+	filter: brightness(1.15);
 }
 
 .flipped-tab {
