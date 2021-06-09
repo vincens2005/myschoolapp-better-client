@@ -104,7 +104,6 @@ a {
 .rounded-cont {
 	background: var(--theme-darker-color);
 	border-radius: 10px;
-	filter: drop-shadow(2px 2px 15px rgb(26, 26, 26));
 	transition: 0.3s ease-out;
 	padding: 10px;
 }
@@ -551,10 +550,6 @@ body::-webkit-scrollbar {
 
 .current-tab {
 	background: var(--theme-muted-highlight);
-}
-
-.no-shadow {
-	filter: none;
 }
 
 .bulletin-item {

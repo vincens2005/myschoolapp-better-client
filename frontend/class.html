@@ -22,7 +22,7 @@
 			<!-- this will be filled with the template from templates/header.hbs -->
 		</div>
 		<script id="links_template" type="text/x-handlebars-template">
-			<div class="rounded-cont bulletin-item no-shadow">
+			<div class="rounded-cont bulletin-item">
 				<h3 class="title">
 						Links
 				</h3>
@@ -41,7 +41,7 @@
 
 		<script id="main-template" type="text/x-handlebars-template">
 			{{! this template is used by multiple bulletin sections, including news and forsection. I don't know what a forsection is. }}
-			<div class="rounded-cont bulletin-item no-shadow">
+			<div class="rounded-cont bulletin-item">
 				<h3 class="title center">
 					{{title}}
 				</h3>
@@ -62,7 +62,7 @@
 
 		<script id="roster-template" type="text/x-handlebars-template">
 			{{#each people}}
-				<div class="rounded-cont no-shadow center person">
+				<div class="rounded-cont center person">
 					<img src="{{this.image}}" class="circle">
 					<span>
 						{{this.name}}
