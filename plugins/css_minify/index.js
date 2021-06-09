@@ -12,6 +12,8 @@ module.exports = {
 			return;
 		}
 		try {
+			console.log("minifiying css...");
+			
 			await minify({
         compressor: csso,
         input: constants.PUBLISH_DIR + '/**/*.css',
@@ -21,8 +23,11 @@ module.exports = {
           ...inputs.minifierOptions
         }
       });
+      
+      console.log("the deed is done.");
 		}
 		catch (error) {
+			console.log("css minify error")
 			utils.build.failPlugin('The Minify CSS plugin failed.', { error })
 		}
 	}
