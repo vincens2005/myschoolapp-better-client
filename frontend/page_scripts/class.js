@@ -56,10 +56,22 @@ async function init() {
 		default:
 			fetch_bulletin(classid);
 	}
+	
+	fetch(base_endpoint + user.baseurl +`/api/datadirect/SectionInfoView/?format=json&SectionId=${classid}&associationId=1`).then(a => a.json())
+	.then(data => {
+				document.title = data[0].GroupName + " - portal++"
+				document.querySelector("#title").innerHTML = data[0].GroupName + " - " + data[0].Identifier + ` (${data[0].Block})`;
+				document.querySelector("#title").classList.remove("ohidden");
+				current_class.name = data[0].GroupName;
+				current_class.block = data[0].Block;
+				current_class.identifier = data[0].Identifier;
+			});
 }
 
 
 async function fetch_bulletin(id) {
+	// this is basically a list of callback functions
+	// TODO: add more endpoints because there are more.
 	var endpoints = [
 		// links endpoint
 		{
@@ -80,18 +92,6 @@ async function fetch_bulletin(id) {
 					noEscape: true
 				});
 				current_class.links = links;
-			}
-		},
-		// class title endpoint
-		{
-			url: `/api/datadirect/SectionInfoView/?format=json&SectionId=${id}&associationId=1`,
-			handler: data => {
-				document.title = data[0].GroupName + " - portal++"
-				document.querySelector("#title").innerHTML = data[0].GroupName + " - " + data[0].Identifier + ` (${data[0].Block})`;
-				document.querySelector("#title").classList.remove("ohidden");
-				current_class.name = data[0].GroupName;
-				current_class.block = data[0].Block;
-				current_class.identifier = data[0].Identifier;
 			}
 		},
 		// bulletin board text endpoint
@@ -138,7 +138,7 @@ async function fetch_roster(id) {
 		})
 	}
 	
-	fill_template("roster-template", {people}, "roster");
+	fill_template("roster-template", {people}, "roster-container");
 }
 
 async function fetch_topics(id) {
@@ -155,5 +155,5 @@ async function fetch_topics(id) {
 	}
 	
 	// use the same template as the roster because it's basically the same
-	fill_template("roster-template", {people: topics}, "roster");
+	fill_template("roster-template", {people: topics}, "roster-container");
 }

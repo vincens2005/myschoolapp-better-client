@@ -67,7 +67,7 @@ function safe_decode(uri) {
 /** makes horizontal overflow scroll with mouse wheel */
 function scroll_horizontally(e) {
 	e = window.event || e;
-	 e.currentTarget.scrollLeft += e.deltaY / 2;
+	e.currentTarget.scrollLeft += e.deltaY / 2;
 	e.preventDefault();
 }
 
