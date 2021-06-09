@@ -120,3 +120,14 @@ function empty_all(element) {
 		empty_all(node)
 	}
 }
+
+/** fetches the image path necessary for many images */
+async function get_image_path() {
+	var pattern = /(?<=\"FtpImagePath\"\s*:\s*\")([^\'*\"*\,*\}*]*)/g;
+	
+	var rosterpage = await fetch(base_endpoint + user.baseurl + "/app/student#academicclass/").then(a => a.text());
+	var ftp_image_path = rosterpage.match(pattern);
+	ftp_image_path = ftp_image_path[0];
+	
+	return ftp_image_path;
+}

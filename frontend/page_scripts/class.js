@@ -48,7 +48,7 @@ async function init() {
 	
 	switch(tab) {
 		case "topics":
-			document.querySelector("#top-bulletin-sections").innerHTML = "i haven't bothered to make this yet"
+			fetch_topics(classid);
 			break;
 		case "roster":
 			fetch_roster(classid);
@@ -124,11 +124,7 @@ async function fetch_bulletin(id) {
 }
 
 async function fetch_roster(id) {
-	var pattern = /(?<=\"FtpImagePath\"\s*:\s*\")([^\'*\"*\,*\}*]*)/g;
-	
-	var rosterpage = await fetch(base_endpoint + user.baseurl + `/app/student#academicclass/${id}/0/roster`).then(a => a.text());
-	var ftp_image_path = rosterpage.match(pattern);
-	ftp_image_path = ftp_image_path[0];
+	var ftp_image_path = await get_image_path();
 	console.log(ftp_image_path)
 	
 	var roster = await fetch(base_endpoint + user.baseurl + `/api/datadirect/sectionrosterget/${id}/?format=json`).then(a => a.json());
@@ -137,9 +133,27 @@ async function fetch_roster(id) {
 	for (var person of roster) {
 		people.push({
 			name: person.name,
-			image: ftp_image_path + "/user/" + person.userPhotoLarge
+			image: ftp_image_path + "/user/" + person.userPhotoLarge,
+			url: ""
 		})
 	}
 	
 	fill_template("roster-template", {people}, "roster");
+}
+
+async function fetch_topics(id) {
+	var ftp_image_path = await get_image_path();
+	
+	var topics_raw = await fetch(base_endpoint + user.baseurl + `/api/datadirect/sectiontopicsget/${id}/?format=json&active=true&future=false&expired=false&sharedTopics=false`).then(a => a.json());
+	var topics = [];
+	for (var topic of topics_raw) {
+		topics.push({
+			name: topic.Name,
+			image: ftp_image_path + "topics/" + topic.ThumbFilename,
+			url: "topics.html?topic=" + topic.TopicID
+		});
+	}
+	
+	// use the same template as the roster because it's basically the same
+	fill_template("roster-template", {people: topics}, "roster");
 }

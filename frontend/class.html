@@ -62,12 +62,12 @@
 
 		<script id="roster-template" type="text/x-handlebars-template">
 			{{#each people}}
-				<div class="rounded-cont center person">
-					<img src="{{this.image}}" class="circle">
+				<a class="rounded-cont center person" href="{{this.url}}">
+					<img src="{{this.image}}" class="circle" alt="no image">
 					<span>
 						{{this.name}}
 					</span>
-				</div>
+				</a>
 			{{/each}}
 		</script>
 

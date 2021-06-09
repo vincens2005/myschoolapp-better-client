@@ -564,6 +564,10 @@ body::-webkit-scrollbar {
 
 .person {
 	margin: 10px;
+	color: white;
+	text-decoration: none;
+	word-wrap: break-word;
+	
 }
 
 .person img {
