@@ -2,8 +2,8 @@ function init() {
 	document.querySelector("#desc_span").innerHTML = "";
 	document.querySelector("#title").innerHTML = "";
 
-	console.log("initializing ityped");
-	ityped.init("#title", {
+	console.log("initializing wiatal");
+	wiatal("#title", {
 		strings: ["portal++"],
 		typeSpeed: 155,
 		loop: false,
@@ -11,7 +11,7 @@ function init() {
 		startDelay: 100,
 		onFinished: () => {
 			setTimeout(() => {
-				ityped.init("#desc_span", {
+				wiatal("#desc_span", {
 					strings: [
 						"A better client for MySchoolApp.",
 						"Reverse-engineered from the original webapp.",
