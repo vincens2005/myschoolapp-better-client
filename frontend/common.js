@@ -123,11 +123,18 @@ function empty_all(element) {
 
 /** fetches the image path necessary for many images */
 async function get_image_path() {
-	var pattern = /(?<=\"FtpImagePath\"\s*:\s*\")([^\'*\"*\,*\}*]*)/g;
-	
+//  uses es9, which mobile safari doesn't support, ugh
+//  supporting the old thing adds three extra lines. ew
+//  es9 code:
+//  var pattern = /(?<=\"FtpImagePath\"\s*:\s*\")([^\'*\"*\,*\}*]*)/g;
+//  why doesn't apple just update their stupid browser
+
+	var pattern = /(\"FtpImagePath\"\s*:\s*\")([^\'*\,*\}*]*)/g
 	var rosterpage = await fetch(base_endpoint + user.baseurl + "/app/student#academicclass/").then(a => a.text());
 	var ftp_image_path = rosterpage.match(pattern);
 	ftp_image_path = ftp_image_path[0];
+	ftp_image_path = "{" + ftp_image_path + "}";
+	ftp_image_path = JSON.parse(ftp_image_path);
 	
-	return ftp_image_path;
+	return ftp_image_path.FtpImagePath;
 }
