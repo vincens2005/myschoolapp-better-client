@@ -114,6 +114,18 @@ body {
 	scrollbar-color: var(--theme-muted-highlight) transparent;
 }
 
+.scrollable-col::-webkit-scrollbar {
+  opacity: 0;
+  transition: 0.2s;
+  display: block;
+  width: 3px;
+}
+
+.scrollable-col:hover::-webkit-scrollbar {
+  opacity: 1;
+  background: var(--theme-muted-highlight);
+}
+
 /*
   get rid of that ugly dotted border browsers put on links
 */

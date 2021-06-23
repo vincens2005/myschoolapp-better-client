@@ -12,7 +12,7 @@ async function init() {
 	// check if user is logged in
 	var loggedin = await logged_in();
 	if (!loggedin) {
-		location = "login.html";
+		location = "login.html?redirect=" + encodeURIComponent(location);
 		return;
 	}
 
