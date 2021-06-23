@@ -67,6 +67,10 @@ body {
 	justify-content: center;
 }
 
+.flex-v-center {
+  align-items: center;
+}
+
 .flex-left {
 	justify-content: start;
 }
@@ -83,6 +87,21 @@ body {
 	width: 100%;
 }
 
+.flex-equal-width > * {
+  flex: 1 1 0px;
+}
+
+.full-container {
+  padding: 30px;
+}
+
+.text-left {
+  text-align: left;
+}
+
+/*
+  get rid of that ugly dotted border browsers put on links
+*/
 a {
 	outline: 0;
 }
@@ -416,6 +435,7 @@ a:not([class]):hover {
 .round-indicator {
 	border-radius: 10rem;
 	display: inline;
+	white-space: nowrap;
 	margin: 0 3px;
 	padding: 0.3em 0.6em 0.3em 0.6em;
 	line-height: 2.2;

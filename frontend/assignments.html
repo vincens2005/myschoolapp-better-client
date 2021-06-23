@@ -23,25 +23,28 @@
     hello world!
     <script id="assignment_template" type="text/x-handlebars-template">
       {{#each assignments}}
-        <div class="assignment rounded-cont list_thingy" id="assignment-{{this.id}}" data-assign-id="{{this.id}}">
-          <h3>
-           {{this.title}}
-          </h3>
-          <span>
-             {{this.class}}
-          </span>
-          <p>
-            {{this.desc}}
-          </p>
-          <span class="round-indicator indicator-{{this.indicator.class}}">
-            {{this.indicator.text}}
-          </span>
-          {{! this html sucks, i promise i will fix it soon}}
+        <div class="assignment rounded-cont list_thingy flex flex-v-center text-left" id="assignment-{{this.id}}" data-assign-id="{{this.id}}">
+          <div>
+            <h3>
+            {{this.title}}
+            </h3>
+            <span>
+              {{this.class}}
+            </span>
+            <span class="standard_transition hidden">
+              {{this.desc}}
+            </span>
+          </div>
+          <div>
+            <span class="round-indicator indicator-{{this.indicator.class}}">
+              {{this.indicator.text}}
+            </span>
+          </div>
         </div>
       {{/each}}
     </script>
     
-    <div class="top-offset flex flex-center">
+    <div class="full-container flex flex-center flex-equal-width center">
       <div>
         <h3> todo </h3>
         <div id="todo">
