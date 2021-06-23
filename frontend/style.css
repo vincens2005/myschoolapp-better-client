@@ -26,7 +26,7 @@ html {
 }
 
 /* override broken css returned by endpoints */
-*[style] {
+*[style]:not([class]) {
 	background: transparent !important;
 }
 
@@ -612,6 +612,15 @@ body::-webkit-scrollbar {
 	
 	height: 150px;
 	height: max(min(20vw, 150px), 75px);
+}
+
+/*
+  dragula stuff
+*/
+.gu-mirror {
+  opacity: 0.98;
+  cursor: grab;
+  filter: drop-shadow(0 0 8px #212121);
 }
 
 /* stolen from staccoverflow */
