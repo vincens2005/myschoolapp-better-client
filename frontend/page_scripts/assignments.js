@@ -49,6 +49,11 @@ function fill_in_assignments(assignments_raw) {
 		});
 	}
 	
+	if (!assignments_tmp.length) {
+    // TODO: tell the user
+    return;
+	}
+	
 	var assignments = {
 		todo: [],
 		progress: [],
@@ -75,11 +80,15 @@ function fill_in_assignments(assignments_raw) {
 	document.querySelector("#progress").innerHTML = "";
 	document.querySelector("#done").innerHTML = "";
 	
+	
 	for (var i in assignments) {
 		fill_template("assignment_template", {assignments: assignments[i]}, i, {
 			noEscape: true // there is no escape.
 		});
 	}
+	
+	// enable drag and drop
+	dnd_init();
 }
 
 function status_to_readable(ind) {
@@ -105,4 +114,9 @@ function status_to_readable(ind) {
 		class: indicators[ind] || "blank",
 		text: text_indicators[ind] || "unknown (oo spooky)"
 	};
+}
+
+function dnd_init() {
+  var containers = [document.querySelector("#todo"), document.querySelector("#progress"), document.querySelector("#done")];
+  var drake = dragula(containers);
 }

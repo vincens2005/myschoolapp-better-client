@@ -99,6 +99,21 @@ body {
   text-align: left;
 }
 
+.scrollable-col {
+  overflow-y: scroll;
+  overflow-x: visible;
+  height: 82vh;
+  transition: 0.15s;
+  scrollbar-width: thin;
+  padding: 2px;
+  padding-bottom: 50px;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollable-col:hover {
+	scrollbar-color: var(--theme-muted-highlight) transparent;
+}
+
 /*
   get rid of that ugly dotted border browsers put on links
 */
@@ -501,8 +516,7 @@ a:not([class]):hover {
 }
 
 .list_thingy {
-	margin: 10px;
-	margin-left: 0;
+	margin-bottom: 10px;
 }
 
 .header-offset {

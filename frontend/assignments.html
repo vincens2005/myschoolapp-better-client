@@ -11,6 +11,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
     <script src="common.js"></script>
+    
+    <!-- dragula -->
+    <script src="https://cdn.jsdelivr.net/gh/bevacqua/dragula@3.7.3/dist/dragula.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bevacqua/dragula@3.7.3/dist/dragula.min.css">
+    
     <script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script> 
@@ -47,21 +52,21 @@
     <div class="full-container flex flex-center flex-equal-width center">
       <div>
         <h3> todo </h3>
-        <div id="todo">
+        <div id="todo" class="scrollable-col">
           
         </div>
       </div>
       
       <div>
         <h3> in progress </h3>
-        <div id="progress">
+        <div id="progress" class="scrollable-col">
           
         </div>
       </div>
       
       <div>
         <h3> done </h3>
-        <div id="done">
+        <div id="done" class="scrollable-col">
             
         </div>
       </div>
