@@ -45,7 +45,8 @@ function fill_in_assignments(assignments_raw) {
 			type: assign.assignment_type,
 			desc: assign.long_description,
 			id: assign.assignment_id,
-			indicator: status_to_readable(assign.assignment_status)
+			index_id: assign.assignment_index_id,
+			indicator: status_ind.to_readable(assign.assignment_status)
 		});
 	}
 	
@@ -59,7 +60,7 @@ function fill_in_assignments(assignments_raw) {
 		progress: [],
 		done: []
 	};
-	for (var assign of assignments_tmp) {
+	for (let assign of assignments_tmp) {
 		if (assign.indicator.class == "good") {
 			assignments.done.push(assign);
 			continue;
@@ -91,32 +92,76 @@ function fill_in_assignments(assignments_raw) {
 	dnd_init();
 }
 
-function status_to_readable(ind) {
-	ind = String(ind);
-	
-	var indicators = { // css class .indicator- + indicator
+var status_ind = {
+  indicators : { // css class .indicator- + indicator
 		"4": "good",
 		"1": "good",
 		"0": "okay",
 		"-1": "todo",
 		"2": "bad"
-	}
+	},
 	
-	var text_indicators = { // the actual text to display
+	text_indicators : { // the actual text to display
 		"4": "completed",
 		"1": "completed",
 		"0": "in progress",
 		"-1": "todo",
 		"2": "overdue"
-	}
+	},
 	
-	return {
-		class: indicators[ind] || "blank",
-		text: text_indicators[ind] || "unknown (oo spooky)"
-	};
-}
+	to_readable: function (ind) {
+    ind = String(ind);
+    return {
+      class: this.indicators[ind] || "blank",
+      text: this.text_indicators[ind] || "unknown (oo spooky)"
+    };
+	},
+	
+	to_number: function(ind) {
+    ind = String(ind);
+    for (let i in this.indicators) {
+      if (this.indicators[i] == ind) {
+        return i;
+      }
+    }
+    for (let i in this.text_indicators) {
+      if (this.text_indicators[i] == ind) {
+        return i;
+      }
+    }
+	}
+};
 
 function dnd_init() {
   var containers = [document.querySelector("#todo"), document.querySelector("#progress"), document.querySelector("#done")];
   var drake = dragula(containers);
+  
+  drake.on("drop", async (el, target, source, sibling) => {
+    if (!target) return;
+    var assign_id = el.getAttribute("data-assign-id");
+    console.log(assign_id)
+    var index_id = el.getAttribute("data-index-id");
+    var to_status = target.id == "progress" ? "in progress" : target.id;
+    to_status = to_status == "done" ? "completed" : to_status;
+    to_status = status_ind.to_number(to_status);
+    console.log(to_status);
+    var response = await fetch(base_endpoint + user.baseurl + `/api/assignment2/assignmentstatusupdate/?format=json&assgnmentIndexId=${index_id}&assignmentStatus=${to_status}`,{
+      method: "POST",
+      body: JSON.stringify({
+        assignmentIndexId: index_id,
+        assignmentStatus: to_status,
+        userTaskInd: false // idk what this does
+      })
+    }).then(a => a.json());
+    
+    if (response.Error) {
+      // TODO: handle error
+      return;
+    }
+    var indicator = document.querySelector("#assignment-ind-" + assign_id);
+    indicator.classList.remove(...indicator.classList);
+    indicator.classList.add("round-indicator", "indicator-blank");
+    indicator.innerHTML = target.id;
+    init();
+  });
 }

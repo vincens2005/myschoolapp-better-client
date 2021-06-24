@@ -490,6 +490,10 @@ a:not([class]):hover {
 	background: var(--theme-indicator-todo);
 }
 
+.indicator-blank {
+  background: var(--theme-lighter-color);
+}
+
 /* class page stuff */
 .title {
 	transition: 0.3s;
