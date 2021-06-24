@@ -1,5 +1,6 @@
 // TODO: for full assign details fetch /api/assignment2/read/ASSIGN_ID/?format=json
 
+var drake_started = false;
 async function init() {
 	var url = new URL(location);
 	var assign_date = url.searchParams.get("date");
@@ -89,7 +90,9 @@ function fill_in_assignments(assignments_raw) {
 	}
 	
 	// enable drag and drop
-	dnd_init();
+	if (!drake_started) {
+    dnd_init();
+	}
 }
 
 var status_ind = {
@@ -133,6 +136,7 @@ var status_ind = {
 };
 
 function dnd_init() {
+  drake_started = true;
   var containers = [document.querySelector("#todo"), document.querySelector("#progress"), document.querySelector("#done")];
   var drake = dragula(containers);
   
