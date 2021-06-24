@@ -630,6 +630,14 @@ body::-webkit-scrollbar {
 	height: max(min(20vw, 150px), 75px);
 }
 
+.nagbar {
+  position: fixed;
+  top: 0;
+  background: red;
+  padding: 15px;
+  width: 100%;
+}
+
 /*
   dragula stuff
 */

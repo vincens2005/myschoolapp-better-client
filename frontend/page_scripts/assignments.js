@@ -1,6 +1,7 @@
 // TODO: for full assign details fetch /api/assignment2/read/ASSIGN_ID/?format=json
 
 var drake_started = false;
+var current_view_date;
 async function init() {
 	var url = new URL(location);
 	var assign_date = url.searchParams.get("date");
@@ -26,6 +27,10 @@ async function init() {
 			date_to_send = possible_date.format("MM/DD/YYYY");
 		}
 	}
+	
+	current_view_date = date_to_send;
+	document.querySelector("#date").innerHTML = "assignments for " + current_view_date;
+	
 	// send the request
 	// TODO: figure out what the `persona` param does
 	var assignment_req = await fetch(base_endpoint + user.baseurl + "/api/DataDirect/AssignmentCenterAssignments/?format=json&filter=2&dateStart=" + date_to_send + "&dateEnd=" + date_to_send + "&persona=2");
@@ -159,7 +164,7 @@ function dnd_init() {
     }).then(a => a.json());
     
     if (response.Error) {
-      // TODO: handle error
+      location = "login.html?popup=" + encodeURIComponent("please log in and try again") + "&redirect=" + encodeURIComponent(location);
       return;
     }
     var indicator = document.querySelector("#assignment-ind-" + assign_id);
@@ -168,4 +173,15 @@ function dnd_init() {
     indicator.innerHTML = target.id;
     init();
   });
+}
+
+/** changes the current view date
+ * @param {Number} fac - factor in days to change the date by
+ */
+function change_date(fac) {
+  var tmp_view_date  =  dayjs(current_view_date, "MM/DD/YYYY");
+	tmp_view_date = tmp_view_date.set("date", tmp_view_date.get("date") + fac);
+	var formatted_date = tmp_view_date.format("MM/DD/YYYY");
+	history.pushState({}, "", "?date=" + formatted_date);
+	init();
 }

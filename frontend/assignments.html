@@ -47,26 +47,40 @@
         </div>
       {{/each}}
     </script>
-    
-    <div class="full-container flex flex-center flex-equal-width center">
-      <div>
-        <h3> todo </h3>
-        <div id="todo" class="scrollable-col">
-          
-        </div>
-      </div>
-      
-      <div>
-        <h3> in progress </h3>
-        <div id="progress" class="scrollable-col">
-          
-        </div>
-      </div>
-      
-      <div>
-        <h3> done </h3>
-        <div id="done" class="scrollable-col">
+    <div class="full-container">
+      <div class="center">
+    		<h2>
+    			<span class="round-button" onclick="change_date(-1)">
+    				&lt
+    			</span>
+    			<span id="date">
+    				<!-- nothing -->
+    			</span>
+    			<span class="round-button" onclick="change_date(1)">
+    				&gt
+    			</span>
+    		</h2>
+    	</div>
+      <div class="flex flex-center flex-equal-width center">
+        <div>
+          <h3> todo </h3>
+          <div id="todo" class="scrollable-col">
             
+          </div>
+        </div>
+        
+        <div>
+          <h3> in progress </h3>
+          <div id="progress" class="scrollable-col">
+            
+          </div>
+        </div>
+        
+        <div>
+          <h3> done </h3>
+          <div id="done" class="scrollable-col">
+              
+          </div>
         </div>
       </div>
     </div>

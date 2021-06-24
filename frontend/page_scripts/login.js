@@ -60,6 +60,13 @@ async function init() {
   redirect = url.searchParams.get("redirect");
 	redirect = safe_decode(redirect);
 	
+	var popup = url.searchParams.get("popup");
+	popup = safe_decode(popup);
+	if (popup) {
+    document.querySelector("#popup").innerText = popup;
+    document.querySelector("#popup").classList.remove("ohidden");
+	}
+	
   user = await get_user();
   document.querySelector("#baseurl").value = removehttp(user.baseurl);
   document.querySelector("#username").value = user.username;
