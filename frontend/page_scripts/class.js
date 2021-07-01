@@ -134,7 +134,7 @@ async function fetch_roster(id) {
 		people.push({
 			name: person.name,
 			image: ftp_image_path + "/user/" + person.userPhotoLarge,
-			url: ""
+			url: "#roster" // TODO: profile page
 		})
 	}
 	

@@ -539,6 +539,10 @@ a:not([class]):hover {
 	margin-top: 35px;
 }
 
+#class-display {
+	width: 100%;
+}
+
 .tab-cont {
 	width: 100%;
 	transition: 0.2s;
@@ -546,6 +550,7 @@ a:not([class]):hover {
 	scrollbar-width: thin;
 	scrollbar-color: transparent transparent;
 	overflow-x: scroll;
+	display: inline-block;
 }
 
 #header {
@@ -609,7 +614,7 @@ body::-webkit-scrollbar {
 }
 
 .person * {
-	padding: 10px;
+	font-size: max(min(2.5vw, 14px), 12px);
 }
 
 .person {
@@ -617,17 +622,22 @@ body::-webkit-scrollbar {
 	color: white;
 	text-decoration: none;
 	word-wrap: break-word;
-	
+	width: max(min(30vw, 160px), 100px);
+	height: max(min(30vw, 160px), 100px);
 }
 
 .person img {
+	padding: 10px;
 	object-fit: cover; /* crop to square */
-	
+	width: 75%;
+	height: 75%;
+/*	
 	width: 150px;
 	width: max(min(20vw, 150px), 75px);
 	
 	height: 150px;
 	height: max(min(20vw, 150px), 75px);
+	*/
 }
 
 .nagbar {
