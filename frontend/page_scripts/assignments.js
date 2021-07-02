@@ -74,7 +74,8 @@ function fill_in_assignments(assignments_raw) {
 			desc: assign.long_description,
 			id: assign.assignment_id,
 			index_id: assign.assignment_index_id,
-			indicator: status_ind.to_readable(assign.assignment_status)
+			indicator: status_ind.to_readable(assign.assignment_status),
+			user_task: String(assign.user_task_ind)
 		});
 	}
 
@@ -172,13 +173,18 @@ function dnd_init() {
 	drake.on("drop", async (el, target, source, sibling) => {
 		if (!target) return;
 		var assign_id = el.getAttribute("data-assign-id");
-		console.log(assign_id)
 		var index_id = el.getAttribute("data-index-id");
 		var to_status = target.id == "progress" ? "in progress" : target.id;
 		to_status = to_status == "done" ? "completed" : to_status;
 		to_status = status_ind.to_number(to_status);
+		var user_task = el.getAttribute("data-user-task") == "true";
+		
+		console.log(user_task)
+		console.log(assign_id)
 		console.log(to_status);
-		set_status(index_id, to_status);
+		
+		set_status(index_id, assign_id, user_task, to_status);
+		
 		var indicator = document.querySelector("#assignment-ind-" + assign_id);
 		indicator.classList.remove(...indicator.classList);
 		indicator.classList.add("round-indicator", "indicator-blank");
@@ -187,8 +193,8 @@ function dnd_init() {
 }
 
 /** changes the current view date
- * @param {Number} fac - factor in days to change the date by
- */
+	* @param {Number} fac - factor in days to change the date by
+	*/
 function change_date(fac) {
 	var tmp_view_date = dayjs(current_view_date, "MM/DD/YYYY");
 	tmp_view_date = tmp_view_date.set("date", tmp_view_date.get("date") + fac);
@@ -197,13 +203,19 @@ function change_date(fac) {
 	init();
 }
 
-function set_status(index_id, to_status) {
-	var response = await fetch(base_endpoint + user.baseurl + `/api/assignment2/assignmentstatusupdate/?format=json&assgnmentIndexId=${index_id}&assignmentStatus=${to_status}`, {
+/** sets the status of an assignment
+	* @param {String} index_id - the index id of the assignment
+	* @param {String} to_status - the status to which the assignment will be set
+	*/
+async function set_status(index_id, assign_id, user_task, to_status) {
+	var send_id = index_id || assign_id; // fallback to assignment id if index id is null
+	fetch_url = base_endpoint + user.baseurl + `/api/assignment2/assignmentstatusupdate/?format=json&assgnmentIndexId=${send_id}&assignmentStatus=${to_status}`;
+	var response = await fetch(fetch_url, {
 		method: "POST",
 		body: JSON.stringify({
-			assignmentIndexId: index_id,
+			assignmentIndexId: send_id,
 			assignmentStatus: to_status,
-			userTaskInd: false // idk what this does
+			userTaskInd: user_task // this tells it whether it was created by the user
 		})
 	}).then(a => a.json());
 
