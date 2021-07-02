@@ -6,10 +6,10 @@ async function init() {
 	var url = new URL(location);
 	var assign_date = url.searchParams.get("date");
 	assign_date = safe_decode(assign_date);
-	
+
 	var start_date = safe_decode(url.searchParams.get("start"));
 	var end_date = safe_decode(url.searchParams.get("end"));
-	
+
 	user = await get_user();
 	user.last_page = "assignments.html";
 	save_data(user);
@@ -37,7 +37,7 @@ async function init() {
 			date_to_send.end = tmp_send;
 		}
 	}
-	
+
 	if (start_date && end_date) {
 		let tmp_send = {
 			start: dayjs(start_date, "MM/DD/YYYY"),
@@ -178,24 +178,11 @@ function dnd_init() {
 		to_status = to_status == "done" ? "completed" : to_status;
 		to_status = status_ind.to_number(to_status);
 		console.log(to_status);
-		var response = await fetch(base_endpoint + user.baseurl + `/api/assignment2/assignmentstatusupdate/?format=json&assgnmentIndexId=${index_id}&assignmentStatus=${to_status}`, {
-			method: "POST",
-			body: JSON.stringify({
-				assignmentIndexId: index_id,
-				assignmentStatus: to_status,
-				userTaskInd: false // idk what this does
-			})
-		}).then(a => a.json());
-
-		if (response.Error) {
-			location = "login.html?popup=" + encodeURIComponent("please log in and try again") + "&redirect=" + encodeURIComponent(location);
-			return;
-		}
+		set_status(index_id, to_status);
 		var indicator = document.querySelector("#assignment-ind-" + assign_id);
 		indicator.classList.remove(...indicator.classList);
 		indicator.classList.add("round-indicator", "indicator-blank");
 		indicator.innerHTML = target.id;
-		init();
 	});
 }
 
@@ -207,5 +194,22 @@ function change_date(fac) {
 	tmp_view_date = tmp_view_date.set("date", tmp_view_date.get("date") + fac);
 	var formatted_date = tmp_view_date.format("MM/DD/YYYY");
 	history.pushState({}, "", "?date=" + formatted_date);
+	init();
+}
+
+function set_status(index_id, to_status) {
+	var response = await fetch(base_endpoint + user.baseurl + `/api/assignment2/assignmentstatusupdate/?format=json&assgnmentIndexId=${index_id}&assignmentStatus=${to_status}`, {
+		method: "POST",
+		body: JSON.stringify({
+			assignmentIndexId: index_id,
+			assignmentStatus: to_status,
+			userTaskInd: false // idk what this does
+		})
+	}).then(a => a.json());
+
+	if (response.Error) {
+		location = "login.html?popup=" + encodeURIComponent("please log in and try again") + "&redirect=" + encodeURIComponent(location);
+		return;
+	}
 	init();
 }
