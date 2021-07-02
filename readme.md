@@ -8,14 +8,14 @@
 
 ## Features/Goals
   - [x] - Faster load speed
-  - [-] - Kanban-style assignment center
+  - [ ] - Kanban-style assignment center
   - [x] - Dark mode
-  - [-] - Better mobile UI
+  - [ ] - Better mobile UI
   - [x] - No jQuery
   - [x] - Remembers last visited page
   - [x] - username autofill
   - [x] - no two-step login page
-  - [] - API Docs
+  - [ ] - API Docs
   - [x] - Open-Source (GPLv3)
 
 ## development
