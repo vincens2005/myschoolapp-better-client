@@ -502,7 +502,7 @@ a:not([class]):hover {
 }
 
 #page-cont {
-	padding: max(20px, 10vh) max(10vw, 10px) 20px;
+	padding: max(20px, 10vh) 10vw 0;
 	display: block;
 }
 
@@ -618,7 +618,8 @@ body::-webkit-scrollbar {
 }
 
 .person {
-	margin: 10px;
+	--person-margin: min(15px, 1.3vw);
+	margin: var(--person-margin) var(--person-margin) 0 0;
 	color: white;
 	text-decoration: none;
 	word-wrap: break-word;

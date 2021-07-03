@@ -89,6 +89,7 @@ function fill_in_assignments(assignments_raw) {
 		progress: [],
 		done: []
 	};
+	
 	for (let assign of assignments_tmp) {
 		if (assign.indicator.class == "good") {
 			assignments.done.push(assign);
