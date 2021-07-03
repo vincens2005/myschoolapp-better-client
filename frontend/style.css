@@ -110,6 +110,12 @@ body {
   scrollbar-color: transparent transparent;
 }
 
+@media (width < 620px) {
+	.scrollable-col {
+		height: auto;
+	}
+}
+
 .scrollable-col:hover {
 	scrollbar-color: var(--theme-muted-highlight) transparent;
 }
