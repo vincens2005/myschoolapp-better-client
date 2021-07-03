@@ -35,7 +35,7 @@
     ]
   [plugins.inputs.minifierOptions]
   removeComments = true
-  minifyCSS = true
+  minifyCSS = false
   minifyJS = true
   collapseInlineTagWhitespace = true
   collapseWhitespace = true
@@ -50,4 +50,4 @@
       'deploy-preview'
     ]
   [plugins.inputs.minifierOptions]
-  restructure = true
+  strict = true

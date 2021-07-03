@@ -1,5 +1,5 @@
 const minify = require('@node-minify/core');
-const csso = require('@node-minify/csso');
+const sqwish = require('@node-minify/sqwish')
 module.exports = {
 
 	onPostBuild: async ({
@@ -15,7 +15,7 @@ module.exports = {
 			console.log("minifiying css...");
 			
 			await minify({
-        compressor: csso,
+        compressor: sqwish,
         input: constants.PUBLISH_DIR + '/**/*.css',
         output: '$1.css',
         replaceInPlace: true,
