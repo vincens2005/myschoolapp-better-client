@@ -1,5 +1,5 @@
 // TODO: for full assign details fetch /api/assignment2/read/ASSIGN_ID/?format=json
-
+var assignment_queue = [];
 var drake_started = false;
 var current_view_date;
 async function init() {
@@ -187,9 +187,10 @@ function dnd_init() {
 		set_status(index_id, assign_id, user_task, to_status);
 		
 		var indicator = document.querySelector("#assignment-ind-" + assign_id);
+		var new_status = status_ind.to_readable(to_status);
 		indicator.classList.remove(...indicator.classList);
-		indicator.classList.add("round-indicator", "indicator-blank");
-		indicator.innerHTML = target.id;
+		indicator.classList.add("round-indicator", "indicator-" + new_status.class);
+		indicator.innerHTML = new_status.text;
 	});
 }
 
@@ -225,4 +226,46 @@ async function set_status(index_id, assign_id, user_task, to_status) {
 		return;
 	}
 	init();
+}
+
+function queue_update(index_id, assign_id, user_task) {
+	console.log(assign_id)
+	var test_function = a => (!!a && a.assign_id == assign_id);
+	if (assignment_queue.find(test_function)) {
+		var i = assignment_queue.findIndex(test_function);
+		clearTimeout(assignment_queue[i].timeout);
+		delete assignment_queue[i];
+	}
+	
+	var indicator = document.querySelector("#assignment-ind-" + assign_id);
+	var ind_text = indicator.innerText;
+	console.log(ind_text)
+	// cycle status (there's probably a better way to do this but idk)
+	switch(ind_text.toLowerCase()) {
+		case "completed":
+			ind_text = "todo";
+			break;
+		case "in progress":
+			ind_text = "completed";
+			break;
+		case "todo":
+			ind_text = "in progress";
+			break;
+		default:
+			return;
+	}
+	
+	var to_status = status_ind.to_number(ind_text);
+	
+	var timeout = setTimeout(() => {
+		set_status(index_id, assign_id, user_task, to_status);
+	}, 500);
+	
+	assignment_queue.push({timeout, assign_id});
+	
+	// update css class
+	var new_status = status_ind.to_readable(to_status);
+	indicator.classList.remove(...indicator.classList);
+	indicator.classList.add("round-indicator", "indicator-" + new_status.class);
+	indicator.innerHTML = new_status.text;
 }

@@ -88,26 +88,26 @@ body {
 }
 
 .flex-equal-width > * {
-  flex: 1 1 0px;
+	flex: 1 1 0px;
 }
 
 .full-container {
-  padding: 30px;
+	padding: 30px;
 }
 
 .text-left {
-  text-align: left;
+	text-align: left;
 }
 
 .scrollable-col {
-  overflow-y: scroll;
-  overflow-x: visible;
-  height: 82vh;
-  transition: 0.15s;
-  scrollbar-width: thin;
-  padding: 2px;
-  padding-bottom: 50px;
-  scrollbar-color: transparent transparent;
+	overflow-y: scroll;
+	overflow-x: visible;
+	height: 82vh;
+	transition: 0.15s;
+	scrollbar-width: thin;
+	padding: 2px;
+	padding-bottom: 50px;
+	scrollbar-color: transparent transparent;
 }
 
 @media (width < 620px) {
@@ -121,19 +121,19 @@ body {
 }
 
 .scrollable-col::-webkit-scrollbar {
-  opacity: 0;
-  transition: 0.2s;
-  display: block;
-  width: 3px;
+	opacity: 0;
+	transition: 0.2s;
+	display: block;
+	width: 3px;
 }
 
 .scrollable-col:hover::-webkit-scrollbar {
-  opacity: 1;
-  background: var(--theme-muted-highlight);
+	opacity: 1;
+	background: var(--theme-muted-highlight);
 }
 
 /*
-  get rid of that ugly dotted border browsers put on links
+	get rid of that ugly dotted border browsers put on links
 */
 a {
 	outline: 0;
@@ -469,12 +469,16 @@ a:not([class]):hover {
 	border-radius: 10rem;
 	display: inline;
 	white-space: nowrap;
+	transition: 0.1s;
 	margin: 0 3px;
 	padding: 0.3em 0.6em 0.3em 0.6em;
 	line-height: 2.2;
 	text-align: center;
 }
 
+.assignment .round-indicator {
+	cursor: pointer;
+}
 
 .indicator-bad {
 	background: var(--theme-indicator-bad);
@@ -648,29 +652,29 @@ body::-webkit-scrollbar {
 }
 
 .nagbar {
-  position: fixed;
-  top: 0;
-  background: red;
-  padding: 15px;
-  width: 100%;
+	position: fixed;
+	top: 0;
+	background: red;
+	padding: 15px;
+	width: 100%;
 }
 
 /*
-  dragula stuff
+	dragula stuff
 */
 .gu-mirror {
-  opacity: 0.98;
-  cursor: grab;
-  filter: drop-shadow(0 0 8px #212121);
+	opacity: 0.98;
+	cursor: grab;
+	filter: drop-shadow(0 0 8px #212121);
 }
 
 /* stolen from staccoverflow */
 @keyframes shake {
-    0%, 100% {}
-    10%, 70%{margin-left: -10px;}
-    40% {margin-left: 10px;}
+		0%, 100% {}
+		10%, 70%{margin-left: -10px;}
+		40% {margin-left: 10px;}
 }
 
 .shake {
-    animation: shake 0.3s;
+	animation: shake 0.3s;
 }
