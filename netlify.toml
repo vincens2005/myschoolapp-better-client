@@ -1,53 +1,53 @@
 [build]
-  functions = "netlify_functions"
-  publish = "frontend/"
+	functions = "netlify_functions"
+	publish = "frontend/"
 
 [build.processing]
-  skip_processing = false
+	skip_processing = false
 [build.processing.css]
-  bundle = false
-  minify = false
+	bundle = false
+	minify = false
 [build.processing.js]
-  bundle = false
-  minify = true
+	bundle = false
+	minify = true
 [build.processing.html]
-  pretty_urls = false
+	pretty_urls = false
 [build.processing.images]
-  compress = true
+	compress = true
 
 [dev]
-  dir = "frontend/"
-  command = "live-server --port=5500 --no-browser"
-  targetPort = 5500
-  framework = "#custom"
-  publish = "frontend/"
-  
+	dir = "frontend/"
+	command = "live-server --port=5500 --no-browser"
+	targetPort = 5500
+	framework = "#custom"
+	publish = "frontend/"
+
 [[plugins]]
-  package = "@netlify/plugin-local-install-core"
-  
+	package = "@netlify/plugin-local-install-core"
+
 [[plugins]]
-  package = "netlify-plugin-minify-html"
-  [plugins.inputs]
-    contexts = [
-      'production',
-      'branch-deploy',
-      'deploy-preview'
-    ]
-  [plugins.inputs.minifierOptions]
-  removeComments = true
-  minifyCSS = false
-  minifyJS = true
-  collapseInlineTagWhitespace = true
-  collapseWhitespace = true
-  removeOptionalTags = false
-  
+	package = "netlify-plugin-minify-html"
+	[plugins.inputs]
+		contexts = [
+			'production',
+			'branch-deploy',
+			'deploy-preview'
+		]
+	[plugins.inputs.minifierOptions]
+	removeComments = true
+	minifyCSS = false
+	minifyJS = true
+	collapseInlineTagWhitespace = true
+	collapseWhitespace = true
+	removeOptionalTags = false
+
 [[plugins]]
-  package = "./plugins/css_minify"
-  [plugins.inputs]
-    contexts = [
-      'production',
-      'branch-deploy',
-      'deploy-preview'
-    ]
-  [plugins.inputs.minifierOptions]
-  strict = true
+	package = "./plugins/css_minify"
+	[plugins.inputs]
+		contexts = [
+			'production',
+			'branch-deploy',
+			'deploy-preview'
+		]
+	[plugins.inputs.minifierOptions]
+	strict = true

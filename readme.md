@@ -19,7 +19,7 @@
   - [x] - Open-Source (GPLv3)
 
 ## development
-### prerequisites:
+### prerequisites
 
 [`netlify-cli`](https://www.npmjs.com/package/netlify-cli) must be installed
 
@@ -45,4 +45,5 @@
   - etc
   - make a pull request
   - if it adds jQuery you die
+  - indent with tabs
   - otherwise it will probably be merged

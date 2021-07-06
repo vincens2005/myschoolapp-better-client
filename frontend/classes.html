@@ -1,48 +1,51 @@
 <!doctype html>
 <html>
 	<!-- TODO: make this page not trash	 -->
-  <head>
-    <title>
-      Classes - portal++
-    </title>
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
-    <link rel="manifest" href="manifest.webmanifest">
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="stylesheet" href="style.css">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
-    <script src="common.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script> 
-    <script src="page_scripts/classes.js"></script>
-  </head>
-  <body onload="init()">
-    <div id="header" onwheel="scroll_horizontally(event)" class="tab-cont">
+
+	<head>
+		<title>
+			Classes - portal++
+		</title>
+		<link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
+		<link rel="manifest" href="manifest.webmanifest">
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
+		<script src="common.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+		<script src="page_scripts/classes.js"></script>
+	</head>
+
+	<body onload="init()">
+		<div id="header" onwheel="scroll_horizontally(event)" class="tab-cont">
 			<!-- this will be filled with the template from templates/header.hbs -->
 		</div>
-		
+
 		<script type="text/x-handlebars-template" id="class_template">
-		  {{#each classes}}
-		    <div class="rounded-cont list_thingy">
-		       <div>
-		        <a href="class.html?class={{this.id}}">{{this.name}}</a>
-		      </div>
-		      <div>
-		        <span>
-		          {{this.teacher}}
-		        </span>
-		      </div>
-		    </div>
-		    <hr class="flex-break">
-		  {{/each}}
+			{{#each classes}}
+				<div class="rounded-cont list_thingy">
+					<div>
+						<a href="class.html?class={{this.id}}">{{this.name}}</a>
+					</div>
+					<div>
+						<span>
+							{{this.teacher}}
+						</span>
+					</div>
+				</div>
+				<hr class="flex-break">
+			{{/each}}
 		</script>
-		
+
 		<div id="output" class="header-offset left-offset flex flex-left flex-wrap ohidden standard_transition">
-		  <h2>
-		    Your Classes
-		  </h2>
-		  <hr class="flex-break">
-		  <!-- classes go here -->
+			<h2>
+				Your Classes
+			</h2>
+			<hr class="flex-break">
+			<!-- classes go here -->
 		</div>
-  </body>
+	</body>
+
 </html>

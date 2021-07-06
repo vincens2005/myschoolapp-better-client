@@ -11,11 +11,11 @@
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/dayjs"></script>
 		<script src="page_scripts/schedule.js"></script>
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
-    <link rel="manifest" href="manifest.webmanifest">
-    <link rel="shortcut icon" href="favicon.ico">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
+		<link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
+		<link rel="manifest" href="manifest.webmanifest">
+		<link rel="shortcut icon" href="favicon.ico">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
 	</head>
 
 	<body onload="init()">
@@ -24,72 +24,72 @@
 		</div>
 		<script id="schedule_template" type="text/x-handlebars-template">
 			{{#each schedule}}
-				<tr >
-	          <td data-heading="Time">
-	            {{this.start_time}} - {{this.end_time}}
-	          </td>
-	          <td data-heading="Block">
-	            {{this.block}}
-	          </td>
-	          <td data-heading="Class">
-	          	<a href="class.html?class={{this.class_id}}">
-	            	{{this.class_name}}
-	            </a>
-	          </td>
-	          <td data-heading="Contact">
-	          	<a href="mailto:{{this.contact_email}}" target="_blank">
-	            	{{this.contact}}
-	            </a>
-	          </td>
-	          <td data-heading="Location">
-	            {{this.room_number}} - {{this.building}}
-	          </td>
-	          <td data-heading="Attendance">
-	            <span class="round-indicator indicator-{{this.indicator_class}}">
-	              {{this.indicator_text}}
-	            </span>
-	          </td>
-	        </tr>
-        {{/each}}
-    </script>
-    <script id="nodata_template" type="text/x-handlebars-template">
-    	<tr>
-    		<td>
-    			Nothing is scheduled for {{date}}. Yay!
-    		</td>
-    		<td>
-    			
-    		</td>
-    		<td>
-    			
-    		</td>
-    		<td>
-    			
-    		</td>
-    		<td>
-    			
-    		</td>
-    		<td>
-    			you're free!
-    		</td>
-    	</tr>
-    </script>
-    
-    <div class="flex flex-center top-offset flex-wrap ohidden standard_transition" id="schedule_cont">
-    	<div class="center">
-    		<h2>
-    			<span class="round-button" onclick="chschedule_date(-1)">
-    				&lt
-    			</span>
-    			<span id="date">
-    				<!-- nothing -->
-    			</span>
-    			<span class="round-button" onclick="chschedule_date(1)">
-    				&gt
-    			</span>
-    		</h2>
-    	</div>
-    	<div>
+				<tr>
+					<td data-heading="Time">
+						{{this.start_time}} - {{this.end_time}}
+					</td>
+					<td data-heading="Block">
+						{{this.block}}
+					</td>
+					<td data-heading="Class">
+						<a href="class.html?class={{this.class_id}}">
+							{{this.class_name}}
+						</a>
+					</td>
+					<td data-heading="Contact">
+						<a href="mailto:{{this.contact_email}}" target="_blank">
+							{{this.contact}}
+						</a>
+					</td>
+					<td data-heading="Location">
+						{{this.room_number}} - {{this.building}}
+					</td>
+					<td data-heading="Attendance">
+						<span class="round-indicator indicator-{{this.indicator_class}}">
+							{{this.indicator_text}}
+						</span>
+					</td>
+				</tr>
+			{{/each}}
+		</script>
+		<script id="nodata_template" type="text/x-handlebars-template">
+			<tr>
+				<td>
+					Nothing is scheduled for {{date}}. Yay!
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					you're free!
+				</td>
+			</tr>
+		</script>
+
+		<div class="flex flex-center top-offset flex-wrap ohidden standard_transition" id="schedule_cont">
+			<div class="center">
+				<h2>
+					<span class="round-button" onclick="chschedule_date(-1)">
+						&lt
+					</span>
+					<span id="date">
+						<!-- nothing -->
+					</span>
+					<span class="round-button" onclick="chschedule_date(1)">
+						&gt
+					</span>
+				</h2>
+			</div>
+			<div>
 				<table class="schedule">
 					<tbody id="schedule_tbody">
 						<tr>

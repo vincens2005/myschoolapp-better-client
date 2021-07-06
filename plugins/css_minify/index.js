@@ -13,22 +13,22 @@ module.exports = {
 		}
 		try {
 			console.log("minifiying css...");
-			
+
 			await minify({
-        compressor: sqwish,
-        input: constants.PUBLISH_DIR + '/**/*.css',
-        output: '$1.css',
-        replaceInPlace: true,
-        options: {
-          ...inputs.minifierOptions
-        }
-      });
-      
-      console.log("the deed is done.");
+				compressor: sqwish,
+				input: constants.PUBLISH_DIR + '/**/*.css',
+				output: '$1.css',
+				replaceInPlace: true,
+				options: {
+					...inputs.minifierOptions
+				}
+			});
+
+			console.log("the deed is done.");
 		}
 		catch (error) {
 			console.log("css minify error")
-			utils.build.failPlugin('The Minify CSS plugin failed.', { error })
+			utils.build.failPlugin('The Minify CSS plugin failed.', {error})
 		}
 	}
 };

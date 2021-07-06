@@ -1,40 +1,44 @@
 <!doctype html>
 <html>
-  <head>
-    <title>
-      Log In - Portal++
-    </title>
-    <link rel="manifest" href="manifest.webmanifest">
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="stylesheet" href="style.css">    <link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
-    <script src="common.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
-    <script src="page_scripts/login.js"></script>
-  </head>
-  <body onload="init()">
-    <div class="nagbar center ohidden standard_transition" id="popup">
-      this is a popup
-    </div>
-    <div id="loginform" class="fixed-center rounded-cont">
-      <!-- form tag to appease password managers. -->
-      <form onsubmit="login(); return false;" id="actual_form">
 
-        <span class="form-title">
-          Log In
-        </span>
-        <hr>
+	<head>
+		<title>
+			Log In - Portal++
+		</title>
+		<link rel="manifest" href="manifest.webmanifest">
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
+		<script src="common.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
+		<script src="page_scripts/login.js"></script>
+	</head>
 
-        <input id="baseurl" placeholder="school.myschoolapp.com" name="baseurl" autocomplete="off" label="baseurl" type="text" />
+	<body onload="init()">
+		<div class="nagbar center ohidden standard_transition" id="popup">
+			this is a popup
+		</div>
+		<div id="loginform" class="fixed-center rounded-cont">
+			<!-- form tag to appease password managers. -->
+			<form onsubmit="login(); return false;" id="actual_form">
 
-        <input id="username" placeholder="username" name="username" autocomplete="username" label="username" type="text" />
+				<span class="form-title">
+					Log In
+				</span>
+				<hr>
 
-        <input id="password" type="password" placeholder="password" name="password" autocomplete="current-password" label="password" />
-        
-        <input type="submit" value="log in" id="loginbutton" class="button">
-        <!-- actually, it is helpful in that it submits on enter-keypress, so that's cool i guess -->
-      </form>
-    </div>
-  </body>
+				<input id="baseurl" placeholder="school.myschoolapp.com" name="baseurl" autocomplete="off" label="baseurl" type="text" />
+
+				<input id="username" placeholder="username" name="username" autocomplete="username" label="username" type="text" />
+
+				<input id="password" type="password" placeholder="password" name="password" autocomplete="current-password" label="password" />
+
+				<input type="submit" value="log in" id="loginbutton" class="button">
+				<!-- actually, it is helpful in that it submits on enter-keypress, so that's cool i guess -->
+			</form>
+		</div>
+	</body>
+
 </html>
