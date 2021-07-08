@@ -50,4 +50,4 @@
 			'deploy-preview'
 		]
 	[plugins.inputs.minifierOptions]
-	strict = true
+	strict = false

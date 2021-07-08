@@ -1,5 +1,5 @@
 const minify = require('@node-minify/core');
-const sqwish = require('@node-minify/sqwish')
+const sqwish = require('@node-minify/sqwish');
 module.exports = {
 
 	onPostBuild: async ({
