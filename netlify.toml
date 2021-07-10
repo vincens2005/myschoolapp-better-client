@@ -9,7 +9,7 @@
 	minify = false
 [build.processing.js]
 	bundle = false
-	minify = true
+	minify = false
 [build.processing.html]
 	pretty_urls = false
 [build.processing.images]
@@ -51,3 +51,15 @@
 		]
 	[plugins.inputs.minifierOptions]
 	strict = false
+
+[[plugins]]
+	package = "./plugins/js_minify"
+	[plugins.inputs]
+		contexts = [
+			'production',
+			'branch-deploy',
+			'deploy-preview'
+		]
+	[plugins.inputs.minifierOptions]
+	mangle = true
+	ecma = 9
