@@ -476,7 +476,11 @@ a:not([class]):hover {
 	text-align: center;
 }
 
-.assignment .round-indicator {
+.pre {
+	white-space: pre-line;
+}
+
+.assignment, .assignment .round-indicator {
 	cursor: pointer;
 }
 

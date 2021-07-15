@@ -20,6 +20,7 @@
 		<script src="https://cdn.jsdelivr.net/gh/mozilla/localForage@master/dist/localforage.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/dayjs"></script>
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/autolink-js@1.0.2/autolink-min.js"></script>
 		<script src="page_scripts/assignments.js"></script>
 	</head>
 
@@ -29,7 +30,7 @@
 		</div>
 		<script id="assignment_template" type="text/x-handlebars-template">
 			{{#each assignments}}
-				<div class="assignment rounded-cont list_thingy flex flex-v-center text-left" id="assignment-{{this.id}}" data-assign-id="{{this.id}}" data-index-id="{{this.index_id}}" data-user-task="{{this.user_task}}">
+				<div class="assignment rounded-cont list_thingy flex flex-v-center text-left" id="assignment-{{this.id}}" data-assign-id="{{this.id}}" data-index-id="{{this.index_id}}" data-user-task="{{this.user_task}}" onclick="toggle_expand('{{this.id}}')" data-expanded="false">
 					<div>
 						<h3>
 							{{this.title}}
@@ -37,12 +38,15 @@
 						<span>
 							{{this.class}}
 						</span>
-						<p class="standard_transition hidden">
+						<p class="standard_transition hidden pre" id="desc-{{this.id}}" ondrag="event.stopPropagation();">
 							{{this.desc}}
+						</p>
+						<p class="standard_transition" id="shortdesc-{{this.id}}">
+							{{this.short_desc}}
 						</p>
 					</div>
 					<div>
-						<span class="round-indicator indicator-{{this.indicator.class}}" id="assignment-ind-{{this.id}}" onclick="queue_update('{{this.index_id}}', {{this.id}}, {{this.user_task}})">
+						<span class="round-indicator indicator-{{this.indicator.class}}" id="assignment-ind-{{this.id}}" onclick="queue_update('{{this.index_id}}', {{this.id}}, {{this.user_task}}, event)">
 							{{this.indicator.text}}
 						</span>
 					</div>

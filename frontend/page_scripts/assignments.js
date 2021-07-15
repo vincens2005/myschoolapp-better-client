@@ -1,4 +1,3 @@
-// TODO: for full assign details fetch /api/assignment2/read/ASSIGN_ID/?format=json
 var assignment_queue = [];
 var drake_started = false;
 var current_view_date;
@@ -63,8 +62,12 @@ async function init() {
 }
 
 function fill_in_assignments(assignments_raw) {
+	user.default_description = user.default_description || "";
 	var assignments_tmp = [];
 	for (var assign of assignments_raw) {
+		// set user.default_description to something for testing capabilities
+		assign.long_description = assign.long_description || user.default_description;
+		assign.long_description = assign.long_description.autoLink({target: "_blank", onclick: "event.stopPropagation();"});
 		assignments_tmp.push({
 			class: assign.groupname,
 			assign_date: assign.date_assigned,
@@ -72,6 +75,7 @@ function fill_in_assignments(assignments_raw) {
 			title: assign.short_description,
 			type: assign.assignment_type,
 			desc: assign.long_description,
+			short_desc: assign.long_description.length > 69 ? assign.long_description.slice(0, 69) + "..." : assign.long_description,
 			id: assign.assignment_id,
 			index_id: assign.assignment_index_id,
 			indicator: status_ind.to_readable(assign.assignment_status),
@@ -228,7 +232,8 @@ async function set_status(index_id, assign_id, user_task, to_status) {
 	init();
 }
 
-function queue_update(index_id, assign_id, user_task) {
+function queue_update(index_id, assign_id, user_task, event) {
+	event.stopPropagation(); // prevent from bubbling
 	console.log(assign_id)
 	var test_function = a => (!!a && a.assign_id == assign_id);
 	if (assignment_queue.find(test_function)) {
@@ -268,4 +273,21 @@ function queue_update(index_id, assign_id, user_task) {
 	indicator.classList.remove(...indicator.classList);
 	indicator.classList.add("round-indicator", "indicator-" + new_status.class);
 	indicator.innerHTML = new_status.text;
+}
+
+function toggle_expand(assign_id) {
+	console.log(assign_id)
+	if (document.querySelector("#assignment-" + assign_id).getAttribute("data-expanded") != "true") {
+		// expand the assignment
+	document.querySelector("#assignment-" + assign_id).classList.add("flex-wrap")
+		document.querySelector("#shortdesc-" + assign_id).classList.add("hidden");
+		document.querySelector("#desc-" + assign_id).classList.remove("hidden");
+		// TODO: fetch full data (including links and stuff) from /api/assignment2/read/ASSIGN_ID/?format=json
+		document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "true");
+		return;
+	}
+	document.querySelector("#shortdesc-" + assign_id).classList.remove("hidden");
+	document.querySelector("#desc-" + assign_id).classList.add("hidden");
+	document.querySelector("#assignment-" + assign_id).classList.remove("flex-wrap")
+	document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "false");
 }

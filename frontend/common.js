@@ -17,7 +17,8 @@ async function get_user() {
 		nuser = {
 			baseurl: "",
 			username: "",
-			last_page: "schedule.html"
+			last_page: "schedule.html",
+			default_description: ""
 		};
 	}
 	return nuser;
