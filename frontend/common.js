@@ -18,6 +18,7 @@ async function get_user() {
 			baseurl: "",
 			username: "",
 			last_page: "schedule.html",
+			debug_mode: false,
 			default_description: ""
 		};
 	}

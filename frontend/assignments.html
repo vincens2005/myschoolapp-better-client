@@ -53,6 +53,71 @@
 				</div>
 			{{/each}}
 		</script>
+		
+		<script id="usertaskadd_template" type="text/x-handlebars-template">
+			<span class="round-button close-button">
+				x
+			</span>
+			<span class="form-title">
+				{{#if editing}}
+					Edit
+				{{else}}
+					Add
+				{{/if}}
+				Task
+			</span>
+			<hr class="title_sep">
+			
+			<input id="add_task_name" placeholder="do stuff" autocomplete="off" type="text" maxlength="500"/>
+			<div>
+				<span class="input-label">
+					class
+				</span>
+				<div class="select-cont">
+					<select>
+						<option value="null">
+							General Task
+						</option>
+						{{#each classes}}
+							<option value="{{this.id}}">
+								{{this.name}}
+							</option>
+						{{/each}}
+					</select>
+				</div>
+			</div>
+			
+			<div>
+				<span class="input-label">
+					assign date
+				</span>
+				<input type="date" class="inline-input" 
+				{{#if editing}}
+					value="{{assign_date}}"
+				{{/if}}
+				>
+			</div>
+			
+			<div>
+				<span class="input-label">
+					due date
+				</span>
+				<input type="date" class="inline-input"
+				{{#if editing}}
+					value="{{due_date}}"
+				{{/if}}
+				>
+			</div>
+			
+			<div class="button">
+				save
+			</div>
+		</script>
+		
+		<div id="add_task" class="rounded-cont fixed-center form ohidden">
+			<!-- this will be filled in with the template in #usertaskadd_template -->
+		</div>
+		
 		<div class="full-container">
 			<div class="center">
 				<h2>

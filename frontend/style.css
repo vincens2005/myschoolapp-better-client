@@ -4,6 +4,7 @@
 	--theme-background-color: #2c2c2c;
 	--theme-lighter-color: #3e3e3e;
 	--theme-darker-color: #202020;
+	--theme-muted-text: #b9b9b9;
 
 	--theme-text-color: white;
 	--theme-link-color: #619eb3;
@@ -68,7 +69,7 @@ body {
 }
 
 .flex-v-center {
-  align-items: center;
+	align-items: center;
 }
 
 .flex-left {
@@ -167,17 +168,40 @@ a {
 	position: fixed;
 }
 
-#loginform {
+.form {
 	padding: 15px 35px 15px 35px;
 }
 
-#loginform input:not([type=submit]) {
+.close-button {
+	float: right;
+}
+
+/*
+	is this dumb? yes.
+	does it work? yes.
+*/
+.form .close-button {
+	margin-right: -25px;
+	margin-top: -5px;
+}
+
+.form input:not([type=submit]), .form .select-cont {
 	margin: 0 auto 15px auto;
 }
 
 .input-label {
 	text-align: left;
-	font-size: 14px user-select: none;
+	font-size: 14px;
+	user-select: none;
+}
+
+input[type=date] {
+	cursor: pointer;
+	padding-right: 5px;
+}
+
+.inline-input {
+	display: inline-block !important;
 }
 
 .form-title {
@@ -186,7 +210,7 @@ a {
 	padding: 0;
 }
 
-#loginform hr {
+ .title_sep {
 	width: 70%;
 	margin: 5px 0 15px 0;
 }
@@ -198,14 +222,53 @@ input:not([type=submit]) {
 	display: block;
 	outline: 0;
 	border-right: none;
-	border-bottom: 1px solid rgb(185, 185, 185);
-	color: white;
+	border-bottom: 1px solid var(--theme-muted-text);
+	color: var(--theme-text-color);
 	font-size: 20px;
 	transition: 0.3s;
 }
 
 input:not([type=submit]):focus {
-	border-bottom: 2px solid white;
+	border-bottom: 2px solid var(--theme-text-color);
+}
+
+select {
+	appearance: none;
+	background: transparent;
+	display: inline-block;
+	outline: 0;
+	border: none;
+	color: var(--theme-text-color);
+	font-size: 20px;
+	padding-right: 1em;
+	z-index: 1;
+	cursor: inherit;
+	transition: 0.3s;
+	font-family: inherit;
+	line-height: inherit;
+}
+
+.select-cont {
+	cursor: pointer;
+	display: inline-grid;
+	align-items: center;
+	grid-template-areas: "select";
+	border-bottom: 1px solid var(--theme-muted-text);
+}
+
+select, .select-cont::after {
+	grid-area: select;
+}
+
+/* this is stolen from the internet */
+.select-cont::after {
+	content: "";
+	display: inline-block;
+  width: 0.7em;
+  height: 0.4em;
+  justify-self: end;
+  background: var(--theme-text-color);
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
 }
 
 .round-button {
@@ -345,7 +408,7 @@ input.button {
 .schedule tr:first-child td::after,
 .schedule tr:last-child td::after {
 	border: 0;
-	background: rgba(0, 0, 0, 0);
+	background: transparent;
 	height: 0;
 	margin: 0;
 }
@@ -403,7 +466,7 @@ input.button {
 
 	.schedule td::after, .schedule tr:last-child td:last-child::after {
 		border: 0;
-		background: rgba(0, 0, 0, 0);
+		background: transparent;
 		height: 0;
 		margin: 0;
 	}
@@ -505,7 +568,7 @@ a:not([class]):hover {
 }
 
 .indicator-blank {
-  background: var(--theme-lighter-color);
+	background: var(--theme-lighter-color);
 }
 
 /* class page stuff */
@@ -634,7 +697,7 @@ body::-webkit-scrollbar {
 .person {
 	--person-margin: min(15px, 1.3vw);
 	margin: var(--person-margin) var(--person-margin) 0 0;
-	color: white;
+	color: var(--theme-text-color);
 	text-decoration: none;
 	word-wrap: break-word;
 	width: max(min(30vw, 160px), 100px);
