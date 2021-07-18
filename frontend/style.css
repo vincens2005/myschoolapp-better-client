@@ -186,7 +186,7 @@ a {
 }
 
 .form input:not([type=submit]), .form .select-cont {
-	margin: 0 auto 15px auto;
+	margin: 0 0 15px 0;
 }
 
 .input-label {

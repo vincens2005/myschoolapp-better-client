@@ -326,6 +326,43 @@ async function save_assignment(user_id, assign_id) {
 	init();
 }
 
+async function show_add_popup() {
+	document.querySelector("#add_task").classList.add("ohidden");
+	setTimeout(() => {
+		document.querySelector("#add_task").classList.remove("hidden");
+	}, 350);
+	
+	// check if user is logged in
+	var loggedin = await logged_in();
+	if (!loggedin) {
+		location = "login.html?redirect=" + encodeURIComponent(location);
+		return;
+	}
+	
+	var endpoint_url = "/api/webapp/context";
+	var response = await fetch(base_endpoint + user.baseurl + endpoint_url).then(a => a.json());
+	
+	var user_id = response.UserInfo.UserId;
+	var classes = [];
+	for (var group of response.Groups) {
+		if (!group.PublishGroupToUser || !group.CurrentEnrollment /* this only shows you your current classes */) continue;
+		
+		classes.push({
+			id: group.SectionId,
+			name: group.GroupName.slice(0, 20)
+		});
+	}
+	
+	document.querySelector("#add_task").innerHTML = "";
+	fill_template("usertaskadd_template", {
+		classes,
+		editing: false,
+		user_id
+	}, "add_task");
+	
+	document.querySelector("#add_task").classList.remove("ohidden");
+}
+
 async function delete_assignment(assign_id) {
 	document.querySelector("#save_assign").classList.add("greyedout");
   document.querySelector("#save_assign").value = "loading...";
