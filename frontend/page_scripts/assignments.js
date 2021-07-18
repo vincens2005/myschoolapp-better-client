@@ -291,3 +291,61 @@ function toggle_expand(assign_id) {
 	document.querySelector("#assignment-" + assign_id).classList.remove("flex-wrap")
 	document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "false");
 }
+
+async function save_assignment(user_id, assign_id) {
+	document.querySelector("#save_assign").classList.add("greyedout");
+  document.querySelector("#save_assign").value = "loading...";
+  
+  var fetch_url = base_endpoint + user.baseurl + "/api/usertask/edit" + (assign_id ? "/" + assign_id : "");
+  
+  var body = {
+		AssignedDate: dayjs(document.querySelector("#add_assign_date").value, "YYYY-MM-DD").format("MM/DD/YYYY"),
+		DueDate: dayjs(document.querySelector("#add_due_date").value, "YYYY-MM-DD").format("MM/DD/YYYY"),
+		ShortDescription: document.querySelector("#add_task_name").value,
+		UserId: user_id
+	}
+	
+	if (assign_id) body.UserTaskId = assign_id;
+  
+	var response = await fetch(fetch_url, {
+		method: assign_id ? "PUT" : "POST",
+		body: JSON.stringify(body)
+	}).then(a => a.json());
+	
+	if (response.Error) {
+		location = "login.html?popup=" + encodeURIComponent("please log in and try again") + "&redirect=" + encodeURIComponent(location);
+		return;
+	}
+	
+	document.querySelector("#add_task").classList.add("ohidden");
+	setTimeout(() => {
+		document.querySelector("#add_task").classList.add("hidden");
+		document.querySelector("#add_task").classList.remove("ohidden");
+	}, 400);
+	
+	init();
+}
+
+async function delete_assignment(assign_id) {
+	document.querySelector("#save_assign").classList.add("greyedout");
+  document.querySelector("#save_assign").value = "loading...";
+
+  
+	var fetch_url = base_endpoint + user.baseurl + "/api/usertask/edit" + "/" + assign_id;
+	var response = await fetch(fetch_url, {
+		method: "DELETE"
+	}).then(a => a.json());
+	
+	if (response.Error) {
+		location = "login.html?popup=" + encodeURIComponent("deleting assignments is broken and we don't know why") + "&redirect=" + encodeURIComponent(location);
+		return;
+	}
+	
+	document.querySelector("#add_task").classList.add("ohidden");
+	setTimeout(() => {
+		document.querySelector("#add_task").classList.add("hidden");
+		document.querySelector("#add_task").classList.remove("ohidden");
+	}, 400);
+	
+	init();
+}

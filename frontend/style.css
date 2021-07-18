@@ -311,6 +311,19 @@ select, .select-cont::after {
 	font-size: 16px;
 }
 
+.button + .button {
+	margin-left: 10px;
+}
+
+.bad_button {
+	transition: 0.3s;
+	background: transparent;
+}
+
+.bad_button:hover {
+	background: var(--theme-indicator-bad);
+}
+
 input.button {
 	padding: 3px 20px 3px 20px
 }

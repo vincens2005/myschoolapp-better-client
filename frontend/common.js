@@ -140,3 +140,13 @@ async function get_image_path() {
 	
 	return ftp_image_path.FtpImagePath;
 }
+
+async function get_verification_token() {
+	// parse the response to get the token
+  var token_get = await fetch(base_endpoint + user.baseurl + "/app/");
+  var token_plaintext = await token_get.text();
+  var token_dom = (new DOMParser()).parseFromString(token_plaintext, "text/html");
+  var antiforge_div = token_dom.querySelector("#__AjaxAntiForgery");
+  var token = antiforge_div.firstElementChild.value;
+  return token;
+}
