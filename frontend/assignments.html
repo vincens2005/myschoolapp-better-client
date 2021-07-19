@@ -55,7 +55,7 @@
 		</script>
 		
 		<script id="usertaskadd_template" type="text/x-handlebars-template">
-			<span class="round-button close-button">
+			<span class="round-button close-button" onclick="hide_add_popup()">
 				x
 			</span>
 			<span class="form-title">
@@ -78,7 +78,7 @@
 					class
 				</span>
 				<div class="select-cont">
-					<select>
+					<select id="add_classname" value="null">
 						<option value="null">
 							General Task
 						</option>
@@ -95,22 +95,14 @@
 				<span class="input-label">
 					assign date
 				</span>
-				<input type="date" id="add_assign_date" class="inline-input" 
-				{{#if editing}}
-					value="{{assign_date}}"
-				{{/if}}
-				>
+				<input type="date" id="add_assign_date" class="inline-input" value="{{assign_date}}">
 			</div>
 			
 			<div>
 				<span class="input-label">
 					due date
 				</span>
-				<input type="date" id="add_due_date" class="inline-input"
-				{{#if editing}}
-					value="{{due_date}}"
-				{{/if}}
-				>
+				<input type="date" id="add_due_date" class="inline-input" value="{{due_date}}">
 			</div>
 			
 			<div class="button" onclick="save_assignment({{user_id}})" id="save_assign">
@@ -123,7 +115,7 @@
 			{{/if}}
 		</script>
 		
-		<div id="add_task" class="rounded-cont fixed-center form hidden standard_transition">
+		<div id="add_task" class="rounded-cont fixed-center form hidden standard_transition popup">
 			<!-- this will be filled in with the template in #usertaskadd_template -->
 		</div>
 		
@@ -141,6 +133,11 @@
 					</span>
 				</h2>
 			</div>
+			
+			<span class="round-button close-button" onclick="show_add_popup()" id="add_button">
+				+
+			</span>
+			
 			<div class="flex flex-center flex-equal-width center flex-wrap">
 				<div>
 					<h3> todo </h3>

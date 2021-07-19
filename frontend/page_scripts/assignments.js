@@ -293,6 +293,7 @@ function toggle_expand(assign_id) {
 }
 
 async function save_assignment(user_id, assign_id) {
+	document.querySelector("#add_button").classList.remove("greyedout");
 	document.querySelector("#save_assign").classList.add("greyedout");
   document.querySelector("#save_assign").value = "loading...";
   
@@ -306,6 +307,7 @@ async function save_assignment(user_id, assign_id) {
 	}
 	
 	if (assign_id) body.UserTaskId = assign_id;
+	if (document.querySelector("#add_classname").value != "null") body.SectionId = Number(document.querySelector("#add_classname").value);
   
 	var response = await fetch(fetch_url, {
 		method: assign_id ? "PUT" : "POST",
@@ -327,6 +329,7 @@ async function save_assignment(user_id, assign_id) {
 }
 
 async function show_add_popup() {
+	document.querySelector("#add_button").classList.add("greyedout");
 	document.querySelector("#add_task").classList.add("ohidden");
 	setTimeout(() => {
 		document.querySelector("#add_task").classList.remove("hidden");
@@ -357,13 +360,16 @@ async function show_add_popup() {
 	fill_template("usertaskadd_template", {
 		classes,
 		editing: false,
-		user_id
+		user_id,
+		assign_date: dayjs().format("YYYY-MM-DD"),
+		due_date: dayjs().add(1, "d").format("YYYY-MM-DD") // default due date is +1 days
 	}, "add_task");
 	
 	document.querySelector("#add_task").classList.remove("ohidden");
 }
 
 async function delete_assignment(assign_id) {
+	document.querySelector("#add_button").classList.remove("greyedout");
 	document.querySelector("#save_assign").classList.add("greyedout");
   document.querySelector("#save_assign").value = "loading...";
 
@@ -385,4 +391,13 @@ async function delete_assignment(assign_id) {
 	}, 400);
 	
 	init();
+}
+
+function hide_add_popup() {
+	document.querySelector("#add_button").classList.remove("greyedout");
+	document.querySelector("#add_task").classList.add("ohidden");
+	setTimeout(() => {
+		document.querySelector("#add_task").classList.add("hidden");
+		document.querySelector("#add_task").classList.remove("ohidden");
+	}, 400);
 }
