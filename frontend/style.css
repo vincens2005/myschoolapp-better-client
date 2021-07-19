@@ -168,6 +168,7 @@ a {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	position: fixed;
+	z-index: 12;
 }
 
 .popup {
@@ -176,6 +177,7 @@ a {
 
 .form {
 	padding: 15px 35px 15px 35px;
+	max-width: 70%;
 }
 
 .close-button {
@@ -197,9 +199,10 @@ a {
 
 .input-label {
 	text-align: left;
-	font-size: 14px;
+	font-size: 18px;
 	user-select: none;
 }
+
 
 input[type=date] {
 	cursor: pointer;
@@ -232,6 +235,7 @@ input:not([type=submit]) {
 	color: var(--theme-text-color);
 	font-size: 20px;
 	transition: 0.3s;
+	max-width: 100%;
 }
 
 input:not([type=submit]):focus {
@@ -323,11 +327,13 @@ select, .select-cont::after {
 
 .bad_button {
 	transition: 0.3s;
+	color: var(--theme-indicator-bad);
 	background: transparent;
 }
 
 .bad_button:hover {
 	background: var(--theme-indicator-bad);
+	color: var(--theme-text-color);
 }
 
 input.button {

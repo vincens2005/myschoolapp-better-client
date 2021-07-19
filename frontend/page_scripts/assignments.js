@@ -79,9 +79,21 @@ function fill_in_assignments(assignments_raw) {
 			id: assign.assignment_id,
 			index_id: assign.assignment_index_id,
 			indicator: status_ind.to_readable(assign.assignment_status),
-			user_task: String(assign.user_task_ind)
+			user_task: assign.user_task_ind
 		});
 	}
+
+	// sort by due date ascending
+	assignments_tmp = assignments_tmp.sort((a,b) => {
+		let dates = [a.due_date, b.due_date];
+		for (let date of dates) {
+			date = dayjs(date, "M/DD/YYYY");
+			date = date.unix();
+		}
+		if (dates[0] > dates[1]) return 1;
+		if (dates[1] > dates[0]) return -1;
+		return 0;
+	});
 
 	if (!assignments_tmp.length) {
 		// TODO: tell the user
@@ -328,7 +340,9 @@ async function save_assignment(user_id, assign_id) {
 	init();
 }
 
-async function show_add_popup() {
+async function show_add_popup(assign_id) {
+	var editing = !!assign_id;
+	
 	document.querySelector("#add_button").classList.add("greyedout");
 	document.querySelector("#add_task").classList.add("ohidden");
 	setTimeout(() => {
@@ -342,12 +356,13 @@ async function show_add_popup() {
 		return;
 	}
 	
-	var endpoint_url = "/api/webapp/context";
-	var response = await fetch(base_endpoint + user.baseurl + endpoint_url).then(a => a.json());
-	
-	var user_id = response.UserInfo.UserId;
+	var context_endpoint_url = "/api/webapp/context";
+	var context = await fetch(base_endpoint + user.baseurl + context_endpoint_url).then(a => a.json());
+
+	var user_id = context.UserInfo.UserId;
 	var classes = [];
-	for (var group of response.Groups) {
+	
+	for (var group of context.Groups) {
 		if (!group.PublishGroupToUser || !group.CurrentEnrollment /* this only shows you your current classes */) continue;
 		
 		classes.push({
@@ -356,15 +371,24 @@ async function show_add_popup() {
 		});
 	}
 	
-	document.querySelector("#add_task").innerHTML = "";
-	fill_template("usertaskadd_template", {
+	var template_data = {
 		classes,
-		editing: false,
+		editing,
 		user_id,
 		assign_date: dayjs().format("YYYY-MM-DD"),
 		due_date: dayjs().add(1, "d").format("YYYY-MM-DD") // default due date is +1 days
-	}, "add_task");
+	}
 	
+	if (editing) {
+		var edit_endpoint_url = "/api/usertask/edit/" + assign_id;
+		var assignment_data = fetch(base_endpoint + user.baseurl + edit_endpoint_url).then(a => a.json());
+		template_data.assign_name = assignment_data.ShortDescription;
+		template_data.due_date = dayjs(assignment_data.DueDate, "M/DD/YYYY").format("YYYY-MM-DD");
+		template_data.assign_date = dayjs(assignment_data.AssignedDate, "M/DD/YYYY").format("YYYY-MM-DD");
+	}
+	
+	document.querySelector("#add_task").innerHTML = "";
+	fill_template("usertaskadd_template", template_data, "add_task");
 	document.querySelector("#add_task").classList.remove("ohidden");
 }
 

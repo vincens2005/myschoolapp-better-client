@@ -13,7 +13,7 @@ function save_data(nuser) {
 /** returns a user object */
 async function get_user() {
 	nuser = await localforage.getItem("user");
-	if (!nuser) {
+	if (!nuser || !removehttp(nuser.baseurl)) {
 		nuser = {
 			baseurl: "",
 			username: "",
@@ -149,4 +149,24 @@ async function get_verification_token() {
   var antiforge_div = token_dom.querySelector("#__AjaxAntiForgery");
   var token = antiforge_div.firstElementChild.value;
   return token;
+}
+
+// stolen from staccoverflow
+/** takes a url and appends https:// at the beginning
+ * @param {String} url - the url
+ */
+function addhttp(url) {
+	if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+		url = "https://" + url;
+	}
+	url = url.replace(/\/$/, "");
+	return url;
+}
+
+/** takes a url and removes http:// or https:// from the beginning
+ * @param {String} url - the url
+ */
+function removehttp(url) {
+	url = url.replace(/^(?:f|ht)tps?\:\/+/, "");
+	return url;
 }
