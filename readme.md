@@ -35,8 +35,10 @@
     - port `5500` must be available or it **WILL NOT WORK**
     - if you _really need_ port `5500` for something else, replace every instance of `5500` in `netlify.toml` with your own port
     - the frontend will be hosted at `/frontend/`, but when this is deployed, it'll be in `/`
-  
-  - I recommend installing an editor plugin similar to [this one](https://github.com/drmargarido/TodoTreeView) for viewing the todos
+  #### Recommended:
+- set `user.debug_mode` to `true`
+- give `user.default_description` a value (can be fetched from) `test_data/test_description.txt`
+- install an editor plugin similar to [this one](https://github.com/drmargarido/TodoTreeView) for viewing the todos
 
 ## contributing
 

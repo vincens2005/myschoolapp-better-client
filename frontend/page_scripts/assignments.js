@@ -1,6 +1,7 @@
 var assignment_queue = [];
 var drake_started = false;
 var current_view_date;
+var autolink_options = {target: "_blank", onclick: "event.stopPropagation();"};
 async function init() {
 	var url = new URL(location);
 	var assign_date = url.searchParams.get("date");
@@ -67,7 +68,7 @@ function fill_in_assignments(assignments_raw) {
 	for (var assign of assignments_raw) {
 		// set user.default_description to something for testing capabilities
 		assign.long_description = assign.long_description || user.default_description;
-		assign.long_description = assign.long_description.autoLink({target: "_blank", onclick: "event.stopPropagation();"});
+		assign.long_description = assign.long_description.autoLink(autolink_options);
 		assignments_tmp.push({
 			class: assign.groupname,
 			assign_date: assign.date_assigned,
@@ -287,15 +288,50 @@ function queue_update(index_id, assign_id, user_task, event) {
 	indicator.innerHTML = new_status.text;
 }
 
-function toggle_expand(assign_id) {
+async function toggle_expand(assign_id) {
 	console.log(assign_id)
 	if (document.querySelector("#assignment-" + assign_id).getAttribute("data-expanded") != "true") {
 		// expand the assignment
 	document.querySelector("#assignment-" + assign_id).classList.add("flex-wrap")
 		document.querySelector("#shortdesc-" + assign_id).classList.add("hidden");
 		document.querySelector("#desc-" + assign_id).classList.remove("hidden");
-		// TODO: fetch full data (including links and stuff) from /api/assignment2/read/ASSIGN_ID/?format=json
 		document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "true");
+		
+		var endpoint_url = base_endpoint + user.baseurl + "/api/assignment2/read/"+assign_id+"/?format=json";
+		var is_user_task = document.querySelector("#assignment-"+ assign_id).getAttribute("data-user-task") == "true";
+		if (is_user_task) {
+			// TODO: show edit button
+			if (!user.debug_mode) return;
+			// if it's a user task and debug mode is enabled, fetch the test assignment
+			endpoint_url = "test_data/test_assignment.json";
+		}
+		var response = await fetch(endpoint_url).then(a => a.json());
+		var assignment_data = {
+			description: response.LongDescription.autoLink(autolink_options),
+			links: [],
+			downloads: []
+		}
+		
+		for (let link of response.LinkItems) {
+			assignment_data.links.push({
+				url: link.Url,
+				title: link.ShortDescription
+			});
+		}
+		
+		for(let dl of response.DownloadItems) {
+			assignment_data.downloads.push({
+				url: download_endpoint + user.baseurl + dl.DownloadUrl,
+				title: dl.ShortDescription,
+				filename: dl.FriendlyFileName
+			});
+		}
+		
+		document.querySelector("#desc-" + assign_id).innerHTML = "";
+		fill_template("assignment_expanded_template", assignment_data, "desc-" + assign_id,{
+			noEscape: true // do not escape html
+		});
+		
 		return;
 	}
 	document.querySelector("#shortdesc-" + assign_id).classList.remove("hidden");

@@ -1,4 +1,5 @@
 const base_endpoint = "/.netlify/functions/cors/"; // this is a const because we don't want the risk of a man in the middle attack
+const download_endpoint = "/.netlify/functions/download/"; // this is a const for the same reason
 var user;
 
 /** saves data 
@@ -18,6 +19,7 @@ async function get_user() {
 			baseurl: "",
 			username: "",
 			last_page: "schedule.html",
+			// enabling debug mode allows the client to fetch test data and fill it in on blank templates
 			debug_mode: false,
 			default_description: ""
 		};
