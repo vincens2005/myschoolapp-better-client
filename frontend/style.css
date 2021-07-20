@@ -186,6 +186,11 @@ a {
 	max-width: 70%;
 }
 
+.topright-button {
+	position: absolute;
+	right: 3%;
+}
+
 .close-button {
 	float: right;
 }
@@ -322,7 +327,7 @@ select, .select-cont::after {
 	vertical-align: middle;
 	display: inline-block;
 	padding: 5px 20px 5px 20px;
-	transition: 0.4s ease-out;
+	transition: 0.3s;
 	border: none;
 	font-size: 16px;
 }
@@ -547,14 +552,14 @@ input.button {
 	font-size: max(min(24px, 2vw), 14px);
 }
 
-a:not([class]) {
+a:not([class]), .link {
 	font-weight: bold;
 	color: var(--theme-link-color);
 	text-decoration: none;
 	transition: 0.1s;
 }
 
-a:not([class]):hover {
+a:not([class]):hover, .link:hover {
 	filter: brightness(1.1);
 }
 
@@ -576,6 +581,10 @@ a:not([class]):hover {
 
 .assignment, .assignment .round-indicator {
 	cursor: pointer;
+}
+
+.assignment {
+	padding-top: 0;
 }
 
 .assignment .rounded-cont {

@@ -32,13 +32,16 @@
 			{{#each assignments}}
 				<div class="assignment rounded-cont list_thingy flex flex-v-center text-left" id="assignment-{{this.id}}" data-assign-id="{{this.id}}" data-index-id="{{this.index_id}}" data-user-task="{{this.user_task}}" onclick="toggle_expand('{{this.id}}')" data-expanded="false">
 					<div>
-						<h3>
+						<h4 id="assign-title-{{this.id}}">
 							{{this.title}}
-						</h3>
+						</h4>
+						<h4 id="long-title-{{this.id}}" class="hidden">
+							{{this.long_title}}
+						</h4>
 						<span>
 							{{this.class}}
 						</span>
-						<p class="standard_transition hidden pre" id="desc-{{this.id}}" ondrag="event.stopPropagation();">
+						<p class="standard_transition hidden" id="desc-{{this.id}}" ondrag="event.stopPropagation();">
 							{{this.desc}}
 						</p>
 						<p class="standard_transition" id="shortdesc-{{this.id}}">
@@ -46,6 +49,12 @@
 						</p>
 					</div>
 					<div>
+						{{#if this.user_task}}
+							<div class="link hidden" style="padding: 5px;" id="edit-button-{{this.id}}" onclick="event.stopPropagation();show_add_popup({{this.id}})">
+								edit
+							</div>
+						{{/if}}
+						
 						<span class="round-indicator indicator-{{this.indicator.class}}" id="assignment-ind-{{this.id}}" onclick="queue_update('{{this.index_id}}', {{this.id}}, {{this.user_task}}, event)">
 							{{this.indicator.text}}
 						</span>
@@ -109,12 +118,12 @@
 					class
 				</span>
 				<div class="select-cont">
-					<select id="add_classname" value="null">
+					<select id="add_classname">
 						<option value="null">
 							General Task
 						</option>
 						{{#each classes}}
-							<option value="{{this.id}}">
+							<option value="{{this.id}}" id="edit-option-{{this.id}}">
 								{{this.name}}
 							</option>
 						{{/each}}
@@ -136,7 +145,13 @@
 				<input type="date" id="add_due_date" class="inline-input" value="{{due_date}}">
 			</div>
 			
-			<div class="button" onclick="save_assignment({{user_id}})" id="save_assign">
+			<div class="button" 
+				{{#if editing}}
+					onclick="save_assignment({{user_id}}, {{assign_id}})"
+				{{else}}
+					onclick="save_assignment({{user_id}})" 
+				{{/if}}
+			id="save_assign">
 				save
 			</div>
 			{{#if editing}}
@@ -165,7 +180,7 @@
 				</h2>
 			</div>
 			
-			<span class="round-button close-button" onclick="show_add_popup()" id="add_button" title="add task">
+			<span class="round-button topright-button" onclick="show_add_popup()" id="add_button" title="add task">
 				+
 			</span>
 			

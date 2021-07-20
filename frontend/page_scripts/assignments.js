@@ -74,7 +74,8 @@ function fill_in_assignments(assignments_raw) {
 			class: assign.groupname,
 			assign_date: assign.date_assigned,
 			due_date: assign.date_due,
-			title: assign.short_description,
+			title: assign.short_description.length > 35 ? assign.long_description.slice(0, 35) + "..." : assign.short_description,
+			long_title: assign.short_description,
 			type: assign.assignment_type,
 			desc: assign.long_description,
 			short_desc: assign.long_description.length > 69 ? assign.long_description.slice(0, 69) + "..." : assign.long_description,
@@ -294,13 +295,26 @@ function queue_update(index_id, assign_id, user_task, event) {
 }
 
 async function toggle_expand(assign_id) {
-	console.log(assign_id)
+	var is_user_task = document.querySelector("#assignment-"+ assign_id).getAttribute("data-user-task") == "true";
 	if (document.querySelector("#assignment-" + assign_id).getAttribute("data-expanded") != "true") {
 		// expand the assignment
-		document.querySelector("#assignment-" + assign_id).classList.add("flex-wrap")
+		document.querySelector("#assignment-" + assign_id).classList.add("flex-wrap");
+		document.querySelector("#assign-title-" + assign_id).classList.add("hidden");
+		document.querySelector("#long-title-" + assign_id).classList.remove("hidden");
 		document.querySelector("#shortdesc-" + assign_id).classList.add("hidden");
 		document.querySelector("#desc-" + assign_id).classList.remove("hidden");
 		document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "true");
+		
+		var endpoint_url = base_endpoint + user.baseurl + "/api/assignment2/read/"+assign_id+"/?format=json";
+		
+		if (is_user_task) {
+			//show edit button
+			document.querySelector("#edit-button-" + assign_id).classList.remove("hidden");
+
+			if (!user.debug_mode) return;
+			// if it's a user task and debug mode is enabled, fetch the test assignment
+			endpoint_url = "test_data/test_assignment.json";
+		}
 		
 		let assignment_index = expanded_assignments.findIndex(a => a.assign_id == assign_id);
 		if (assignment_index >= 0) {
@@ -311,16 +325,6 @@ async function toggle_expand(assign_id) {
 				noEscape: true // do not escape html
 			});
 			return;
-		}
-		
-		var endpoint_url = base_endpoint + user.baseurl + "/api/assignment2/read/"+assign_id+"/?format=json";
-		var is_user_task = document.querySelector("#assignment-"+ assign_id).getAttribute("data-user-task") == "true";
-		
-		if (is_user_task) {
-			// TODO: show edit button
-			if (!user.debug_mode) return;
-			// if it's a user task and debug mode is enabled, fetch the test assignment
-			endpoint_url = "test_data/test_assignment.json";
 		}
 		
 		var response = await fetch(endpoint_url).then(a => a.json());
@@ -358,9 +362,12 @@ async function toggle_expand(assign_id) {
 	}
 	
 	// un-expand assignment
+	document.querySelector("#assign-title-" + assign_id).classList.remove("hidden");
+	document.querySelector("#long-title-" + assign_id).classList.add("hidden");
 	document.querySelector("#shortdesc-" + assign_id).classList.remove("hidden");
 	document.querySelector("#desc-" + assign_id).classList.add("hidden");
 	document.querySelector("#assignment-" + assign_id).classList.remove("flex-wrap")
+	document.querySelector("#edit-button-" + assign_id).classList.add("hidden");
 	document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "false");
 	let assignment_index = expanded_assignments.findIndex(a => a.assign_id == assign_id);
 	expanded_assignments[assignment_index].currently_expanded = false;
@@ -404,7 +411,8 @@ async function save_assignment(user_id, assign_id) {
 
 async function show_add_popup(assign_id) {
 	var editing = !!assign_id;
-	
+	document.querySelector("#edit-button-" + assign_id).innerHTML = "loading...";
+	document.querySelector("#edit-button-" + assign_id).classList.add("greyedout");
 	document.querySelector("#add_button").classList.add("greyedout");
 	document.querySelector("#add_task").classList.add("ohidden");
 	setTimeout(() => {
@@ -437,24 +445,35 @@ async function show_add_popup(assign_id) {
 		classes,
 		editing,
 		user_id,
+		assign_id,
 		assign_date: dayjs().format("YYYY-MM-DD"),
 		due_date: dayjs().add(1, "d").format("YYYY-MM-DD") // default due date is +1 days
 	}
 	
 	if (editing) {
 		var edit_endpoint_url = "/api/usertask/edit/" + assign_id;
-		var assignment_data = fetch(base_endpoint + user.baseurl + edit_endpoint_url).then(a => a.json());
+		var assignment_data = await fetch(base_endpoint + user.baseurl + edit_endpoint_url).then(a => a.json());
 		template_data.assign_name = assignment_data.ShortDescription;
 		template_data.due_date = dayjs(assignment_data.DueDate, "M/DD/YYYY").format("YYYY-MM-DD");
 		template_data.assign_date = dayjs(assignment_data.AssignedDate, "M/DD/YYYY").format("YYYY-MM-DD");
+		template_data.class_id = assignment_data.SectionId;
 	}
 	
 	document.querySelector("#add_task").innerHTML = "";
 	fill_template("usertaskadd_template", template_data, "add_task");
+	if (editing) document.querySelector("#edit-option-" + template_data.class_id).setAttribute("selected", "true"); 
 	document.querySelector("#add_task").classList.remove("ohidden");
+	
+	document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";
+	document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
 }
 
 async function delete_assignment(assign_id) {
+	// TODO: make this function work
+	/*
+		worst case scenario, we just set both input values to 1970-01-01
+		and call save_assignment()
+	*/
 	document.querySelector("#add_button").classList.remove("greyedout");
 	document.querySelector("#save_assign").classList.add("greyedout");
   document.querySelector("#save_assign").value = "loading...";
