@@ -2,6 +2,7 @@ var assignment_queue = [];
 var drake_started = false;
 var current_view_date;
 var autolink_options = {target: "_blank", onclick: "event.stopPropagation();"};
+var expanded_assignments = [];
 async function init() {
 	var url = new URL(location);
 	var assign_date = url.searchParams.get("date");
@@ -135,6 +136,10 @@ function fill_in_assignments(assignments_raw) {
 		}, i, {
 			noEscape: true // there is no escape.
 		});
+	}
+	
+	for (var assignment of expanded_assignments) {
+		if (assignment.currently_expanded) toggle_expand(assignment.assign_id);
 	}
 
 	// enable drag and drop
@@ -292,21 +297,36 @@ async function toggle_expand(assign_id) {
 	console.log(assign_id)
 	if (document.querySelector("#assignment-" + assign_id).getAttribute("data-expanded") != "true") {
 		// expand the assignment
-	document.querySelector("#assignment-" + assign_id).classList.add("flex-wrap")
+		document.querySelector("#assignment-" + assign_id).classList.add("flex-wrap")
 		document.querySelector("#shortdesc-" + assign_id).classList.add("hidden");
 		document.querySelector("#desc-" + assign_id).classList.remove("hidden");
 		document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "true");
 		
+		let assignment_index = expanded_assignments.findIndex(a => a.assign_id == assign_id);
+		if (assignment_index >= 0) {
+			expanded_assignments[assignment_index].currently_expanded = true;
+			
+			document.querySelector("#desc-" + assign_id).innerHTML = "";
+			fill_template("assignment_expanded_template", expanded_assignments[assignment_index], "desc-" + assign_id,{
+				noEscape: true // do not escape html
+			});
+			return;
+		}
+		
 		var endpoint_url = base_endpoint + user.baseurl + "/api/assignment2/read/"+assign_id+"/?format=json";
 		var is_user_task = document.querySelector("#assignment-"+ assign_id).getAttribute("data-user-task") == "true";
+		
 		if (is_user_task) {
 			// TODO: show edit button
 			if (!user.debug_mode) return;
 			// if it's a user task and debug mode is enabled, fetch the test assignment
 			endpoint_url = "test_data/test_assignment.json";
 		}
+		
 		var response = await fetch(endpoint_url).then(a => a.json());
 		var assignment_data = {
+			assign_id,
+			currently_expanded: true,
 			description: response.LongDescription.autoLink(autolink_options),
 			links: [],
 			downloads: []
@@ -327,6 +347,8 @@ async function toggle_expand(assign_id) {
 			});
 		}
 		
+		expanded_assignments.push(assignment_data);
+		
 		document.querySelector("#desc-" + assign_id).innerHTML = "";
 		fill_template("assignment_expanded_template", assignment_data, "desc-" + assign_id,{
 			noEscape: true // do not escape html
@@ -334,10 +356,14 @@ async function toggle_expand(assign_id) {
 		
 		return;
 	}
+	
+	// un-expand assignment
 	document.querySelector("#shortdesc-" + assign_id).classList.remove("hidden");
 	document.querySelector("#desc-" + assign_id).classList.add("hidden");
 	document.querySelector("#assignment-" + assign_id).classList.remove("flex-wrap")
 	document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "false");
+	let assignment_index = expanded_assignments.findIndex(a => a.assign_id == assign_id);
+	expanded_assignments[assignment_index].currently_expanded = false;
 }
 
 async function save_assignment(user_id, assign_id) {
