@@ -1,3 +1,17 @@
+/*
+	we need a separate download proxy because of the way netlify handles things.
+	basically, netlify only supports plaintext transfer,
+	so if you try to transfer something that is not plaintext, it errors out.
+	a workaround to this is to encode the file into base64 and send it.
+	that is why this function exists: it transfers files as base64
+	however, base64 increases filesize, so we should only use it when neccesary.
+	that is why this is separate from cors.js
+	also, cors.js has some extra code to handle auth and stuff
+	this is a very basic endpoint that only downloads files.
+	DO NOT USE THIS TO DOWNLOAD ANY PLAINTEXT
+	doing that would slow down load speed and load speed is a high priority
+*/
+
 var fetch = require("node-fetch");
 exports.handler = async (event, context) => {
 	var url = event.path;
