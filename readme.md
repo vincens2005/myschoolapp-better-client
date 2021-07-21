@@ -8,9 +8,10 @@
 
 ## Features/Goals
   - [x] - Faster load speed
-  - [ ] - Kanban-style assignment center (almost done!!!!)
+  - [x] - Kanban-style assignment center
   - [x] - Dark mode
   - [x] - Better mobile UI
+  - [x] - Easily themable by injecting CSS
   - [x] - No jQuery
   - [x] - Remembers last visited page
   - [x] - username autofill
@@ -37,7 +38,7 @@
     - the frontend will be hosted at `/frontend/`, but when this is deployed, it'll be in `/`
   #### Recommended:
 - set `user.debug_mode` to `true`
-- give `user.default_description` a value (can be fetched from) `test_data/test_description.txt`
+- give `user.default_description` a value (can be fetched from `test_data/test_description.txt`)
 - install an editor plugin similar to [this one](https://github.com/drmargarido/TodoTreeView) for viewing the todos
 
 ## contributing
