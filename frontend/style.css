@@ -11,6 +11,7 @@
 	--theme-link-color: #619eb3;
 	--theme-dim-shadow-color: #212121;
 	--theme-shadow-color: #161616;
+	--theme-background: var(--theme-background-color);
 
 	/* indicator colors */
 	--theme-indicator-good: #7ba25c;
@@ -44,7 +45,7 @@ input[type=submit] {
 }
 
 body {
-	background: var(--theme-background-color);
+	background: var(--theme-background);
 	color: var(--theme-text-color);
 	font-family: sans-serif;
 	margin: 0;
@@ -579,6 +580,32 @@ a:not([class]):hover, .link:hover {
 	white-space: pre-line;
 }
 
+.assignment > div {
+	margin-top: 10px;
+}
+
+.assignment h4 {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.assignment:not([data-expanded=true]) .assigned {
+	display: none;
+}
+
+.assignment[data-expanded=true] h5 {
+	margin-left: 5px;
+}
+
+.assignment h5 + h5 {
+	margin-top: 10px;
+}
+
+.assignment h5 {
+	margin-bottom: 0;
+	margin-top: 8px;
+}
+
 .assignment, .assignment .round-indicator {
 	cursor: pointer;
 }
@@ -587,6 +614,7 @@ a:not([class]):hover, .link:hover {
 	margin-left: auto;
 }
 .assignment {
+	transition: margin 0s;
 	padding-top: 0;
 }
 

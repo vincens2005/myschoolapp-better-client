@@ -19,6 +19,7 @@
 
 		<script src="https://cdn.jsdelivr.net/npm/localforage@1.9.0/dist/localforage.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/dayjs"></script>
+		<script src="https://cdn.jsdelivr.net/npm/dayjs/plugin/relativeTime.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/autolink-js@1.0.2/autolink-min.js"></script>
 		<script src="page_scripts/assignments.js"></script>
@@ -38,19 +39,28 @@
 						<h4 id="long-title-{{this.id}}" class="hidden">
 							{{this.long_title}}
 						</h4>
-						<span>
-							{{this.class}}
-						</span>
+						<small id="short-class-{{this.id}}">
+							{{this.short_class}}
+						</small>
+						<small id="long-class-{{this.id}}" class="hidden">
+							{{this.long_class}}
+						</small>
 						<p class="standard_transition hidden" id="desc-{{this.id}}" ondrag="event.stopPropagation();">
 							{{this.desc}}
 						</p>
+						<h5 class="assigned">
+							Assigned {{assign_date}}
+						</h5>
+						<h5>
+							Due {{due_date}}
+						</h5>
 						{{#if this.user_task}}
 							<div class="link hidden" style="padding: 5px;" id="edit-button-{{this.id}}" onclick="event.stopPropagation();show_add_popup({{this.id}})">
 								edit
 							</div>
 						{{/if}}
 					</div>
-					
+
 					<div>
 						<span class="round-indicator indicator-{{this.indicator.class}}" id="assignment-ind-{{this.id}}" onclick="queue_update('{{this.index_id}}', {{this.id}}, {{this.user_task}}, event)">
 							{{this.indicator.text}}
@@ -59,20 +69,20 @@
 				</div>
 			{{/each}}
 		</script>
-		
+
 		<script id="assignment_expanded_template" type="text/x-handlebars-template">
 			<!-- this template is placed into the <p id="desc-ASSIGN_ID"> of an assignment when it is expanded -->
 			{{description}}
-			
+
 			{{#if links}}
 				<div class="rounded-cont medium-background link-cont">
 					<h3 class="title">
 						Links
 					</h3>
 					{{#each links}}
-							<a href="{{this.url}}" target="_blank" onclick="event.stopPropagation();">
-								{{this.title}}
-							</a>
+						<a href="{{this.url}}" target="_blank" onclick="event.stopPropagation();">
+							{{this.title}}
+						</a>
 					{{/each}}
 				</div>
 			{{/if}}
@@ -82,14 +92,15 @@
 						Downloads
 					</h3>
 					{{#each downloads}}
-							<a href="{{this.url}}" onclick="event.stopPropagation();" download="{{this.filename}}">
-								{{this.title}}
-							</a>
+						<a href="{{this.url}}" onclick="event.stopPropagation();" download="{{this.filename}}">
+							{{this.title}}
+						</a>
 					{{/each}}
 				</div>
 			{{/if}}
+
 		</script>
-		
+
 		<script id="usertaskadd_template" type="text/x-handlebars-template">
 			<span class="round-button close-button" onclick="hide_add_popup()">
 				<!-- this is the unicode vector or cross produxt X, U+2A2F -->
@@ -157,11 +168,11 @@
 				</div>
 			{{/if}}
 		</script>
-		
+
 		<div id="add_task" class="rounded-cont fixed-center form hidden standard_transition popup">
 			<!-- this will be filled in with the template in #usertaskadd_template -->
 		</div>
-		
+
 		<div class="full-container">
 			<div class="center">
 				<h2>
@@ -176,11 +187,11 @@
 					</span>
 				</h2>
 			</div>
-			
+
 			<span class="round-button topright-button" onclick="show_add_popup()" id="add_button" title="add task">
 				+
 			</span>
-			
+
 			<div class="flex flex-center flex-equal-width center flex-wrap">
 				<div>
 					<h3> todo </h3>

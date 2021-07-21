@@ -4,6 +4,7 @@ var current_view_date;
 var autolink_options = {target: "_blank", onclick: "event.stopPropagation();"};
 var expanded_assignments = [];
 async function init() {
+	dayjs.extend(window.dayjs_plugin_relativeTime);
 	var url = new URL(location);
 	var assign_date = url.searchParams.get("date");
 	assign_date = safe_decode(assign_date);
@@ -71,10 +72,11 @@ function fill_in_assignments(assignments_raw) {
 		assign.long_description = assign.long_description || user.default_description;
 		assign.long_description = assign.long_description.autoLink(autolink_options);
 		assignments_tmp.push({
-			class: assign.groupname,
-			assign_date: assign.date_assigned,
-			due_date: assign.date_due,
-			title: assign.short_description.length > 35 ? assign.long_description.slice(0, 35) + "..." : assign.short_description,
+			short_class: assign.groupname.length > 21 ? assign.groupname.slice(0, 21) + "..." : assign.groupname,
+			long_class: assign.groupname,
+			assign_date: dayjs(assign.date_assigned, "M/DD/YYYY").fromNow(),
+			due_date: dayjs(assign.date_due, "M/DD/YYYY").fromNow(),
+			title: assign.short_description.length > 35 ? assign.short_description.slice(0, 35) + "..." : assign.short_description,
 			long_title: assign.short_description,
 			type: assign.assignment_type,
 			desc: assign.long_description,
@@ -299,7 +301,9 @@ async function toggle_expand(assign_id) {
 		// expand the assignment
 		document.querySelector("#assignment-" + assign_id).classList.add("flex-wrap");
 		document.querySelector("#assign-title-" + assign_id).classList.add("hidden");
+		document.querySelector("#short-class-" + assign_id).classList.add("hidden");
 		document.querySelector("#long-title-" + assign_id).classList.remove("hidden");
+		document.querySelector("#long-class-" + assign_id).classList.remove("hidden");
 		document.querySelector("#desc-" + assign_id).classList.remove("hidden");
 		document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "true");
 		
@@ -360,8 +364,10 @@ async function toggle_expand(assign_id) {
 	}
 	
 	// un-expand assignment
-	document.querySelector("#assign-title-" + assign_id).classList.remove("hidden");
 	document.querySelector("#long-title-" + assign_id).classList.add("hidden");
+	document.querySelector("#short-class-" + assign_id).classList.remove("hidden");
+	document.querySelector("#assign-title-" + assign_id).classList.remove("hidden");
+	document.querySelector("#long-class-" + assign_id).classList.add("hidden");
 	document.querySelector("#desc-" + assign_id).classList.add("hidden");
 	document.querySelector("#assignment-" + assign_id).classList.remove("flex-wrap")
 	document.querySelector("#edit-button-" + assign_id).classList.add("hidden");
