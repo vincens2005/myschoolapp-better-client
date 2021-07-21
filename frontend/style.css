@@ -549,7 +549,7 @@ input.button {
 }
 
 #date {
-	font-size: max(min(24px, 2vw), 14px);
+	font-size: max(min(23px, 2vw), 14px);
 }
 
 a:not([class]), .link {
@@ -583,8 +583,15 @@ a:not([class]):hover, .link:hover {
 	cursor: pointer;
 }
 
+.assignment:not([data-expanded=true]) div:last-child {
+	margin-left: auto;
+}
 .assignment {
 	padding-top: 0;
+}
+
+.assignment:last-child {
+	margin-bottom: 150px;
 }
 
 .assignment .rounded-cont {

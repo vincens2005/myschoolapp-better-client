@@ -78,7 +78,6 @@ function fill_in_assignments(assignments_raw) {
 			long_title: assign.short_description,
 			type: assign.assignment_type,
 			desc: assign.long_description,
-			short_desc: assign.long_description.length > 69 ? assign.long_description.slice(0, 69) + "..." : assign.long_description,
 			id: assign.assignment_id,
 			index_id: assign.assignment_index_id,
 			indicator: status_ind.to_readable(assign.assignment_status),
@@ -301,7 +300,6 @@ async function toggle_expand(assign_id) {
 		document.querySelector("#assignment-" + assign_id).classList.add("flex-wrap");
 		document.querySelector("#assign-title-" + assign_id).classList.add("hidden");
 		document.querySelector("#long-title-" + assign_id).classList.remove("hidden");
-		document.querySelector("#shortdesc-" + assign_id).classList.add("hidden");
 		document.querySelector("#desc-" + assign_id).classList.remove("hidden");
 		document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "true");
 		
@@ -364,7 +362,6 @@ async function toggle_expand(assign_id) {
 	// un-expand assignment
 	document.querySelector("#assign-title-" + assign_id).classList.remove("hidden");
 	document.querySelector("#long-title-" + assign_id).classList.add("hidden");
-	document.querySelector("#shortdesc-" + assign_id).classList.remove("hidden");
 	document.querySelector("#desc-" + assign_id).classList.add("hidden");
 	document.querySelector("#assignment-" + assign_id).classList.remove("flex-wrap")
 	document.querySelector("#edit-button-" + assign_id).classList.add("hidden");
@@ -461,7 +458,7 @@ async function show_add_popup(assign_id) {
 	
 	document.querySelector("#add_task").innerHTML = "";
 	fill_template("usertaskadd_template", template_data, "add_task");
-	if (editing) document.querySelector("#edit-option-" + template_data.class_id).setAttribute("selected", "true"); 
+	if (editing && template_data.classid) document.querySelector("#edit-option-" + template_data.class_id).setAttribute("selected", "true"); 
 	document.querySelector("#add_task").classList.remove("ohidden");
 	
 	document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";

@@ -44,17 +44,14 @@
 						<p class="standard_transition hidden" id="desc-{{this.id}}" ondrag="event.stopPropagation();">
 							{{this.desc}}
 						</p>
-						<p class="standard_transition" id="shortdesc-{{this.id}}">
-							{{this.short_desc}}
-						</p>
-					</div>
-					<div>
 						{{#if this.user_task}}
 							<div class="link hidden" style="padding: 5px;" id="edit-button-{{this.id}}" onclick="event.stopPropagation();show_add_popup({{this.id}})">
 								edit
 							</div>
 						{{/if}}
-						
+					</div>
+					
+					<div>
 						<span class="round-indicator indicator-{{this.indicator.class}}" id="assignment-ind-{{this.id}}" onclick="queue_update('{{this.index_id}}', {{this.id}}, {{this.user_task}}, event)">
 							{{this.indicator.text}}
 						</span>
