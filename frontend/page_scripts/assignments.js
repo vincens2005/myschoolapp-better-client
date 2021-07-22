@@ -414,8 +414,12 @@ async function save_assignment(user_id, assign_id) {
 
 async function show_add_popup(assign_id) {
 	var editing = !!assign_id;
-	document.querySelector("#edit-button-" + assign_id).innerHTML = "loading...";
-	document.querySelector("#edit-button-" + assign_id).classList.add("greyedout");
+	
+	if (editing) {
+		document.querySelector("#edit-button-" + assign_id).innerHTML = "loading...";
+		document.querySelector("#edit-button-" + assign_id).classList.add("greyedout");
+	}
+	
 	document.querySelector("#add_button").classList.add("greyedout");
 	document.querySelector("#add_task").classList.add("ohidden");
 	setTimeout(() => {

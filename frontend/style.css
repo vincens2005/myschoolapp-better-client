@@ -593,8 +593,9 @@ a:not([class]):hover, .link:hover {
 	display: none;
 }
 
-.assignment[data-expanded=true] h5 {
-	margin-left: 5px;
+.assignment[data-expanded=true] .round-indicator {
+	transition: margin 0s;
+	margin-left: 0;
 }
 
 .assignment h5 + h5 {
@@ -613,6 +614,11 @@ a:not([class]):hover, .link:hover {
 .assignment:not([data-expanded=true]) div:last-child {
 	margin-left: auto;
 }
+
+.assignment[data-expanded=true] div:first-child {
+	margin-right: auto;
+}
+
 .assignment {
 	transition: margin 0s;
 	padding-top: 0;
