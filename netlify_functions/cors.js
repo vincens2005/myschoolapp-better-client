@@ -30,6 +30,7 @@ exports.handler = async (event, context) => {
 		body: event.body
 	};
 	
+	
 	// delete body if it's not a POST request
 	if (event.httpMethod.toUpperCase() == "GET" || event.httpMethod.toUpperCase() == "HEAD") {
 		delete options.body;

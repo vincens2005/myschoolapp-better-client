@@ -1,6 +1,5 @@
 var redirect;
 async function login() {
-	// TODO: form validation
 	var baseurl = addhttp(document.querySelector("#baseurl").value);
 	var post_data = {
 		From: "",
@@ -8,7 +7,25 @@ async function login() {
 		Username: document.querySelector("#username").value,
 		Password: document.querySelector("#password").value
 	};
-
+	
+	if (!validurl(baseurl)) {
+		shake_login();
+		show_popup("please enter your base URL");
+		return;
+	}
+	
+	if (!post_data.Username) {
+		shake_login();
+		show_popup("please enter your username");
+		return;
+	}
+	
+	if (!post_data.Password) {
+		shake_login();
+		show_popup("please enter your password");
+		return;
+	}
+	
 	// store form data for future speed
 	if (user.username != post_data.Username) {
 		localforage.removeItem("user"); // clear data if different user
@@ -35,12 +52,9 @@ async function login() {
 	login_response = await login_response.json();
 
 	if (!login_response.LoginSuccessful) {
-		console.log("Login Unsucessful!");
-		// shake login box if something goes wrong
-		document.querySelector("#loginform").classList.add("shake");
-		setTimeout(() => {
-			document.querySelector("#loginform").classList.remove("shake");
-		}, 550);
+		console.log("login unsucessful!");
+		show_popup("login failed");
+		shake_login();
 		document.querySelector("#loginbutton").classList.remove("greyedout");
 		document.querySelector("#loginbutton").value = "log in";
 		return;
@@ -58,11 +72,11 @@ async function init() {
 	var popup = url.searchParams.get("popup");
 	popup = safe_decode(popup);
 	if (popup) {
-		document.querySelector("#popup").innerText = popup;
-		document.querySelector("#popup").classList.remove("ohidden");
+		show_popup(popup);
 	}
 
 	user = await get_user();
+	if (!validurl(user.baseurl)) return;
 	document.querySelector("#baseurl").value = removehttp(user.baseurl);
 	document.querySelector("#username").value = user.username;
 
@@ -79,3 +93,14 @@ async function init() {
 	document.querySelector("#loginbutton").value = "log in";
 }
 
+function shake_login() {
+	document.querySelector("#loginform").classList.add("shake");
+	setTimeout(() => {
+		document.querySelector("#loginform").classList.remove("shake");
+	}, 550);
+}
+
+function show_popup(text) {
+	document.querySelector("#popup").innerText = text;
+	document.querySelector("#popup").classList.remove("ohidden");
+}

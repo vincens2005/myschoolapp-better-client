@@ -173,3 +173,16 @@ function removehttp(url) {
 	url = url.replace(/^(?:f|ht)tps?\:\/+/, "");
 	return url;
 }
+
+/** checks if a URL is valid
+	* @param {String} url - the url
+*/
+function validurl(url) {
+	try {
+		var new_url = new URL(url);
+		return true;
+	}
+	catch (error) {
+		return false;
+	}
+}
