@@ -625,8 +625,10 @@ a:not([class]):hover, .link:hover {
 	padding-top: 0;
 }
 
-.assignment:last-child {
-	margin-bottom: 150px;
+@media (width > 630px) {
+	.assignment:last-child {
+		margin-bottom: 150px;
+	}
 }
 
 .assignment .rounded-cont {

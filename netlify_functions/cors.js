@@ -15,14 +15,14 @@ exports.handler = async (event, context) => {
 	console.log(url.href); // our final URL
 	var cookie_string = event.headers.cookie || "";
 	var useragent = event.headers["user-agent"] || "";
-	var RVC = event.headers.requestverificationtoken || ""; // this token is yoinked from the login page
+	var RVT = event.headers.requestverificationtoken || ""; // this token is yoinked from the login page
 	
-	//console.log(RVC)
+	//console.log(RVT)
 	
 	var headers_to_send = {
 		"Cookie": cookie_string,
 		"User-Agent": useragent,
-		"RequestVerificationToken": RVC,
+		"RequestVerificationToken": RVT,
 		"content-type": "application/json",
 		"accept": "*/*",
 		"host": url.host,

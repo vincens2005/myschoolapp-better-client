@@ -399,7 +399,10 @@ async function save_assignment(user_id, assign_id) {
   
 	var response = await fetch(fetch_url, {
 		method: assign_id ? "PUT" : "POST",
-		body: JSON.stringify(body)
+		body: JSON.stringify(body),
+		headers: {
+			"RequestVerificationToken": user.token
+		}
 	}).then(a => a.json());
 	
 	if (response.Error) {
@@ -479,37 +482,11 @@ async function show_add_popup(assign_id) {
 	document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
 }
 
-async function delete_assignment(assign_id) {
+async function delete_assignment(assign_id, user_id) {
 	// TODO: make this function work
-	/*
-		worst case scenario, we just set both input values to 1970-01-01
-		and call save_assignment()
-	*/
-	document.querySelector("#add_button").classList.remove("greyedout");
-	document.querySelector("#save_assign").classList.add("greyedout");
-  document.querySelector("#save_assign").value = "loading...";
-
-  
-	var fetch_url = base_endpoint + user.baseurl + "/api/usertask/edit" + "/" + assign_id;
-	var response = await fetch(fetch_url, {
-		method: "DELETE",
-		headers: {
-			"RequestVerificationToken": user.token
-		}
-	}).then(a => a.json());
-	
-	if (response.Error) {
-		location = "login.html?popup=" + encodeURIComponent("deleting assignments is broken and we don't know why") + "&redirect=" + encodeURIComponent(location);
-		return;
-	}
-	
-	document.querySelector("#add_task").classList.add("ohidden");
-	setTimeout(() => {
-		document.querySelector("#add_task").classList.add("hidden");
-		document.querySelector("#add_task").classList.remove("ohidden");
-	}, 400);
-	
-	init();
+	document.querySelector("#add_due_date").value = "1970-01-01";
+	document.querySelector("#add_assign_date").value = "1970-01-01";
+	save_assignment(user_id, assign_id)
 }
 
 function hide_add_popup() {
