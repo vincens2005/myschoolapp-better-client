@@ -483,7 +483,6 @@ async function show_add_popup(assign_id) {
 }
 
 async function delete_assignment(assign_id, user_id) {
-	// TODO: make this function work
 	document.querySelector("#add_due_date").value = "1970-01-01";
 	document.querySelector("#add_assign_date").value = "1970-01-01";
 	save_assignment(user_id, assign_id)
