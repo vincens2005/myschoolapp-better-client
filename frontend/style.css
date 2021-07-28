@@ -38,7 +38,7 @@ html {
 /*
 	get rid of stupid safari garbage
 */
-input[type=submit] {
+input {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -242,6 +242,7 @@ input:not([type=submit]) {
 	border-left: none;
 	display: block;
 	outline: 0;
+	border-radius: 0;
 	border-right: none;
 	border-bottom: 1px solid var(--theme-muted-text);
 	color: var(--theme-text-color);
