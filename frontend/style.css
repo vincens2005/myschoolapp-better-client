@@ -107,7 +107,6 @@ body {
 .scrollable-col {
 	overflow-y: scroll;
 	overflow-x: visible;
-	height: 82vh;
 	transition: 0.15s;
 	scrollbar-width: thin;
 	padding: 2px;
@@ -115,7 +114,7 @@ body {
 	scrollbar-color: transparent transparent;
 }
 
-@media (width < 620px) {
+@media (max-width: 620px) {
 	.scrollable-col {
 		height: auto;
 	}
@@ -451,7 +450,7 @@ input.button {
 	margin: 0;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
 	.schedule td {
 		display: block;
 	}
@@ -625,7 +624,7 @@ a:not([class]):hover, .link:hover {
 	padding-top: 0;
 }
 
-@media (width > 630px) {
+@media (min-width: 750px) {
 	.assignment:last-child {
 		margin-bottom: 150px;
 	}
