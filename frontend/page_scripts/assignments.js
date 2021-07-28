@@ -242,7 +242,11 @@ async function set_status(index_id, assign_id, user_task, to_status) {
 			assignmentIndexId: send_id,
 			assignmentStatus: to_status,
 			userTaskInd: user_task // this tells it whether it was created by the user
-		})
+		}),
+		headers: {
+			"content-type": "application/json",
+			"RequestVerificationToken": user.token
+		}
 	}).then(a => a.json());
 
 	if (response.Error) {
@@ -488,7 +492,10 @@ async function delete_assignment(assign_id) {
   
 	var fetch_url = base_endpoint + user.baseurl + "/api/usertask/edit" + "/" + assign_id;
 	var response = await fetch(fetch_url, {
-		method: "DELETE"
+		method: "DELETE",
+		headers: {
+			"RequestVerificationToken": user.token
+		}
 	}).then(a => a.json());
 	
 	if (response.Error) {

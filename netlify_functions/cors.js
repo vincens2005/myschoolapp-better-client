@@ -4,6 +4,10 @@ exports.handler = async (event, context) => {
 
 	url = url.split(".netlify/functions/cors/")[1];
 	url = decodeURIComponent(url);
+	
+	// why does this happen????
+	if (url.match(/index.html?\s*\n*$/)) url = url.replace(/index.html?\s*\n*$/, "");
+	
 	url = new URL(url);
 	for (var i in event.queryStringParameters) {
 		url.searchParams.append(i, event.queryStringParameters[i]);
@@ -21,7 +25,8 @@ exports.handler = async (event, context) => {
 		"RequestVerificationToken": RVC,
 		"content-type": "application/json",
 		"accept": "*/*",
-		"host": url.host
+		"host": url.host,
+		"referer": url.origin + "/app/student"
 	};
 	
 	var options = {
@@ -46,7 +51,7 @@ exports.handler = async (event, context) => {
 		cook_header = headers["set-cookie"];
 	}
 	return {
-		statusCode: 200,
+		statusCode: response.status,
 		body: response_text,
 		headers: {
 			"content-type": String(headers["content-type"]) || "text/plain",

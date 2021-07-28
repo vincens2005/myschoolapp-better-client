@@ -22,7 +22,8 @@ async function get_user() {
 			last_page: "schedule.html",
 			// enabling debug mode allows the client to fetch test data and fill it in on blank templates
 			debug_mode: false,
-			default_description: ""
+			default_description: "",
+			token: ""
 		};
 	}
 	return nuser;

@@ -32,6 +32,7 @@ async function login() {
 	}
 	user.username = post_data.Username;
 	user.baseurl = baseurl;
+	user.token = await get_verification_token();
 	save_data(user);
 
 	// grey out login button
@@ -39,14 +40,13 @@ async function login() {
 	document.querySelector("#loginbutton").value = "loading...";
 
 	// logging in needs this token
-	var token = await get_verification_token();
 
 	// this request log you in.
 	var login_response = await fetch(base_endpoint + baseurl + "/api/SignIn", {
 		method: "POST",
 		body: JSON.stringify(post_data),
 		headers: {
-			"RequestVerificationToken": token
+			"RequestVerificationToken": user.token
 		}
 	});
 	login_response = await login_response.json();
@@ -89,6 +89,8 @@ async function init() {
 		location = redirect || user.last_page || "schedule.html";
 		return;
 	}
+	user.token = "";
+	save_data(user);
 	document.querySelector("#loginbutton").classList.remove("greyedout");
 	document.querySelector("#loginbutton").value = "log in";
 }
