@@ -81,6 +81,7 @@ function fill_in_assignments(assignments_raw) {
 			type: assign.assignment_type,
 			desc: assign.long_description,
 			id: assign.assignment_id,
+			is_submission: assign.DropboxInd || true,
 			index_id: assign.assignment_index_id,
 			indicator: status_ind.to_readable(assign.assignment_status),
 			user_task: assign.user_task_ind
@@ -301,22 +302,24 @@ function queue_update(index_id, assign_id, user_task, event) {
 
 async function toggle_expand(assign_id) {
 	var is_user_task = document.querySelector("#assignment-"+ assign_id).getAttribute("data-user-task") == "true";
+	
+	var hidden_when_expanded = ["assign-title", "short-class"];
+	var shown_when_expanded = ["long-title", "long-class", "desc", "edit-div"];
+	
 	if (document.querySelector("#assignment-" + assign_id).getAttribute("data-expanded") != "true") {
 		// expand the assignment
+		for (let id of hidden_when_expanded) {
+			document.querySelector("#" + id + "-" + assign_id).classList.add("hidden");
+		}
+		for (let id of shown_when_expanded) {
+			document.querySelector("#" + id + "-" + assign_id).classList.remove("hidden");
+		}
 		document.querySelector("#assignment-" + assign_id).classList.add("flex-wrap");
-		document.querySelector("#assign-title-" + assign_id).classList.add("hidden");
-		document.querySelector("#short-class-" + assign_id).classList.add("hidden");
-		document.querySelector("#long-title-" + assign_id).classList.remove("hidden");
-		document.querySelector("#long-class-" + assign_id).classList.remove("hidden");
-		document.querySelector("#desc-" + assign_id).classList.remove("hidden");
 		document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "true");
 		
 		var endpoint_url = base_endpoint + user.baseurl + "/api/assignment2/read/"+assign_id+"/?format=json";
 		
 		if (is_user_task) {
-			//show edit button
-			document.querySelector("#edit-button-" + assign_id).classList.remove("hidden");
-
 			if (!user.debug_mode) return;
 			// if it's a user task and debug mode is enabled, fetch the test assignment
 			endpoint_url = "test_data/test_assignment.json";
@@ -368,13 +371,13 @@ async function toggle_expand(assign_id) {
 	}
 	
 	// un-expand assignment
-	document.querySelector("#long-title-" + assign_id).classList.add("hidden");
-	document.querySelector("#short-class-" + assign_id).classList.remove("hidden");
-	document.querySelector("#assign-title-" + assign_id).classList.remove("hidden");
-	document.querySelector("#long-class-" + assign_id).classList.add("hidden");
-	document.querySelector("#desc-" + assign_id).classList.add("hidden");
+	for (let id of hidden_when_expanded) {
+		document.querySelector("#" + id + "-" + assign_id).classList.remove("hidden");
+	}
+	for (let id of shown_when_expanded) {
+		document.querySelector("#" + id + "-" + assign_id).classList.add("hidden");
+	}
 	document.querySelector("#assignment-" + assign_id).classList.remove("flex-wrap")
-	document.querySelector("#edit-button-" + assign_id).classList.add("hidden");
 	document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "false");
 	let assignment_index = expanded_assignments.findIndex(a => a.assign_id == assign_id);
 	expanded_assignments[assignment_index].currently_expanded = false;
