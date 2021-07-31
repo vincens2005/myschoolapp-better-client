@@ -22,7 +22,7 @@ async function init() {
 	
 	var topic_info = await fetch(base_endpoint + user.baseurl + "/api/datadirect/topicget/"+ topic_id +"/?format=json").then(a => a.json());
 	document.title = topic_info[0].Name + " - portal++";
-	fill_template("info_template", topic_info[0], "output");
+	fill_template("info_template", topic_info[0], "title_stuff");
 	
 	var topic_endpoint = `/api/datadirect/topiccontentget/${topic_id}/?format=json&index_id=${topic_info[0].TopicIndexId}&id=${topic_info[0].TopicId}`
 	var topic_raw = await fetch(base_endpoint + user.baseurl + topic_endpoint).then(a => a.json());
@@ -38,4 +38,7 @@ async function init() {
 	}
 	
 	console.log(topic_items);
+	fill_template("topic_template", {topic_items}, "topic_items", {
+		noEscape: true
+	});
 }

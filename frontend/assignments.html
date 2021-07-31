@@ -31,7 +31,7 @@
 		</div>
 		<script id="assignment_template" type="text/x-handlebars-template">
 			{{#each assignments}}
-				<div class="assignment rounded-cont list_thingy flex flex-v-center text-left" id="assignment-{{this.id}}" data-assign-id="{{this.id}}" data-index-id="{{this.index_id}}" data-user-task="{{this.user_task}}" onclick="toggle_expand('{{this.id}}')" data-expanded="false">
+				<div class="assignment rounded-cont flex flex-v-center text-left" id="assignment-{{this.id}}" data-assign-id="{{this.id}}" data-index-id="{{this.index_id}}" data-user-task="{{this.user_task}}" onclick="toggle_expand('{{this.id}}')" data-expanded="false">
 					<div>
 						<h4 id="assign-title-{{this.id}}">
 							{{this.title}}

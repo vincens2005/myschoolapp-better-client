@@ -816,6 +816,15 @@ body::-webkit-scrollbar {
 	*/
 }
 
+#topic_items {
+	padding-right: max(min(150px, 4vw), 20px);
+}
+
+#topic_items div {
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
 .nagbar {
 	position: fixed;
 	top: 0;
