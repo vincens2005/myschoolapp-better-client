@@ -705,10 +705,11 @@ a:not([class]):hover, .link:hover {
 }
 
 .header-offset {
-	margin-top: 35px;
+	margin-top: 45px;
 }
 
 #class-display {
+	padding-top: 12px;
 	width: 100%;
 }
 

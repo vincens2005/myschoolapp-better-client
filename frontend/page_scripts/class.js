@@ -150,7 +150,7 @@ async function fetch_topics(id) {
 		topics.push({
 			name: topic.Name,
 			image: ftp_image_path + "topics/" + topic.ThumbFilename,
-			url: "topics.html?topic=" + topic.TopicID
+			url: "topic.html?topic=" + topic.TopicID
 		});
 	}
 	

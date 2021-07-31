@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+	<head>
+		<title>
+			topic - portal++
+		</title>
+		<link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
+		<link rel="manifest" href="manifest.webmanifest">
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
+		<script src="common.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/localforage@1.9.0/dist/localforage.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+		<script src="page_scripts/topic.js"></script>
+	</head>
+	
+	<body onload="init()">
+		<div id="header" onwheel="scroll_horizontally(event)" class="tab-cont">
+			<!-- this will be filled with the template from templates/header.hbs -->
+		</div>
+		
+		<script type="text/x-handlebars-template" id="info_template">
+			<a href="class.html?class={{SectionId}}#topics">
+				&lt; {{GroupName}}
+			</a>
+			<h2 id="title">
+				{{Name}}
+			</h2>
+		</script>
+		
+		<div id="output" class="header-offset left-offset">
+			<!-- stuff will get filled in here -->
+		</div>
+	</body>
+</html>

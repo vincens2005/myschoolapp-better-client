@@ -89,7 +89,7 @@ async function get_header() {
 		{
 			title: "classes",
 			url: "classes.html",
-			url_matches: ["classes","class"]
+			url_matches: ["classes","class", "topic"]
 		},
 		{
 			title: "assignments",
