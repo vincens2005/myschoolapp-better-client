@@ -24,10 +24,15 @@
 		<script id="links_template" type="text/x-handlebars-template">
 			<div class="rounded-cont bulletin-item link-cont">
 				<h3 class="title">
-						Links
+						{{title}}
 				</h3>
-				{{#each links}}
-					<a href="{{this.url}}" target="_blank">
+				{{#each items}}
+					<a href="{{this.url}}" 
+					{{#if this.filename}}
+						download="{{this.filename}}"
+					{{else}} 
+						target="_blank" 
+					{{/if}}>
 						{{this.short_desc}}
 					</a>
 				{{/each}}
@@ -81,7 +86,7 @@
 						<div id="top-bulletin-sections">
 							<!-- top sections (details, news) will go here -->
 						</div>
-						<div id="bulletin-sidebar">
+						<div id="bulletin-sidebar" class="ohidden standard_transition">
 							<!-- stuff on the side -->
 						</div>
 					</div>

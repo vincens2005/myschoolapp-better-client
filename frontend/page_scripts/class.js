@@ -1,5 +1,3 @@
-// class.js
-var current_class = {};
 async function init() {
 	user = await get_user();
 
@@ -62,9 +60,6 @@ async function init() {
 				document.title = data[0].GroupName + " - portal++"
 				document.querySelector("#title").innerHTML = data[0].GroupName + " - " + data[0].Identifier + ` (${data[0].Block})`;
 				document.querySelector("#title").classList.remove("ohidden");
-				current_class.name = data[0].GroupName;
-				current_class.block = data[0].Block;
-				current_class.identifier = data[0].Identifier;
 			});
 }
 
@@ -77,9 +72,7 @@ async function fetch_bulletin(id) {
 		{
 			url: `/api/link/forsection/${id}/?format=json&editMode=false&active=false&future=false&expired=false&contextLabelId=2`,
 			handler: data => {
-				if (data.length == 0) {
-					return;
-				}
+				if (!data.length) return;
 				var links = []
 				for (var item of data) {
 					links.push({
@@ -88,19 +81,39 @@ async function fetch_bulletin(id) {
 						desc: item.Description
 					});
 				}
-				fill_template("links_template", {links}, "bulletin-sidebar", {
-					noEscape: true
-				});
-				current_class.links = links;
+				fill_template("links_template", {
+					items: links,
+					title: "Links"
+				}, "bulletin-sidebar");
+			}
+		},
+		//downloads endpoint
+		{
+			url: `/api/download/forsection/${id}/?format=json&editMode=false&active=false&future=false&expired=false&contextLabelId=2`,
+			handler: data => {
+				if (!data.length) return;
+				var downloads = []
+				for (var item of data) {
+					downloads.push({
+						url: download_endpoint + user.baseurl + item.DownloadUrl,
+						short_desc: item.Description,
+						desc: item.Description,
+						filename: item.FileName
+					});
+				}
+				fill_template("links_template", {
+					items: downloads,
+					title: "Downloads",
+				},
+				"bulletin-sidebar");
 			}
 		},
 		// bulletin board text endpoint
 		{
 			url: `/api/text/forsection/${id}/?format=json&contextLabelId=2`,
 			handler: data => {
-				if (!data.length) {
-					return;
-				}
+				if (!data.length) return;
+				if(!data[0].Description) return;
 				
 				var forsection = { // what is a forsection?
 					title: data[0].Description,
@@ -110,7 +123,6 @@ async function fetch_bulletin(id) {
 				fill_template("main-template", forsection, "top-bulletin-sections", {
 					noEscape: true // there is no escape
 				});
-				current_class.forsection = forsection;
 			}
 		},
 	]
@@ -119,8 +131,9 @@ async function fetch_bulletin(id) {
 		// in this case, use .then rather than await so that these happen simultaniouesutly
 		fetch(base_endpoint + user.baseurl + endpoint.url)
 		.then(a => a.json())
-		.then(endpoint.handler)
+		.then(endpoint.handler);
 	}
+	document.querySelector("#bulletin-sidebar").classList.remove("ohidden");
 }
 
 async function fetch_roster(id) {
