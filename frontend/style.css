@@ -828,6 +828,7 @@ body::-webkit-scrollbar {
 	grid-template-rows: masonry;
 	gap: 15px;
 	padding-right: max(min(150px, 4vw), 20px);
+	padding-bottom: 50px;
 }
 
 #topic_items > div {

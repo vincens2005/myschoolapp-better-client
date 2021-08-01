@@ -29,12 +29,14 @@ async function init() {
 	var topic_items = [];
 	
 	for (let item of topic_raw) {
-		topic_items.push({
-			title: item.ShortDescription || "",
-			description: item.LongDescription || "",
-			url: item.Url,
-			download: item.AllowDownload
-		});
+		if (item.ShortDescription || item.LongDescription) {
+			topic_items.push({
+				title: item.ShortDescription || "",
+				description: item.LongDescription || "",
+				url: item.Url,
+				download: item.AllowDownload
+			});
+		}
 	}
 	
 	console.log(topic_items);
