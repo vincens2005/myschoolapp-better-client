@@ -34,19 +34,24 @@
 		
 		<script type="text/x-handlebars-template" id="topic_template">
 			{{#each topic_items}}
-				<div class="rounded-cont list_thingy">
+				<div class="rounded-cont">
 					{{#if this.title}}
-						{{#if this.url}}
-							<a href="{{this.url}}" target="_blank">
-						{{/if}}
-						{{this.title}}			
-						{{#if this.url}}
-							</a>
-						{{/if}}
-						
-						<br>
+						<div
+						{{#if this.description}}
+							class="list_thingy"
+						{{/if}} >
+							{{#if this.url}}
+								<a href="{{this.url}}" target="_blank">
+							{{/if}}
+							{{this.title}}			
+							{{#if this.url}}
+								</a>
+							{{/if}}
+						</div>
 					{{/if}}
-					{{this.description}}
+					<span>
+						{{this.description}}
+					</span>
 				</div>
 			{{/each}}
 		</script>
@@ -55,7 +60,7 @@
 			<div id="title_stuff">
 				<!-- this is where the topic title will go -->
 			</div>
-			<div id="topic_items" class="flex flex-left flex-wrap flex-top-align">
+			<div id="topic_items">
 				<!-- this is where the actual stuff goes -->
 			</div>
 	</body>

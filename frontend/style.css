@@ -18,7 +18,12 @@
 	--theme-indicator-okay: #b7925c;
 	--theme-indicator-todo: #9e89c8;
 	--theme-indicator-bad: #da5858;
+	
+	--theme-main-font: 'Noto Sans', sans-serif;
+	--theme-main-font-size: 15.5px;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
 html {
 	scroll-behavior: smooth;
@@ -47,7 +52,8 @@ input {
 body {
 	background: var(--theme-background);
 	color: var(--theme-text-color);
-	font-family: sans-serif;
+	font-family: var(--theme-main-font);
+	font-size: var(--theme-main-font-size);
 	margin: 0;
 }
 
@@ -128,7 +134,7 @@ body {
 	opacity: 0;
 	transition: 0.2s;
 	display: block;
-	width: 3px;
+	width: 2px;
 }
 
 .scrollable-col:hover::-webkit-scrollbar {
@@ -684,7 +690,7 @@ a:not([class]):hover, .link:hover {
 	border-radius: 5px 5px 0 0;
 	transition: 0.193s; /* one has to be very precise with these things */
 	display: inline-block;
-	padding: 5px 10px;
+	padding: 1px 10px 2px;
 	margin: 0 3px 3px 0;
 	cursor: pointer;
 	text-decoration: none;
@@ -817,12 +823,15 @@ body::-webkit-scrollbar {
 }
 
 #topic_items {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(286px, 1fr));
+	grid-template-rows: masonry;
+	gap: 15px;
 	padding-right: max(min(150px, 4vw), 20px);
 }
 
-#topic_items div {
-	margin-right: 10px;
-	margin-bottom: 10px;
+#topic_items > div {
+	max-width: 300px;
 }
 
 .nagbar {
