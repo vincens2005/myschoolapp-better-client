@@ -76,7 +76,8 @@ function fill_in_assignments(assignments_raw) {
 			long_class: assign.groupname,
 			assign_date: dayjs(assign.date_assigned, "M/DD/YYYY").fromNow(),
 			due_date: dayjs(assign.date_due, "M/DD/YYYY").fromNow(),
-			title: assign.short_description.length > 35 ? assign.short_description.slice(0, 35) + "..." : assign.short_description,
+			raw_due_date: dayjs(assign.date_due, "M/DD/YYYY").unix(),
+			title: assign.short_description.length > 35 ? assign.short_description.slice(0, 15) + "..." : assign.short_description,
 			long_title: assign.short_description,
 			type: assign.assignment_type,
 			desc: assign.long_description,
@@ -90,11 +91,7 @@ function fill_in_assignments(assignments_raw) {
 
 	// sort by due date ascending
 	assignments_tmp = assignments_tmp.sort((a,b) => {
-		let dates = [a.due_date, b.due_date];
-		for (let date of dates) {
-			date = dayjs(date, "M/DD/YYYY");
-			date = date.unix();
-		}
+		let dates = [a.raw_due_date, b.raw_due_date];
 		if (dates[0] > dates[1]) return 1;
 		if (dates[1] > dates[0]) return -1;
 		return 0;
@@ -216,6 +213,13 @@ function dnd_init() {
 		indicator.classList.remove(...indicator.classList);
 		indicator.classList.add("round-indicator", "indicator-" + new_status.class);
 		indicator.innerHTML = new_status.text;
+	});
+	
+	drake.on("drag", () => {
+		if (document.body.clientWidth < 900) {
+			drake.cancel();
+			return;
+		}
 	});
 }
 
@@ -386,11 +390,11 @@ async function toggle_expand(assign_id) {
 async function save_assignment(user_id, assign_id) {
 	document.querySelector("#add_button").classList.remove("greyedout");
 	document.querySelector("#save_assign").classList.add("greyedout");
-  document.querySelector("#save_assign").value = "loading...";
-  
-  var fetch_url = base_endpoint + user.baseurl + "/api/usertask/edit" + (assign_id ? "/" + assign_id : "");
-  
-  var body = {
+	document.querySelector("#save_assign").value = "loading...";
+	
+	var fetch_url = base_endpoint + user.baseurl + "/api/usertask/edit" + (assign_id ? "/" + assign_id : "");
+	
+	var body = {
 		AssignedDate: dayjs(document.querySelector("#add_assign_date").value, "YYYY-MM-DD").format("MM/DD/YYYY"),
 		DueDate: dayjs(document.querySelector("#add_due_date").value, "YYYY-MM-DD").format("MM/DD/YYYY"),
 		ShortDescription: document.querySelector("#add_task_name").value,
@@ -399,7 +403,7 @@ async function save_assignment(user_id, assign_id) {
 	
 	if (assign_id) body.UserTaskId = assign_id;
 	if (document.querySelector("#add_classname").value != "null") body.SectionId = Number(document.querySelector("#add_classname").value);
-  
+	
 	var response = await fetch(fetch_url, {
 		method: assign_id ? "PUT" : "POST",
 		body: JSON.stringify(body),
