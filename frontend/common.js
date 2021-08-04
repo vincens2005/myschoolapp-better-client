@@ -133,7 +133,7 @@ async function get_image_path() {
 //  supporting the old thing adds three extra lines. ew
 //  es9 code:
 //  var pattern = /(?<=\"FtpImagePath\"\s*:\s*\")([^\'*\"*\,*\}*]*)/g;
-//  why doesn't apple just update their stupid browser
+//  why doesn't apple just update their stupid browser?
 
 	var pattern = /(\"FtpImagePath\"\s*:\s*\")([^\'*\,*\}*]*)/g
 	var rosterpage = await fetch(base_endpoint + user.baseurl + "/app/student#academicclass/").then(a => a.text());
@@ -186,4 +186,13 @@ function validurl(url) {
 	catch (error) {
 		return false;
 	}
+}
+
+/** removes html from text
+	* @param {String} html - the html to clean
+*/
+function htmltotext(html) {
+	let el = document.createElement("span");
+	el.innerHTML = html;
+	return el.innerText;
 }
