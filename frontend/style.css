@@ -701,7 +701,7 @@ a:not([class]):hover, .link:hover {
 /* safari-specific styles */
 @media screen and (min-color-index:0) and (-webkit-min-device-pixel-ratio:0) {
 	.tab {
-		padding: 4px 10px 4px;
+		padding: 3px 10px 3px !important;
 	}
 }
 .tab {
