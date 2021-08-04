@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
 :root {
 	--theme-button-color: #1b776a;
 	--theme-muted-highlight: #456a65;
@@ -22,8 +24,6 @@
 	--theme-main-font: 'Noto Sans', sans-serif;
 	--theme-main-font-size: 15.5px;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
 html {
 	scroll-behavior: smooth;
@@ -108,7 +108,7 @@ body {
 }
 
 .text-left {
-	text-align: left;
+	text-align: left !important;
 }
 
 .scrollable-col {
@@ -698,7 +698,12 @@ a:not([class]):hover, .link:hover {
 #page-cont > #title {
 	width: 100%;
 }
-
+/* safari-specific styles */
+@media screen and (min-color-index:0) and (-webkit-min-device-pixel-ratio:0) {
+	.tab {
+		padding: 4px 10px 4px;
+	}
+}
 .tab {
 	background: var(--theme-lighter-color);
 	border-radius: 5px 5px 0 0;
