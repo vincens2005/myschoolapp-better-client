@@ -574,7 +574,7 @@ input.button {
 }
 
 #date {
-	font-size: max(min(23px, 2vw), 14px);
+	font-size: max(min(23px, 2vw), 16px);
 }
 
 a:not([class]), .link {

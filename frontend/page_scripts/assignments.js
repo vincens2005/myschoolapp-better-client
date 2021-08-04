@@ -4,6 +4,12 @@ var current_view_date;
 var autolink_options = {target: "_blank", onclick: "event.stopPropagation();"};
 var expanded_assignments = [];
 async function init() {
+	// reset element transitions
+	document.querySelector("#noassignments").classList.add("ohidden");
+	setTimeout(() => {
+		document.querySelector("#noassignments").classList.add("hidden");
+	}, 300);
+	
 	dayjs.extend(window.dayjs_plugin_relativeTime);
 	var url = new URL(location);
 	var assign_date = url.searchParams.get("date");
@@ -61,12 +67,26 @@ async function init() {
 
 	// TODO: validate response
 	var assignments_json = await assignment_req.json();
+	if (!assignments_json.length) {
+		document.querySelector("#noassignments").classList.remove("hidden");
+		document.querySelector("#assignment_container").classList.add("ohidden");
+		setTimeout(() => {
+			document.querySelector("#noassignments").classList.remove("ohidden");
+		}, 50);
+		return;
+	}
 	fill_in_assignments(assignments_json);
 }
 
 function fill_in_assignments(assignments_raw) {
 	user.default_description = user.default_description || "";
 	var assignments_tmp = [];
+	var screen_width = document.body.clientWidth;
+	var max_title_len = 25;
+	if (screen_width <= 900) {
+		max_title_len = -30.5507 + 0.1154 * screen_width; // don't worry about where these numbers came from
+		max_title_len = Math.max(max_title_len, 5);
+	}
 	for (var assign of assignments_raw) {
 		// set user.default_description to something for testing capabilities
 		assign.long_description = assign.long_description || user.default_description;
@@ -77,7 +97,7 @@ function fill_in_assignments(assignments_raw) {
 			assign_date: dayjs(assign.date_assigned, "M/DD/YYYY").fromNow(),
 			due_date: dayjs(assign.date_due, "M/DD/YYYY").fromNow(),
 			raw_due_date: dayjs(assign.date_due, "M/DD/YYYY").unix(),
-			title: assign.short_description.length > 35 ? assign.short_description.slice(0, 15) + "..." : assign.short_description,
+			title: assign.short_description.length > max_title_len - 1 ? assign.short_description.slice(0, max_title_len) + "..." : assign.short_description,
 			long_title: assign.short_description,
 			type: assign.assignment_type,
 			desc: assign.long_description,
@@ -146,6 +166,8 @@ function fill_in_assignments(assignments_raw) {
 	if (!drake_started) {
 		dnd_init();
 	}
+	
+	document.querySelector("#assignment_container").classList.remove("ohidden");
 }
 
 var status_ind = {
