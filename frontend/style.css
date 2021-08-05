@@ -578,6 +578,7 @@ input.button {
 }
 
 a:not([class]), .link {
+	cursor: pointer;
 	font-weight: bold;
 	color: var(--theme-link-color);
 	text-decoration: none;
@@ -633,7 +634,7 @@ a:not([class]):hover, .link:hover {
 	margin-top: 8px;
 }
 
-.assignment, .assignment .round-indicator {
+.assignment:not([data-expanded=true]), .assignment .round-indicator, .assignment .long_header {
 	cursor: pointer;
 }
 

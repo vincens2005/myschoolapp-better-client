@@ -36,16 +36,20 @@
 						<h4 id="assign-title-{{this.id}}">
 							{{this.title}}
 						</h4>
-						<h4 id="long-title-{{this.id}}" class="hidden">
-							{{this.long_title}}
-						</h4>
 						<small id="short-class-{{this.id}}">
 							{{this.short_class}}
 						</small>
-						<small id="long-class-{{this.id}}" class="hidden">
-							{{this.long_class}}
-						</small>
-						<p class="standard_transition hidden" id="desc-{{this.id}}" ondrag="event.stopPropagation();">
+						
+						<div onclick="toggle_expand('{{this.id}}')" id="long-header-{{this.id}}" class="hidden long_header">	
+							<h4>
+								{{this.long_title}}
+							</h4>
+							<small>
+								{{this.long_class}}
+							</small>
+						</div>
+						
+						<p class="standard_transition hidden" id="desc-{{this.id}}">
 							{{this.desc}}
 						</p>
 						<h5 class="assigned">
@@ -56,7 +60,7 @@
 						</h5>
 						<div class="hidden" style="padding-top: 5px;" id="edit-div-{{this.id}}">
 							{{#if this.user_task}}
-								<span class="link" onclick="event.stopPropagation();show_add_popup({{this.id}})" id="edit-button-{{this.id}}"> edit</span>
+								<span class="link" onclick="show_add_popup({{this.id}})" id="edit-button-{{this.id}}"> edit</span>
 							{{/if}}
 							{{#if this.is_submission}}
 								<br>
@@ -84,7 +88,7 @@
 						Links
 					</h3>
 					{{#each links}}
-						<a href="{{this.url}}" target="_blank" onclick="event.stopPropagation();">
+						<a href="{{this.url}}" target="_blank">
 							{{this.title}}
 						</a>
 					{{/each}}
@@ -96,7 +100,7 @@
 						Downloads
 					</h3>
 					{{#each downloads}}
-						<a href="{{this.url}}" onclick="event.stopPropagation();" download="{{this.filename}}">
+						<a href="{{this.url}}" download="{{this.filename}}">
 							{{this.title}}
 						</a>
 					{{/each}}

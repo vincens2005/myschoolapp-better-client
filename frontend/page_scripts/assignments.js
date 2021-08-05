@@ -208,7 +208,14 @@ var status_ind = {
 function dnd_init() {
 	drake_started = true;
 	var containers = [document.querySelector("#todo"), document.querySelector("#progress"), document.querySelector("#done")];
-	var drake = dragula(containers);
+	var options = {
+		moves: (el, source, handle, sibling) => {
+			if (document.body.clientWidth < 900) return false;
+			console.log(handle);
+			return handle.tagName != "P" && (handle.parentElement.id == el.id || handle.parentElement.parentElement.id == el.id || handle.parentElement.classList.contains("long_header"));
+		}
+	}
+	var drake = dragula(containers, options);
 
 	drake.on("drop", async (el, target, source, sibling) => {
 		if (!target) return;
@@ -230,13 +237,6 @@ function dnd_init() {
 		indicator.classList.remove(...indicator.classList);
 		indicator.classList.add("round-indicator", "indicator-" + new_status.class);
 		indicator.innerHTML = new_status.text;
-	});
-	
-	drake.on("drag", () => {
-		if (document.body.clientWidth < 900) {
-			drake.cancel();
-			return;
-		}
 	});
 }
 
@@ -325,12 +325,15 @@ async function toggle_expand(assign_id) {
 	var is_user_task = document.querySelector("#assignment-"+ assign_id).getAttribute("data-user-task") == "true";
 	
 	var hidden_when_expanded = ["assign-title", "short-class"];
-	var shown_when_expanded = ["long-title", "long-class", "desc", "edit-div"];
+	var shown_when_expanded = ["long-header", "desc", "edit-div"];
 	
 	let assignment_index = expanded_assignments.findIndex(a => a.assign_id == assign_id);
 	
 	if (document.querySelector("#assignment-" + assign_id).getAttribute("data-expanded") != "true") {
 		// expand the assignment
+		// disable onclick event (now it's just in the long-header)
+		document.querySelector("#assignment-" + assign_id).setAttribute("onclick", "");
+		
 		for (let id of hidden_when_expanded) {
 			document.querySelector("#" + id + "-" + assign_id).classList.add("hidden");
 		}
@@ -409,6 +412,10 @@ async function toggle_expand(assign_id) {
 	}
 	document.querySelector("#assignment-" + assign_id).classList.remove("flex-wrap")
 	document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "false");
+	// add onclick attribute back
+	setTimeout(() => {
+		document.querySelector("#assignment-" + assign_id).setAttribute("onclick", "toggle_expand('" + assign_id + "')");
+	}, 50); // this is given a timeout because otherwise the click event will be triggered instantly
 	expanded_assignments[assignment_index].currently_expanded = false;
 }
 
