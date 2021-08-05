@@ -342,8 +342,7 @@ async function toggle_expand(assign_id) {
 		
 		var endpoint_url = base_endpoint + user.baseurl + "/api/assignment2/read/"+assign_id+"/?format=json";
 		
-		if (is_user_task) {
-			if (!user.debug_mode) return;
+		if (is_user_task && user.debug_mode) {
 			// if it's a user task and debug mode is enabled, fetch the test assignment
 			endpoint_url = "test_data/test_assignment.json";
 		}
@@ -358,28 +357,37 @@ async function toggle_expand(assign_id) {
 			return;
 		}
 		
-		var response = await fetch(endpoint_url).then(a => a.json());
 		var assignment_data = {
 			assign_id,
 			currently_expanded: true,
-			description: response.LongDescription.autoLink(autolink_options),
+			description: "",
 			links: [],
 			downloads: []
 		}
 		
-		for (let link of response.LinkItems) {
-			assignment_data.links.push({
-				url: link.Url,
-				title: link.ShortDescription
-			});
-		}
-		
-		for(let dl of response.DownloadItems) {
-			assignment_data.downloads.push({
-				url: download_endpoint + user.baseurl + dl.DownloadUrl,
-				title: dl.ShortDescription,
-				filename: dl.FriendlyFileName
-			});
+		if (!is_user_task || user.debug_mode) {
+			var response = await fetch(endpoint_url).then(a => a.json());
+			assignment_data = {
+				assign_id,
+				currently_expanded: true,
+				description: response.LongDescription.autoLink(autolink_options),
+				links: [],
+				downloads: []
+			}
+			for (let link of response.LinkItems) {
+				assignment_data.links.push({
+					url: link.Url,
+					title: link.ShortDescription
+				});
+			}
+			
+			for(let dl of response.DownloadItems) {
+				assignment_data.downloads.push({
+					url: download_endpoint + user.baseurl + dl.DownloadUrl,
+					title: dl.ShortDescription,
+					filename: dl.FriendlyFileName
+				});
+			}
 		}
 		
 		expanded_assignments.push(assignment_data);
