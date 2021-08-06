@@ -22,19 +22,20 @@
 			<!-- this will be filled with the template from templates/header.hbs -->
 		</div>
 		<script id="links_template" type="text/x-handlebars-template">
+			<!-- this template is used by multiple sections, including links, downloads, and announcements. -->
 			<div class="rounded-cont bulletin-item link-cont">
 				<h3 class="title">
 						{{title}}
 				</h3>
 				{{#each items}}
-					<a href="{{this.url}}" 
+					<{{#if this.is_link}}a href="{{this.url}}" {{else}}span {{/if}}
 					{{#if this.filename}}
 						download="{{this.filename}}"
 					{{else}} 
 						target="_blank" 
 					{{/if}}>
-						{{this.short_desc}}
-					</a>
+						{{this.short_desc}} {{#if this.date}} - {{this.date}} {{/if}}
+					</{{#if this.is_link}}a {{else}}span{{/if}}>
 				{{/each}}
 			</div>
 		</script>
