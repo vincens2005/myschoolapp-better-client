@@ -794,10 +794,6 @@ body::-webkit-scrollbar {
 	display: block;
 }
 
-#bulletin-sidebar {
-	flex: 0.9 1 auto;
-	justify-content: flex-end;
-}
 
 .current-tab {
 	background: var(--theme-muted-highlight);
