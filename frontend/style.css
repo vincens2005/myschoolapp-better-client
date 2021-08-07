@@ -794,7 +794,6 @@ body::-webkit-scrollbar {
 	display: block;
 }
 
-
 .current-tab {
 	background: var(--theme-muted-highlight);
 }
@@ -840,11 +839,16 @@ body::-webkit-scrollbar {
 
 #topic_items {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(286px, 1fr));
-	grid-template-rows: masonry;
-	gap: 15px;
-	padding-right: max(min(150px, 4vw), 20px);
+	grid-template-columns: repeat(auto-fit, minmax(286px, 1fr)); 
 	padding-bottom: 50px;
+}
+
+#topic_items * {
+	flex-grow: 1;
+}
+
+.small-gap {
+	gap: 15px;
 }
 
 #topic_items > div {
