@@ -7,17 +7,17 @@
 [portalplus.tech](https://portalplus.tech/)
 
 ## Features/Goals
-  - [x] - Faster load speed
-  - [x] - Kanban-style assignment center
-  - [x] - Dark mode
-  - [x] - Better mobile UI
-  - [x] - Easily themable by injecting CSS
-  - [x] - No jQuery
-  - [x] - Remembers last visited page
-  - [x] - username autofill
-  - [x] - no two-step login page
-  - [ ] - API Docs (low priority)
-  - [x] - Open-Source (GPLv3)
+  - [x] Faster load speed
+  - [x] Kanban-style assignment center
+  - [x] Dark mode
+  - [x] Better mobile UI
+  - [x] Easily themable by injecting CSS
+  - [x] No jQuery
+  - [x] Remembers last visited page
+  - [x] username autofill
+  - [x] no two-step login page
+  - [ ] API Docs (low priority)
+  - [x] Open-Source (GPLv3)
 
 ## development
 ### prerequisites
