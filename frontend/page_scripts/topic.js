@@ -32,36 +32,46 @@ async function init() {
 	
 	for (let item of topic_raw) {
 		if (item.ShortDescription || item.LongDescription) {
+			let full_len = (item.LongDescription || "" + item.ShortDescription || "").length
 			topic_items_tmp.push({
 				title: item.ShortDescription || "",
 				description: item.LongDescription || "",
 				url: item.Url,
 				download: item.AllowDownload,
-				is_long: (item.LongDescription || "" + item.ShortDescription || "").length >= 100
+				size: full_len >= 100 ? Math.min(Math.round(full_len / 120), 4) : 1 // magic algorithm
 			});
 		}
 	}
 	
 	var topic_items = [];
+	var current_chunk = {
+		len: 0,
+		items: []
+	}
 	
-	var combine_len = 4; // max number of items in combined column
-	for (let i = 0; i < topic_items_tmp.length;) {
-		// 3 is how much a long item is equivalent to in short items. sorry for bad var name
-		length_difference = topic_items_tmp[i].is_long ? 3 : 0;
-		
-		let children = topic_items_tmp.slice(i, i + combine_len - length_difference)
-		let is_parent = children.length > 1;
-		if (is_parent) {
+	var clear_chunk = () => {
+		if (current_chunk.items.length > 1) {
 			topic_items.push({
-				is_parent,
-				children
+				is_parent: true,
+				children: current_chunk.items
 			});
 		}
 		else {
-			topic_items.push(children[0]);
+			topic_items.push(current_chunk.items[0]);
 		}
-		i += (topic_items_tmp.length >= combine_len ? combine_len - length_difference : topic_items_tmp.length); // yes
+		current_chunk.len = 0;
+		current_chunk.items = [];
 	}
+	
+	for (let item of topic_items_tmp) {
+		if (current_chunk.len + item.size > 4) {
+			clear_chunk();
+		}	
+		current_chunk.items.push(item);
+		current_chunk.len += item.size;
+	}
+	
+	clear_chunk();
 	
 	fill_template("topic_template", {topic_items}, "topic_items", {
 		noEscape: true
