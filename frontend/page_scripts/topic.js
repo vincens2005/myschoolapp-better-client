@@ -36,28 +36,31 @@ async function init() {
 				title: item.ShortDescription || "",
 				description: item.LongDescription || "",
 				url: item.Url,
-				download: item.AllowDownload
+				download: item.AllowDownload,
+				is_long: (item.LongDescription || "" + item.ShortDescription || "").length >= 100
 			});
 		}
 	}
 	
-	var combined_items = [];
 	var topic_items = [];
 	
-	for (let item of topic_items_tmp) {
-		if ((item.description + item.title).length <= 100) {
-			combined_items.push(item); // combine short items into one column
-			continue;
-		}
-		topic_items.push(item);
-	}
-	
 	var combine_len = 4; // max number of items in combined column
-	for (let i = 0; i < combined_items.length; i += (combined_items.length >= combine_len ? combine_len + 1 : combined_items.length)) {
-		topic_items.push({
-			is_parent: true,
-			children: combined_items.slice(i, i + combine_len)
-		});
+	for (let i = 0; i < topic_items_tmp.length;) {
+		// 3 is how much a long item is equivalent to in short items. sorry for bad var name
+		length_difference = topic_items_tmp[i].is_long ? 3 : 0;
+		
+		let children = topic_items_tmp.slice(i, i + combine_len - length_difference)
+		let is_parent = children.length > 1;
+		if (is_parent) {
+			topic_items.push({
+				is_parent,
+				children
+			});
+		}
+		else {
+			topic_items.push(children[0]);
+		}
+		i += (topic_items_tmp.length >= combine_len ? combine_len - length_difference : topic_items_tmp.length); // yes
 	}
 	
 	fill_template("topic_template", {topic_items}, "topic_items", {
