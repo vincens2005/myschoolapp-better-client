@@ -189,6 +189,10 @@ a {
 	padding: 10px;
 }
 
+img.rounded-cont {
+	padding: 0;
+}
+
 .medium-background {
 	background: var(--theme-medium-color);
 }

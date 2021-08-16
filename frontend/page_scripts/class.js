@@ -136,16 +136,20 @@ async function fetch_bulletin(id) {
 				var announcements = [];
 				for (let item of data) {
 					announcements.push({
-						is_link: false,
+						is_link: !!item.Description,
 						short_desc: item.Name,
-						date: item.PublishDateDisplay
+						desc: item.Description || false,
+						date: item.PublishDateDisplay,
+						func: "toggle_announcement"
 					});
 				}
 
 				fill_template("links_template", {
 						items: announcements,
-						title: "Annoncements",
-					}, "bulletin-sidebar");
+						title: "Annoncements"
+					}, "bulletin-sidebar", {
+						noEscape: true
+					});
 			}
 		},
 		// news endpoint
@@ -164,6 +168,16 @@ async function fetch_bulletin(id) {
 				}
 				
 				fill_template("news_template", {items}, "top-bulletin-sections", {
+					noEscape: true
+				});
+			}
+		},
+		// photos endpoint
+		{
+			url: `/api/media/sectionmediaget/${id}/?format=json&contentId=31&editMode=false&active=true&future=false&expired=false&contextLabelId=2`,
+			handler: data => {
+				if (!data.length) return;
+				fill_template("photos_template", {items: data}, "top-bulletin-sections", {
 					noEscape: true
 				});
 			}
@@ -216,4 +230,11 @@ async function fetch_topics(id) {
 	fill_template("roster-template", {
 		people: topics
 	}, "roster-container");
+}
+
+function toggle_announcement(id) {
+	let element = document.querySelector("#toggle_announcement-" + id);
+	if (element.classList.contains("hidden")) return void element.classList.remove("hidden"), element.scrollIntoView();
+	element.classList.add("hidden");
+	element.parentElement.scrollIntoView();
 }

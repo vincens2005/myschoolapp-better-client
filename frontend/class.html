@@ -28,14 +28,21 @@
 						{{title}}
 				</h3>
 				{{#each items}}
-					<{{#if this.is_link}}a href="{{this.url}}" {{else}}div {{/if}}
+					<{{#if this.is_link}}a {{#if this.url}}href="{{this.url}}" {{/if}} {{else}}div {{/if}}
 					{{#if this.filename}}
 						download="{{this.filename}}"
+					{{else if this.func}}
+						onclick="{{this.func}}({{@index}})"
 					{{else}} 
 						target="_blank" 
 					{{/if}}>
 						{{this.short_desc}} {{#if this.date}} - {{this.date}} {{/if}}
 					</{{#if this.is_link}}a {{else}}div{{/if}}>
+					{{#if this.desc}}
+						<div id="{{this.func}}-{{@index}}" class="hidden">
+							{{this.desc}}
+						</div>
+					{{/if}}
 				{{/each}}
 			</div>
 		</script>
@@ -54,6 +61,17 @@
 						<br>
 						{{desc}}
 					</div>
+				{{/items}}
+			</div>
+		</script>
+		
+		<script id="photos_template" type="text/x-handlebars-template">
+			<div class="rounded-cont bulletin-item">
+				<h3 class="title center">
+					photos
+				</h3>
+				{{#items}}
+					<img src="{{CoverFilenameUrl}}" class="rounded-cont person" alt="no image">
 				{{/items}}
 			</div>
 		</script>
