@@ -40,6 +40,23 @@
 			</div>
 		</script>
 
+		<script id="news_template" type="text/x-handlebars-template">
+			<div class="rounded-cont bulletin-item">
+				<h3 class="title center">
+					NEWS
+				</h3>
+				{{#items}}
+					<h4>
+						{{name}}
+					</h4>
+					<div>
+						{{short_desc}}
+						<br>
+						{{desc}}
+					</div>
+				{{/items}}
+			</div>
+		</script>
 
 		<script id="main-template" type="text/x-handlebars-template">
 			{{! this template is used by multiple bulletin sections, including news and forsection. I don't know what a forsection is. }}
@@ -87,6 +104,7 @@
 						<div id="top-bulletin-sections">
 							<!-- top sections (details, news) will go here -->
 						</div>
+						
 						<div id="bulletin-sidebar" class="ohidden standard_transition">
 							<!-- stuff on the side -->
 						</div>

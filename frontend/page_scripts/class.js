@@ -75,7 +75,7 @@ async function fetch_bulletin(id) {
 			handler: data => {
 				if (!data.length) return;
 				var links = []
-				for (var item of data) {
+				for (let item of data) {
 					links.push({
 						url: item.Url,
 						short_desc: item.ShortDescription,
@@ -95,7 +95,7 @@ async function fetch_bulletin(id) {
 			handler: data => {
 				if (!data.length) return;
 				var downloads = []
-				for (var item of data) {
+				for (let item of data) {
 					downloads.push({
 						url: download_endpoint + user.baseurl + item.DownloadUrl,
 						short_desc: item.Description,
@@ -148,9 +148,29 @@ async function fetch_bulletin(id) {
 					}, "bulletin-sidebar");
 			}
 		},
+		// news endpoint
+		{
+			url: `/api/news/forsection/${id}/?format=json&editMode=false&active=true&future=false&expired=false&contextLabelId=2`,
+			handler: data => {
+				if (!data.length) return;
+				let items = [];
+				
+				for (let item of data) {
+					items.push({
+						name: item.Name,
+						short_desc: item.BriefDescription,
+						desc: item.Description
+					});
+				}
+				
+				fill_template("news_template", {items}, "top-bulletin-sections", {
+					noEscape: true
+				});
+			}
+		}
 	]
 
-	for (var endpoint of endpoints) {
+	for (let endpoint of endpoints) {
 		// in this case, use .then rather than await so that these happen simultaniouesutly
 		fetch(base_endpoint + user.baseurl + endpoint.url)
 			.then(a => a.json())

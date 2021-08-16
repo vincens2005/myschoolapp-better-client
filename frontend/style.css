@@ -43,7 +43,7 @@ html {
 /*
 	get rid of stupid safari garbage
 */
-input {
+input, select {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
