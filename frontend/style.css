@@ -206,7 +206,7 @@ img.rounded-cont {
 }
 
 .popup {
-	filter: drop-shadow(-3px 2px 10px var(--theme-shadow-color));
+	filter: drop-shadow(0 3px 2px var(--theme-shadow-color))
 }
 
 .form {
@@ -328,12 +328,13 @@ select, .select-cont::after {
 	margin: 5px;
 	border-radius: 2em;
 	padding: 3px;
-	width: 15px;
-	height: 15px;
-	line-height: 15px;
+	--width-and-height: max(min(1.5vw, 15px), 10px);
+	width: var(--width-and-height);
+	height: var(--width-and-height);
+	line-height: var(--width-and-height);
 	vertical-align: middle;
 	display: inline-block;
-	font-size: 13px;
+	font-size: max(min(2vw, 15px), 10px);
 	text-align: center;
 	transition: 0.3s;
 	cursor: pointer;
@@ -578,7 +579,7 @@ input.button {
 }
 
 #date {
-	font-size: max(min(23px, 2vw), 16px);
+	font-size: max(min(20px, 2vw), 14px);
 }
 
 a:not([class]), .link {
@@ -758,6 +759,8 @@ a:not([class]):hover, .link:hover {
 	left: 0;
 	position: fixed;
 	padding-left: 3px;
+	z-index: 12;
+	filter: drop-shadow(0 2.5px 4px var(--theme-background-color))
 }
 
 .tab-cont .tab {

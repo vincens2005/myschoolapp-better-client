@@ -514,11 +514,12 @@ async function show_add_popup(assign_id) {
 	
 	document.querySelector("#add_task").innerHTML = "";
 	fill_template("usertaskadd_template", template_data, "add_task");
-	if (editing && template_data.classid) document.querySelector("#edit-option-" + template_data.class_id).setAttribute("selected", "true"); 
+	if (editing && template_data.classid) {
+		document.querySelector("#edit-option-" + template_data.class_id).setAttribute("selected", "true");
+		document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";
+		document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
+	}
 	document.querySelector("#add_task").classList.remove("ohidden");
-	
-	document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";
-	document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
 }
 
 async function delete_assignment(assign_id, user_id) {
