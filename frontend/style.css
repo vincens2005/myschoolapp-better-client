@@ -542,6 +542,7 @@ input.button {
 		padding-right: 10px;
 		font-weight: bold;
 		white-space: nowrap;
+		padding: 0;
 	}
 }
 
