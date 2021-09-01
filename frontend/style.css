@@ -327,14 +327,14 @@ select, .select-cont::after {
 	cursor: pointer;
 	margin: 5px;
 	border-radius: 2em;
-	padding: 3px;
 	--width-and-height: max(min(1.5vw, 15px), 10px);
+	padding: calc(var(--width-and-height) / 5);
 	width: var(--width-and-height);
 	height: var(--width-and-height);
 	line-height: var(--width-and-height);
 	vertical-align: middle;
 	display: inline-block;
-	font-size: max(min(2vw, 15px), 10px);
+	font-size: var(--width-and-height);
 	text-align: center;
 	transition: 0.3s;
 	cursor: pointer;
@@ -579,7 +579,7 @@ input.button {
 }
 
 #date {
-	font-size: max(min(20px, 2vw), 14px);
+	font-size: max(min(20px, 2vw), 12px);
 }
 
 a:not([class]), .link {

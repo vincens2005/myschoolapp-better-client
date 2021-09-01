@@ -528,11 +528,17 @@ async function delete_assignment(assign_id, user_id) {
 	save_assignment(user_id, assign_id)
 }
 
-function hide_add_popup() {
+function hide_add_popup(assign_id) {
 	document.querySelector("#add_button").classList.remove("greyedout");
 	document.querySelector("#add_task").classList.add("ohidden");
 	setTimeout(() => {
 		document.querySelector("#add_task").classList.add("hidden");
 		document.querySelector("#add_task").classList.remove("ohidden");
 	}, 400);
+	// if there's no edit button then return
+	if (!document.querySelector("#edit-button-" + assign_id)) return;
+	
+	// make edit button go back to normal
+	document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";
+	document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
 }
