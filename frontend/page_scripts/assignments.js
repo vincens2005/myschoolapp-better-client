@@ -82,6 +82,17 @@ async function init() {
 	if (!drake_started) {
 		dnd_init();
 		setup_keymaster();
+		// fill in add template to make page appear snappier
+		let template_data = {
+			classes: [],
+			fakedata: true,
+			editing: false,
+			user_id: "",
+			assign_id: "",
+			assign_date: dayjs().format("YYYY-MM-DD"),
+			due_date: dayjs().add(1, "d").format("YYYY-MM-DD")
+		}
+		fill_template("usertaskadd_template", template_data, "add_task");
 	}
 }
 
@@ -516,11 +527,11 @@ async function show_add_popup(assign_id) {
 	}
 	
 	document.querySelector("#add_button").classList.add("greyedout");
-	document.querySelector("#add_task").classList.add("ohidden");
-	key.setScope("edittask");
+	document.querySelector("#add_task").classList.remove("hidden");
 	setTimeout(() => {
-		document.querySelector("#add_task").classList.remove("hidden");
-	}, 50);
+		document.querySelector("#add_task").classList.remove("ohidden");
+	}, 50)
+	key.setScope("edittask");
 	
 	// check if user is logged in
 	var loggedin = await logged_in();
@@ -569,7 +580,6 @@ async function show_add_popup(assign_id) {
 		document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";
 		document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
 	}
-	document.querySelector("#add_task").classList.remove("ohidden");
 }
 
 async function delete_assignment(assign_id, user_id) {
@@ -583,7 +593,6 @@ function hide_add_popup(assign_id) {
 	document.querySelector("#add_task").classList.add("ohidden");
 	setTimeout(() => {
 		document.querySelector("#add_task").classList.add("hidden");
-		document.querySelector("#add_task").classList.remove("ohidden");
 	}, 400);
 	key.setScope("default");
 	// if there's no edit button then return

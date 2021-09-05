@@ -162,7 +162,7 @@
 				<input type="date" id="add_due_date" class="inline-input" value="{{due_date}}">
 			</div>
 			
-			<div class="button" 
+			<div class="button {{#if fakedata}} greyedout {{/if}}" 
 				{{#if editing}}
 					onclick="save_assignment({{user_id}}, {{assign_id}})"
 				{{else}}
@@ -178,7 +178,7 @@
 			{{/if}}
 		</script>
 
-		<div id="add_task" class="rounded-cont fixed-center form hidden standard_transition popup">
+		<div id="add_task" class="rounded-cont fixed-center form ohidden hidden standard_transition popup">
 			<!-- this will be filled in with the template in #usertaskadd_template -->
 		</div>
 
