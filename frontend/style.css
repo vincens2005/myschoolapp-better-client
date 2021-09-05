@@ -313,7 +313,6 @@ select {
 	grid-template-areas: "select";
 	border-bottom: 1px solid var(--theme-muted-text);
 	overflow-x: hidden;
-	width: 200px;
 }
 
 select, .select-cont::after {
@@ -698,6 +697,10 @@ a:not([class]):hover, .link:hover {
 
 .indicator-blank {
 	background: var(--theme-lighter-color);
+}
+
+#add_classname {
+	width: 200px;
 }
 
 /* class page stuff */
