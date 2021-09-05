@@ -122,12 +122,9 @@ body {
 
 @media (min-width: 900px) {
 	.scrollable-col {
-		padding-bottom: 250px;
+		height: 70vh;	
 	}
 	
-	.assignment:last-child {
-		margin-bottom: 150px;
-	}
 }
 
 @media (max-width: 900px) {
@@ -244,6 +241,8 @@ img.rounded-cont {
 
 
 input[type=date] {
+	font-weight: normal;
+	font-family: var(--theme-main-font);
 	cursor: pointer;
 	padding-right: 5px;
 }
@@ -280,6 +279,15 @@ input:not([type=submit]) {
 
 input:not([type=submit]):focus {
 	border-bottom: 2px solid var(--theme-text-color);
+}
+
+/*
+	why is chrome so stupid???? 
+	it took me like an hour to find this pseudoelement
+	AND IT'S NOT DOCUMENTED
+*/
+input::-webkit-calendar-picker-indicator {
+	display: none;
 }
 
 select {
@@ -375,6 +383,7 @@ select, .select-cont::after {
 }
 
 .bad_button:hover {
+	filter: unset !important;
 	background: var(--theme-indicator-bad);
 	color: var(--theme-text-color);
 }

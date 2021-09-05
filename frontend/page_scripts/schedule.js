@@ -79,12 +79,19 @@ function attendance_to_color(ind) {
 	return indicators[String(ind)] || "blank";
 }
 
-/** changes the current view date
+/** changes the current view date by a factor in days
  * @param {Number} fac - factor in days to change the date by
  */
 function chschedule_date(fac) {
 	current_view_date = current_view_date.set("date", current_view_date.get("date") + fac);
 	var formatted_date = current_view_date.format("MM/DD/YYYY");
-	history.pushState({}, "", "?date=" + formatted_date);
+	setschedule_date(formatted_date);
+}
+
+/** changes the current view date 
+	* @param {String} date - the date to set the schedule to
+	*/
+function setschedule_date(date) {
+	history.pushState({}, "", "?date=" + date);
 	init();
 }

@@ -127,7 +127,12 @@
 			
 			<input id="add_task_name" placeholder="do stuff" autocomplete="off" type="text" maxlength="500" 
 			{{#if editing}}
-				value="{{assign_name}}"
+				{{#if fakedata}}
+					value="...................."
+					class="greyedout"
+				{{else}}
+					value="{{assign_name}}"
+				{{/if}}
 			{{/if}}
 			>
 			<div>
@@ -152,14 +157,14 @@
 				<span class="input-label">
 					assign date
 				</span>
-				<input type="date" id="add_assign_date" class="inline-input" value="{{assign_date}}">
+				<input type="date" id="add_assign_date" class="inline-input" value="{{assign_date}}" required>
 			</div>
 			
 			<div>
 				<span class="input-label">
 					due date
 				</span>
-				<input type="date" id="add_due_date" class="inline-input" value="{{due_date}}">
+				<input type="date" id="add_due_date" class="inline-input" value="{{due_date}}" required>
 			</div>
 			
 			<div class="button {{#if fakedata}} greyedout {{/if}}" 
@@ -172,7 +177,7 @@
 				save
 			</div>
 			{{#if editing}}
-				<div class="button bad_button" onclick="delete_assignment({{assign_id}})">
+				<div class="button bad_button {{#if fakedata}} greyedout {{/if}}" onclick="delete_assignment({{assign_id}})">
 					delete
 				</div>
 			{{/if}}

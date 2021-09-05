@@ -82,17 +82,6 @@ async function init() {
 	if (!drake_started) {
 		dnd_init();
 		setup_keymaster();
-		// fill in add template to make page appear snappier
-		let template_data = {
-			classes: [],
-			fakedata: true,
-			editing: false,
-			user_id: "",
-			assign_id: "",
-			assign_date: dayjs().format("YYYY-MM-DD"),
-			due_date: dayjs().add(1, "d").format("YYYY-MM-DD")
-		}
-		fill_template("usertaskadd_template", template_data, "add_task");
 	}
 }
 
@@ -226,7 +215,7 @@ function dnd_init() {
 		moves: (el, source, handle, sibling) => {
 			if (document.body.clientWidth < 900) return false;
 			console.log(handle);
-			return handle.tagName != "P" && (handle.parentElement.id == el.id || handle.parentElement.parentElement.id == el.id || handle.parentElement.classList.contains("long_header"));
+			return handle.tagName != "P" && (handle.parentElement.id == el.id || handle.parentElement.parentElement.id == el.id || handle == el|| handle.parentElement.classList.contains("long_header"));
 		}
 	}
 	var drake = dragula(containers, options);
@@ -291,6 +280,21 @@ function setup_keymaster() {
 	}
 	key.setScope("default");
 	key.filter = () => true; // allow keypresses on inputs
+}
+
+function fake_addinput(editing) {
+	// fill in add template to make page appear snappier
+	let template_data = {
+		classes: [],
+		fakedata: true,
+		editing,
+		user_id: "",
+		assign_id: "",
+		assign_date: dayjs().format("YYYY-MM-DD"),
+		due_date: dayjs().add(1, "d").format("YYYY-MM-DD")
+	}
+	document.querySelector("#add_task").innerHTML = "";
+	fill_template("usertaskadd_template", template_data, "add_task");
 }
 
 /** changes the current view date
@@ -520,6 +524,7 @@ async function save_assignment(user_id, assign_id) {
 async function show_add_popup(assign_id) {
 	var editing = !!assign_id;
 	
+	fake_addinput(editing);
 	if (editing) {
 		lastfocused_assign = assign_id;
 		document.querySelector("#edit-button-" + assign_id).innerHTML = "loading...";
@@ -571,15 +576,15 @@ async function show_add_popup(assign_id) {
 		template_data.due_date = dayjs(assignment_data.DueDate, "M/DD/YYYY").format("YYYY-MM-DD");
 		template_data.assign_date = dayjs(assignment_data.AssignedDate, "M/DD/YYYY").format("YYYY-MM-DD");
 		template_data.class_id = assignment_data.SectionId;
+		document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";
+		document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
 	}
 	
 	document.querySelector("#add_task").innerHTML = "";
 	fill_template("usertaskadd_template", template_data, "add_task");
-	if (editing && template_data.classid) {
-		document.querySelector("#edit-option-" + template_data.class_id).setAttribute("selected", "true");
-		document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";
-		document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
-	}
+	document.querySelector("#add_task_name").focus();
+	
+	if (editing && template_data.classid) document.querySelector("#edit-option-" + template_data.class_id).setAttribute("selected", "true");
 }
 
 async function delete_assignment(assign_id, user_id) {
@@ -591,6 +596,7 @@ async function delete_assignment(assign_id, user_id) {
 function hide_add_popup(assign_id) {
 	document.querySelector("#add_button").classList.remove("greyedout");
 	document.querySelector("#add_task").classList.add("ohidden");
+	document.querySelector("#add_task_name").blur();
 	setTimeout(() => {
 		document.querySelector("#add_task").classList.add("hidden");
 	}, 400);
