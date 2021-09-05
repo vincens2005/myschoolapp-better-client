@@ -3,6 +3,8 @@ var drake_started = false;
 var current_view_date;
 var autolink_options = {target: "_blank", onclick: "event.stopPropagation();"};
 var expanded_assignments = [];
+var lastfocused_assign = null;
+var user_id = null;
 async function init() {
 	// reset element transitions
 	document.querySelector("#noassignments").classList.add("ohidden");
@@ -75,6 +77,12 @@ async function init() {
 		return;
 	}
 	fill_in_assignments(assignments_json);
+	
+	// enable drag and drop and initialize keymap
+	if (!drake_started) {
+		dnd_init();
+		setup_keymaster();
+	}
 }
 
 function fill_in_assignments(assignments_raw) {
@@ -156,11 +164,6 @@ function fill_in_assignments(assignments_raw) {
 	for (var assignment of expanded_assignments) {
 		if (assignment.currently_expanded) toggle_expand(assignment.assign_id);
 	}
-
-	// enable drag and drop
-	if (!drake_started) {
-		dnd_init();
-	}
 	
 	document.querySelector("#assignment_container").classList.remove("ohidden");
 }
@@ -240,6 +243,45 @@ function dnd_init() {
 	});
 }
 
+/** this function handles keyboard shortcuts and stuff **/
+function setup_keymaster() {
+	let keymap = [
+		{
+			key: "esc",
+			scope: "default",
+			action: () => {
+				toggle_expand(lastfocused_assign);
+			}
+		},
+		{
+			key: "esc",
+			scope: "edittask",
+			action: () => {
+				hide_add_popup(lastfocused_assign);
+			}
+		}, 
+		{
+			key: "enter",
+			scope: "edittask", 
+			action: () => {
+				save_assignment(user_id, lastfocused_assign);
+			}
+		},
+		{
+			key: "shift+a",
+			scope: "default",
+			action: () => {
+				show_add_popup();
+			}
+		}
+	];
+	for (let action of keymap) {
+		key(action.key, action.scope, action.action);
+	}
+	key.setScope("default");
+	key.filter = () => true; // allow keypresses on inputs
+}
+
 /** changes the current view date
 	* @param {Number} fac - factor in days to change the date by
 	*/
@@ -256,6 +298,8 @@ function change_date(fac) {
 	* @param {String} to_status - the status to which the assignment will be set
 	*/
 async function set_status(index_id, assign_id, user_task, to_status) {
+	lastfocused_assign = assign_id;
+	
 	var send_id = index_id || assign_id; // fallback to assignment id if index id is null
 	fetch_url = base_endpoint + user.baseurl + `/api/assignment2/assignmentstatusupdate/?format=json&assgnmentIndexId=${send_id}&assignmentStatus=${to_status}`;
 	var response = await fetch(fetch_url, {
@@ -322,6 +366,10 @@ function queue_update(index_id, assign_id, user_task, event) {
 }
 
 async function toggle_expand(assign_id) {
+	if (!assign_id) return;
+	
+	lastfocused_assign = assign_id; // for keymap
+	
 	var is_user_task = document.querySelector("#assignment-"+ assign_id).getAttribute("data-user-task") == "true";
 	
 	var hidden_when_expanded = ["assign-title", "short-class"];
@@ -462,15 +510,17 @@ async function show_add_popup(assign_id) {
 	var editing = !!assign_id;
 	
 	if (editing) {
+		lastfocused_assign = assign_id;
 		document.querySelector("#edit-button-" + assign_id).innerHTML = "loading...";
 		document.querySelector("#edit-button-" + assign_id).classList.add("greyedout");
 	}
 	
 	document.querySelector("#add_button").classList.add("greyedout");
 	document.querySelector("#add_task").classList.add("ohidden");
+	key.setScope("edittask");
 	setTimeout(() => {
 		document.querySelector("#add_task").classList.remove("hidden");
-	}, 350);
+	}, 50);
 	
 	// check if user is logged in
 	var loggedin = await logged_in();
@@ -482,7 +532,7 @@ async function show_add_popup(assign_id) {
 	var context_endpoint_url = "/api/webapp/context";
 	var context = await fetch(base_endpoint + user.baseurl + context_endpoint_url).then(a => a.json());
 
-	var user_id = context.UserInfo.UserId;
+	user_id = context.UserInfo.UserId;
 	var classes = [];
 	
 	for (var group of context.Groups) {
@@ -535,6 +585,7 @@ function hide_add_popup(assign_id) {
 		document.querySelector("#add_task").classList.add("hidden");
 		document.querySelector("#add_task").classList.remove("ohidden");
 	}, 400);
+	key.setScope("default");
 	// if there's no edit button then return
 	if (!document.querySelector("#edit-button-" + assign_id)) return;
 	
