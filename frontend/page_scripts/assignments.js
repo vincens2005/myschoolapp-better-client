@@ -178,7 +178,7 @@ var status_ind = {
 		"4": "completed",
 		"1": "completed",
 		"0": "in progress",
-		"-1": "todo",
+		"-1": "to do",
 		"2": "overdue"
 	},
 
@@ -294,12 +294,12 @@ function queue_update(index_id, assign_id, user_task, event) {
 	// cycle status (there's probably a better way to do this but idk)
 	switch(ind_text.toLowerCase()) {
 		case "completed":
-			ind_text = "todo";
+			ind_text = "to do";
 			break;
 		case "in progress":
 			ind_text = "completed";
 			break;
-		case "todo":
+		case "to do":
 			ind_text = "in progress";
 			break;
 		default:
