@@ -305,7 +305,7 @@ select {
 	grid-template-areas: "select";
 	border-bottom: 1px solid var(--theme-muted-text);
 	overflow-x: hidden;
-	max-width: 200px;
+	width: 200px;
 }
 
 select, .select-cont::after {

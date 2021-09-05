@@ -1,5 +1,9 @@
 var redirect;
 async function login() {
+	// grey out login button
+	document.querySelector("#loginbutton").classList.add("greyedout");
+	document.querySelector("#loginbutton").value = "loading...";
+	
 	var baseurl = addhttp(document.querySelector("#baseurl").value);
 	var post_data = {
 		From: "",
@@ -32,16 +36,10 @@ async function login() {
 	}
 	user.username = post_data.Username;
 	user.baseurl = baseurl;
-	user.token = await get_verification_token();
+	user.token = await get_verification_token(); // logging in needs this token
 	save_data(user);
 
-	// grey out login button
-	document.querySelector("#loginbutton").classList.add("greyedout");
-	document.querySelector("#loginbutton").value = "loading...";
-
-	// logging in needs this token
-
-	// this request log you in.
+	// this request to log you in.
 	var login_response = await fetch(base_endpoint + baseurl + "/api/SignIn", {
 		method: "POST",
 		body: JSON.stringify(post_data),
