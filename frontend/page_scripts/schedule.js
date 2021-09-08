@@ -6,7 +6,7 @@ async function init() {
 	schedule_date = safe_decode(schedule_date);
 
 	user = await get_user();
-	user.last_page = location;
+	user.last_page = location.toString();
 	save_data(user);
 
 	// check if user is logged in

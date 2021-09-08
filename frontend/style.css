@@ -843,6 +843,7 @@ body::-webkit-scrollbar {
 	word-wrap: break-word;
 	width: max(min(30vw, 160px), 100px);
 	height: max(min(30vw, 160px), 100px);
+	object-fit: cover;
 }
 
 .person img {

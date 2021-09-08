@@ -21,7 +21,7 @@ async function init() {
 	var end_date = safe_decode(url.searchParams.get("end"));
 
 	user = await get_user();
-	user.last_page = "assignments.html";
+	user.last_page = location.toString();
 	save_data(user);
 
 	// check if user is logged in

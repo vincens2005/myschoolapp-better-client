@@ -17,7 +17,7 @@ async function init() {
 
 	get_header();
 
-	user.last_page = location;
+	user.last_page = location.toString();
 	save_data(user);
 
 	var tab = url.hash.replace(/#/gi, "");

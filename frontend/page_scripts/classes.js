@@ -1,6 +1,6 @@
 async function init() {
 	user = await get_user();
-	user.last_page = location;
+	user.last_page = location.toString();
 	save_data(user);
 
 	// check if user is logged in

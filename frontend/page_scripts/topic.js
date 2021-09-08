@@ -15,7 +15,7 @@ async function init() {
 		return;
 	}
 	
-	user.last_page = location;
+	user.last_page = location.toString();
 	save_data(user);
 	
 	get_header();
