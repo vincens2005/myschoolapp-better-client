@@ -79,6 +79,7 @@ function scroll_horizontally(e) {
 
 /** fills in the header from the template */
 async function get_header() {
+	document.querySelector("#header").classList.add("ohidden", "standard_transition");
 	var template_data = await fetch("templates/header.hbs").then(a => a.text());
 	var tabs = [
 		{
@@ -111,6 +112,7 @@ async function get_header() {
 	var template = Handlebars.compile(template_data);
 	var html = template({tabs});
 	document.querySelector("#header").innerHTML = html;
+	document.querySelector("#header").classList.remove("ohidden")
 }
 
 /** empties element while preserving children with ids

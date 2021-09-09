@@ -214,8 +214,12 @@ function dnd_init() {
 	var options = {
 		moves: (el, source, handle, sibling) => {
 			if (document.body.clientWidth < 900) return false;
-			console.log(handle);
-			return handle.tagName != "P" && (handle.parentElement.id == el.id || handle.parentElement.parentElement.id == el.id || handle == el|| handle.parentElement.classList.contains("long_header"));
+			if (key.isPressed("ctrl") || key.isPressed("alt") || key.isPressed("command")) return true;
+			return handle.tagName != "P" &&
+			(handle.parentElement.id == el.id || 
+				handle.parentElement.parentElement.id == el.id ||
+						handle == el ||
+							handle.parentElement.classList.contains("long_header"));
 		}
 	}
 	var drake = dragula(containers, options);
