@@ -435,6 +435,16 @@ input.button {
 
 /* schedule table stuff */
 
+#schedule_cont {
+	margin-top: calc(60vh - 200px);
+}
+
+@media (max-width: 900px) {
+	#schedule_cont {
+		margin-top: 45px;
+	}
+}
+
 .schedule {
 	border-collapse: collapse;
 	border-radius: 10px;
@@ -489,7 +499,7 @@ input.button {
 	margin: 0;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
 	.schedule td {
 		display: block;
 	}
