@@ -97,6 +97,7 @@ function fill_in_assignments(assignments_raw) {
 	for (var assign of assignments_raw) {
 		// set user.default_description to something for testing capabilities
 		assign.long_description = assign.long_description || user.default_description;
+		assign.long_description = htmltotext(assign.long_description);
 		assign.long_description = assign.long_description.autoLink(autolink_options);
 		assign.short_description = htmltotext(assign.short_description);
 		assignments_tmp.push({
