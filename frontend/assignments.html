@@ -63,9 +63,9 @@
 							{{#if this.user_task}}
 								<span class="link" onclick="show_add_popup({{this.id}})" id="edit-button-{{this.id}}"> edit</span>
 							{{/if}}
-							{{#if this.is_submission}}
+							{{#if this.is_special}}
 								<br>
-								submission assignments are not currently supported. to submit this assignment, use the official client
+								{{this.special_type}} assignments are not currently supported. to submit this assignment, use the official client
 							{{/if}}
 						</div>
 					</div>
