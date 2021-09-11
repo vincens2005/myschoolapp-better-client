@@ -111,8 +111,8 @@ function fill_in_assignments(assignments_raw) {
 			type: assign.assignment_type,
 			desc: assign.long_description,
 			id: assign.assignment_id,
-			is_special: assign.DropboxInd || assign.discussion_ind || false,
-			special_type: assign.DropboxInd ? "submission" : (assign.discussion_ind ? "discussion" : ""),
+			is_special: assign.drop_box_ind || assign.discussion_ind || false,
+			special_type: assign.drop_box_ind ? "submission" : (assign.discussion_ind ? "discussion" : ""),
 			index_id: assign.assignment_index_id,
 			indicator: status_ind.to_readable(assign.assignment_status),
 			user_task: assign.user_task_ind
@@ -439,6 +439,7 @@ async function toggle_expand(assign_id) {
 		
 		if (!is_user_task || user.debug_mode) {
 			var response = await fetch(endpoint_url).then(a => a.json());
+			console.log(response.LongDescription.autoLink())
 			assignment_data = {
 				assign_id,
 				currently_expanded: true,
@@ -446,6 +447,7 @@ async function toggle_expand(assign_id) {
 				links: [],
 				downloads: []
 			}
+			
 			for (let link of response.LinkItems) {
 				assignment_data.links.push({
 					url: link.Url,
