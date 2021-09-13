@@ -127,7 +127,7 @@ function empty_all(element) {
 			node.remove();
 			continue;
 		}
-		empty_all(node)
+		empty_all(node);
 	}
 }
 

@@ -73,7 +73,6 @@ async function fetch_bulletin(id) {
 		{
 			url: `/api/link/forsection/${id}/?format=json&editMode=false&active=false&future=false&expired=false&contextLabelId=2`,
 			handler: data => {
-				if (!data.length) return;
 				var links = []
 				for (let item of data) {
 					links.push({
@@ -93,7 +92,6 @@ async function fetch_bulletin(id) {
 		{
 			url: `/api/download/forsection/${id}/?format=json&editMode=false&active=false&future=false&expired=false&contextLabelId=2`,
 			handler: data => {
-				if (!data.length) return;
 				var downloads = []
 				for (let item of data) {
 					downloads.push({
@@ -115,7 +113,6 @@ async function fetch_bulletin(id) {
 		{
 			url: `/api/text/forsection/${id}/?format=json&contextLabelId=2`,
 			handler: data => {
-				if (!data.length) return;
 				if (!data[0].Description) return;
 
 				var forsection = { // what is a forsection?
@@ -132,7 +129,6 @@ async function fetch_bulletin(id) {
 		{
 			url: `/api/announcement/forsection/${id}/?format=json&active=true&future=false&expired=false&contextLabelId=2`,
 			handler: data => {
-				if (!data.length) return;
 				var announcements = [];
 				for (let item of data) {
 					announcements.push({
@@ -156,7 +152,6 @@ async function fetch_bulletin(id) {
 		{
 			url: `/api/news/forsection/${id}/?format=json&editMode=false&active=true&future=false&expired=false&contextLabelId=2`,
 			handler: data => {
-				if (!data.length) return;
 				let items = [];
 				
 				for (let item of data) {
@@ -176,7 +171,6 @@ async function fetch_bulletin(id) {
 		{
 			url: `/api/media/sectionmediaget/${id}/?format=json&contentId=31&editMode=false&active=true&future=false&expired=false&contextLabelId=2`,
 			handler: data => {
-				if (!data.length) return;
 				fill_template("photos_template", {items: data}, "top-bulletin-sections", {
 					noEscape: true
 				});
@@ -188,7 +182,10 @@ async function fetch_bulletin(id) {
 		// in this case, use .then rather than await so that these happen simultaniouesutly
 		fetch(base_endpoint + user.baseurl + endpoint.url)
 			.then(a => a.json())
-			.then(endpoint.handler);
+			.then(a => {
+				if (!a.length) return;
+				endpoint.handler(a);
+			});
 	}
 	document.querySelector("#bulletin-sidebar").classList.remove("ohidden");
 }

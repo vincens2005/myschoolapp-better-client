@@ -235,10 +235,6 @@ function dnd_init() {
 		to_status = status_ind.to_number(to_status);
 		var user_task = el.getAttribute("data-user-task") == "true";
 		
-		console.log(user_task)
-		console.log(assign_id)
-		console.log(to_status);
-		
 		set_status(index_id, assign_id, user_task, to_status);
 		
 		var indicator = document.querySelector("#assignment-ind-" + assign_id);
@@ -345,7 +341,6 @@ async function set_status(index_id, assign_id, user_task, to_status) {
 
 function queue_update(index_id, assign_id, user_task, event) {
 	event.stopPropagation(); // prevent from bubbling
-	console.log(assign_id)
 	var test_function = a => (!!a && a.assign_id == assign_id);
 	if (assignment_queue.find(test_function)) {
 		var i = assignment_queue.findIndex(test_function);
@@ -355,7 +350,6 @@ function queue_update(index_id, assign_id, user_task, event) {
 	
 	var indicator = document.querySelector("#assignment-ind-" + assign_id);
 	var ind_text = indicator.innerText;
-	console.log(ind_text)
 	// cycle status (there's probably a better way to do this but idk)
 	switch(ind_text.toLowerCase()) {
 		case "completed":
@@ -439,7 +433,6 @@ async function toggle_expand(assign_id) {
 		
 		if (!is_user_task || user.debug_mode) {
 			var response = await fetch(endpoint_url).then(a => a.json());
-			console.log(response.LongDescription.autoLink())
 			assignment_data = {
 				assign_id,
 				currently_expanded: true,
