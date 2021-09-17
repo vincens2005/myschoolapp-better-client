@@ -15,9 +15,10 @@ function init() {
 					strings: [
 						"A better client for MySchoolApp.",
 						"Reverse-engineered from the original webapp.",
+						"\"A godsend\" -Josh",
 						"Faster & lighter than the stock webapp.",
 						"Mobile friendly.",
-						"Aesthetically pleasing.",
+						"Proudly made in vanilla JS",
 						"Are you still reading this?",
 						"Click log in if your school uses BlackBaud's Learning Management System.",
 						"Fine, whatever.",

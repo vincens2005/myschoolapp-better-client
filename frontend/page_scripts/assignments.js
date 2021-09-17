@@ -536,7 +536,7 @@ async function show_add_popup(assign_id) {
 	document.querySelector("#add_task").classList.remove("hidden");
 	setTimeout(() => {
 		document.querySelector("#add_task").classList.remove("ohidden");
-	}, 50)
+	}, 50);
 	key.setScope("edittask");
 	
 	// check if user is logged in
