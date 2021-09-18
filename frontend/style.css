@@ -332,6 +332,8 @@ select, .select-cont::after {
 
 .round-button {
 	background: var(--theme-button-color);
+	color: var(--theme-text-color);
+	text-decoration: none;
 	user-select: none;
 	cursor: pointer;
 	margin: 5px;
@@ -351,6 +353,17 @@ select, .select-cont::after {
 
 .round-button:hover {
 	filter: brightness(1.25); 
+}
+
+#feedback {
+	width: auto;
+	padding: 3px 8px;
+	position: fixed;
+	left: 10px;
+	bottom: 10px;
+	filter: drop-shadow(1px 1px 1px var(--theme-shadow-color));
+	--width-and-height: 12px;
+	background: var(--theme-muted-highlight);
 }
 
 .button {

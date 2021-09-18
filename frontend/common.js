@@ -97,7 +97,12 @@ async function get_header() {
 			title: "assignments",
 			url: "assignments.html",
 			url_matches: ["assignments"]
-		}
+		}//,
+		// {
+		// 	title: "feedback",
+		// 	url: "https://forms.gle/t2XREwBjHR5dGtfD9",
+		// 	url_matches: []
+		// }
 	]
 	for (var tab of tabs) {
 		var cur_url = new URL(location);
@@ -115,6 +120,18 @@ async function get_header() {
 	header.innerHTML = html;
 	header.classList.remove("ohidden");
 	header.setAttribute("data-loaded", "true");
+	
+	// feedback button
+	let feedback_button = document.createElement("a");
+	feedback_button.id = "feedback";
+	feedback_button.classList.add("round-button", "ohidden");
+	feedback_button.href = "https://forms.gle/t2XREwBjHR5dGtfD9";
+	feedback_button.innerText = "feedback";
+	feedback_button.target = "_blank";
+	document.body.appendChild(feedback_button);
+	setTimeout(() => {
+		feedback_button.classList.remove("ohidden");
+	}, 100);
 }
 
 /** empties element while preserving children with ids
