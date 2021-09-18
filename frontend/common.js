@@ -97,12 +97,7 @@ async function get_header() {
 			title: "assignments",
 			url: "assignments.html",
 			url_matches: ["assignments"]
-		}//,
-		// {
-		// 	title: "feedback",
-		// 	url: "https://forms.gle/t2XREwBjHR5dGtfD9",
-		// 	url_matches: []
-		// }
+		}
 	]
 	for (var tab of tabs) {
 		var cur_url = new URL(location);

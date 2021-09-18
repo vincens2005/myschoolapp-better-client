@@ -73,9 +73,16 @@ async function init() {
 		show_popup(popup);
 	}
 
+	var baseurl = url.searchParams.get("baseurl");
+	baseurl = safe_decode(baseurl);
+	if (baseurl) {
+		document.querySelector("#baseurl").value = removehttp(baseurl);
+	}
+
 	user = await get_user();
 	if (!validurl(user.baseurl)) return;
-	document.querySelector("#baseurl").value = removehttp(user.baseurl);
+	// I know this is kind of a dumb way to prioritize the query string, but idgaf
+	document.querySelector("#baseurl").value = baseurl || removehttp(user.baseurl);
 	document.querySelector("#username").value = user.username;
 
 	// grey out login button

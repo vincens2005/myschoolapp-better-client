@@ -14,6 +14,7 @@
 	--theme-dim-shadow-color: #212121;
 	--theme-shadow-color: #161616;
 	--theme-background: var(--theme-background-color);
+	--theme-nagbar-color: red;
 
 	/* indicator colors */
 	--theme-indicator-good: #7ba25c;
@@ -359,11 +360,15 @@ select, .select-cont::after {
 	width: auto;
 	padding: 3px 8px;
 	position: fixed;
-	left: 10px;
-	bottom: 10px;
-	filter: drop-shadow(1px 1px 1px var(--theme-shadow-color));
+	left: 3px;
+	bottom: 3px;
+	filter: brightness(1) drop-shadow(1px 1px 1px var(--theme-shadow-color));
 	--width-and-height: 12px;
 	background: var(--theme-muted-highlight);
+}
+
+#feedback:hover {
+	filter: brightness(1.25) drop-shadow(2px 2px 2px var(--theme-shadow-color));
 }
 
 .button {
@@ -904,7 +909,7 @@ body::-webkit-scrollbar {
 .nagbar {
 	position: fixed;
 	top: 0;
-	background: red;
+	background: var(--theme-nagbar-color);
 	padding: 15px;
 	width: 100%;
 }

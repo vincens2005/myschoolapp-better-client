@@ -18,7 +18,7 @@ function init() {
 						"\"A godsend\" -Josh",
 						"Faster & lighter than the stock webapp.",
 						"Mobile friendly.",
-						"Proudly made in vanilla JS",
+						"Proudly made with vanilla JS",
 						"Are you still reading this?",
 						"Click log in if your school uses BlackBaud's Learning Management System.",
 						"Fine, whatever.",
