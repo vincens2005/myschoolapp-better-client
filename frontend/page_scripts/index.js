@@ -53,4 +53,26 @@ function init() {
 		}
 	});
 	document.querySelector("#landing_page_cont").classList.remove("hidden");
+	
+	let url = new URL(location);
+
+	let baseurl = url.searchParams.get("baseurl");
+	baseurl = safe_decode(baseurl);
+	if (!baseurl) return;
+	url = new URL("login", window.location);
+	url.searchParams.append("baseurl", baseurl);
+	document.querySelector("#loginbutton").href = url.href;
+}
+
+/** stolen from common.js because common.js is 6kb and that's not worth it */
+function safe_decode(uri) {
+	if (!uri) {
+		return uri;
+	}
+	try {
+		return decodeURIComponent(uri.replace(/%(?![0-9][0-9a-fA-F]+)/gi, '%25'));
+	}
+	catch (err) {
+		return decodeURIComponent(uri);
+	}
 }
