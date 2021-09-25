@@ -147,13 +147,18 @@ body {
 }
 
 .scrollable-col::-webkit-scrollbar {
-	opacity: 0;
-	transition: 0.2s;
 	display: block;
-	width: 2px;
+	width: 3px;
+	border-radius: 2px;
 }
 
-.scrollable-col:hover::-webkit-scrollbar {
+.scrollable-col::-webkit-scrollbar-thumb {
+	opacity: 0;
+	transition: 0.2s;
+	border-radius: 2px;
+}
+
+.scrollable-col:hover::-webkit-scrollbar-thumb {
 	opacity: 1;
 	background: var(--theme-muted-highlight);
 }
@@ -834,7 +839,8 @@ html {
 
 .tab-cont::-webkit-scrollbar {
 	display: block;
-	height: 6px;
+	height: 3px;
+	padding: 2px;
 	/* browsers should just support the standard, this sucks */
 	transition: 0.2s;
 }
