@@ -55,7 +55,6 @@ exports.handler = async (event, context) => {
 		body: response_text,
 		headers: {
 			"content-type": String(headers["content-type"]) || "text/plain",
-			"access-control-expose-headers": "set-cookie"
 		},
 		multiValueHeaders: {
 			"set-cookie": cook_header || []
