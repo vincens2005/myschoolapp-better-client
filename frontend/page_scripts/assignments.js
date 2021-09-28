@@ -316,7 +316,6 @@ function change_date(fac) {
 	*/
 async function set_status(index_id, assign_id, user_task, to_status) {
 	lastfocused_assign = assign_id;
-	
 	var send_id = index_id || assign_id; // fallback to assignment id if index id is null
 	fetch_url = base_endpoint + user.baseurl + `/api/assignment2/assignmentstatusupdate/?format=json&assgnmentIndexId=${send_id}&assignmentStatus=${to_status}`;
 	var response = await fetch(fetch_url, {
@@ -331,8 +330,9 @@ async function set_status(index_id, assign_id, user_task, to_status) {
 			"RequestVerificationToken": user.token
 		}
 	}).then(a => a.json());
-
 	if (response.Error) {
+		let loggedin = await try_login();
+		if (loggedin) return set_status(index_id, assign_id, user_task, to_status);
 		location = "login.html?popup=" + encodeURIComponent("please log in and try again") + "&redirect=" + encodeURIComponent(location);
 		return;
 	}
@@ -406,7 +406,7 @@ async function toggle_expand(assign_id) {
 		document.querySelector("#assignment-" + assign_id).classList.add("flex-wrap");
 		document.querySelector("#assignment-" + assign_id).setAttribute("data-expanded", "true");
 		
-		var endpoint_url = base_endpoint + user.baseurl + "/api/assignment2/read/"+assign_id+"/?format=json";
+		var endpoint_url = base_endpoint + user.baseurl + "/api/assignment2/read/" + assign_id + "/?format=json";
 		
 		if (is_user_task && user.debug_mode) {
 			// if it's a user task and debug mode is enabled, fetch the test assignment
@@ -433,6 +433,16 @@ async function toggle_expand(assign_id) {
 		
 		if (!is_user_task || user.debug_mode) {
 			var response = await fetch(endpoint_url).then(a => a.json());
+			if (response.Error) {
+				let loggedin = await try_login();
+				if (loggedin) {
+					response = await fetch(endpoint_url).then(a => a.json()); // do it again
+				}
+				else {
+					location = "login.html?popup=" + encodeURIComponent("this shouldn't happen, but please log in and try again") + "&redirect=" + encodeURIComponent(location);
+					return;
+				}
+			}
 			assignment_data = {
 				assign_id,
 				currently_expanded: true,
@@ -608,4 +618,52 @@ function hide_add_popup(assign_id) {
 	// make edit button go back to normal
 	document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";
 	document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
+}
+
+async function try_login() {
+	let loggedin = await logged_in();
+	if (loggedin) return loggedin;
+	
+	document.querySelector("#loginform").classList.remove("hidden");
+	setTimeout(() => {
+		document.querySelector("#loginform").classList.remove("ohidden");
+		document.querySelector("#password").focus();
+	}, 50);
+	
+	return new Promise(async (resolve, reject) => {
+		// the function to be given to the log in form's onsubmit
+		let onsub_func = async (e) => {
+			e.preventDefault();
+			let post_data = {
+				From: "",
+				InterfaceSource: "WebApp",
+				Username: user.username,
+				Password: document.querySelector("#password").value
+			};
+			if (!post_data.Password) return false;
+			
+			document.querySelector("#loginbutton").classList.add("greyedout");
+			document.querySelector("#loginbutton").value = "loading...";
+			
+			let login_response = await fetch(base_endpoint + user.baseurl + "/api/SignIn", {
+				method: "POST",
+				body: JSON.stringify(post_data),
+				headers: {
+					"RequestVerificationToken": user.token
+				}
+			});
+			login_response = await login_response.json();
+			
+			resolve(login_response.LoginSuccessful); // resolve the promise
+			
+			document.querySelector("#password").blur();
+			document.querySelector("#loginform").classList.add("ohidden");
+			setTimeout(() => {
+				document.querySelector("#loginform").classList.add("hidden");
+				document.querySelector("#loginbutton").classList.remove("greyedout");
+				document.querySelector("#loginbutton").value = "log in";
+			}, 400);
+		}
+		document.querySelector("#actual_form").onsubmit = onsub_func;
+	});
 }

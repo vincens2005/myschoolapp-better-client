@@ -186,6 +186,21 @@
 		<div id="add_task" class="rounded-cont fixed-center form ohidden hidden standard_transition popup">
 			<!-- this will be filled in with the template in #usertaskadd_template -->
 		</div>
+		
+		<div id="loginform" class="fixed-center rounded-cont standard_transition popup form hidden ohidden">
+			<!-- form tag to appease password managers. -->
+			<form onsubmit="return false;" id="actual_form">
+
+				<span class="form-title">
+					Log In
+				</span>
+				<hr class="title_sep">
+
+				<input id="password" type="password" placeholder="password" name="password" autocomplete="current-password" label="password" />
+
+				<input type="submit" value="log in" id="loginbutton" class="button">
+			</form>
+		</div>
 
 		<div class="full-container">
 			<div class="center">
