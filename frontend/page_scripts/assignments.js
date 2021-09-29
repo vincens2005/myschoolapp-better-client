@@ -180,8 +180,8 @@ var status_ind = {
 	},
 
 	text_indicators: { // the actual text to display
-		"4": "completed",
-		"1": "completed",
+		"4": "done",
+		"1": "done",
 		"0": "in progress",
 		"-1": "to do",
 		"2": "overdue"
@@ -231,7 +231,7 @@ function dnd_init() {
 		var assign_id = el.getAttribute("data-assign-id");
 		var index_id = el.getAttribute("data-index-id");
 		var to_status = target.id == "progress" ? "in progress" : target.id;
-		to_status = to_status == "done" ? "completed" : to_status;
+		to_status = to_status == "done" ? "done" : to_status;
 		to_status = status_ind.to_number(to_status);
 		var user_task = el.getAttribute("data-user-task") == "true";
 		
@@ -352,11 +352,11 @@ function queue_update(index_id, assign_id, user_task, event) {
 	var ind_text = indicator.innerText;
 	// cycle status (there's probably a better way to do this but idk)
 	switch(ind_text.toLowerCase()) {
-		case "completed":
+		case "done":
 			ind_text = "to do";
 			break;
 		case "in progress":
-			ind_text = "completed";
+			ind_text = "done";
 			break;
 		case "to do":
 			ind_text = "in progress";
