@@ -493,7 +493,7 @@ async function toggle_expand(assign_id) {
 	expanded_assignments[assignment_index].currently_expanded = false;
 }
 
-async function save_assignment(user_id, assign_id) {
+async function save_assignment(user_id, assign_id, second_try) {
 	document.querySelector("#add_button").classList.remove("greyedout");
 	document.querySelector("#save_assign").classList.add("greyedout");
 	document.querySelector("#save_assign").value = "loading...";
@@ -518,16 +518,15 @@ async function save_assignment(user_id, assign_id) {
 		}
 	}).then(a => a.json());
 	
+	hide_add_popup();
+	
 	if (response.Error) {
+		if (second_try) location = "login.html?popup=" + encodeURIComponent("this is a huge error that you should never see") + "&redirect=" + encodeURIComponent(location); return;
+		let loggedin = await try_login();
+		if (loggedin) return save_assignment(user_id, assign_id, true);
 		location = "login.html?popup=" + encodeURIComponent("please log in and try again") + "&redirect=" + encodeURIComponent(location);
 		return;
 	}
-	
-	document.querySelector("#add_task").classList.add("ohidden");
-	setTimeout(() => {
-		document.querySelector("#add_task").classList.add("hidden");
-		document.querySelector("#add_task").classList.remove("ohidden");
-	}, 400);
 	
 	init();
 }
@@ -550,7 +549,7 @@ async function show_add_popup(assign_id) {
 	key.setScope("edittask");
 	
 	// check if user is logged in
-	var loggedin = await logged_in();
+	var loggedin = await try_login();
 	if (!loggedin) {
 		location = "login.html?redirect=" + encodeURIComponent(location);
 		return;
@@ -599,6 +598,8 @@ async function show_add_popup(assign_id) {
 }
 
 async function delete_assignment(assign_id, user_id) {
+	expanded_assignments.splice(expanded_assignments.findIndex(a => a.assign_id == assign_id), 1);
+	lastfocused_assign = null;
 	document.querySelector("#add_due_date").value = "1970-01-01";
 	document.querySelector("#add_assign_date").value = "1970-01-01";
 	save_assignment(user_id, assign_id)
@@ -621,8 +622,10 @@ function hide_add_popup(assign_id) {
 }
 
 async function try_login() {
+	let old_scope = key.getScope();
+	key.setScope("loginform");
 	let loggedin = await logged_in();
-	if (loggedin) return loggedin;
+	if (loggedin) return key.setScope(old_scope), loggedin;
 	
 	document.querySelector("#loginform").classList.remove("hidden");
 	setTimeout(() => {
@@ -634,6 +637,8 @@ async function try_login() {
 		// the function to be given to the log in form's onsubmit
 		let onsub_func = async (e) => {
 			e.preventDefault();
+			user.token = await get_verification_token(); // this token needs to be regenerated per session
+			save_data(user);
 			let post_data = {
 				From: "",
 				InterfaceSource: "WebApp",
@@ -663,6 +668,7 @@ async function try_login() {
 				document.querySelector("#loginbutton").classList.remove("greyedout");
 				document.querySelector("#loginbutton").value = "log in";
 			}, 400);
+			key.setScope(old_scope);
 		}
 		document.querySelector("#actual_form").onsubmit = onsub_func;
 	});

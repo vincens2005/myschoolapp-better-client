@@ -30,10 +30,10 @@ async function login() {
 		return;
 	}
 	
-	// store form data for future speed
 	if (user.username != post_data.Username) {
 		localforage.removeItem("user"); // clear data if different user
 	}
+	// store form data for future speed
 	user.username = post_data.Username;
 	user.baseurl = baseurl;
 	user.token = await get_verification_token(); // logging in needs this token
