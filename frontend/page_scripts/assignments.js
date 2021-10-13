@@ -94,20 +94,22 @@ function fill_in_assignments(assignments_raw) {
 		max_title_len = -30.5507 + 0.1154 * screen_width; // don't worry about where these numbers came from
 		max_title_len = Math.max(max_title_len, 5);
 	}
+	let parser = new DOMParser();
 	for (var assign of assignments_raw) {
 		// set user.default_description to something for testing capabilities
 		assign.long_description = assign.long_description || user.default_description;
 		assign.long_description = htmltotext(assign.long_description);
 		assign.long_description = assign.long_description.autoLink(autolink_options);
-		assign.short_description = htmltotext(assign.short_description);
+		assign.text_title = htmltotext(assign.short_description);
+		let long_title = parser.parseFromString(assign.short_description, "text/html").body.innerHTML; // make sure HTML isn't broken
 		assignments_tmp.push({
 			short_class: assign.groupname.length > 21 ? assign.groupname.slice(0, 21) + "..." : assign.groupname,
 			long_class: assign.groupname,
 			assign_date: dayjs(assign.date_assigned, "M/DD/YYYY").fromNow(),
 			due_date: dayjs(assign.date_due, "M/DD/YYYY").fromNow(),
 			raw_due_date: dayjs(assign.date_due, "M/DD/YYYY").unix(),
-			title: assign.short_description.length > max_title_len - 1 ? assign.short_description.slice(0, max_title_len) + "..." : assign.short_description,
-			long_title: assign.short_description,
+			title: assign.text_title.length > max_title_len - 1 ? assign.text_title.slice(0, max_title_len) + "..." : assign.text_title,
+			long_title,
 			type: assign.assignment_type,
 			desc: assign.long_description,
 			id: assign.assignment_id,

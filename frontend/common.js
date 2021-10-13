@@ -210,5 +210,8 @@ function validurl(url) {
 function htmltotext(html) {
 	let el = document.createElement("span");
 	el.innerHTML = html;
-	return el.innerText;
+	text = el.innerText;
+	text = text.replace(/</g, "&lt;");
+	text = text.replace(/>/g, "&gt;");
+	return text;
 }
