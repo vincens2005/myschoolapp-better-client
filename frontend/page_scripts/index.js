@@ -49,10 +49,10 @@ function init() {
 					backDelay: 780,
 					loopDelay: 12000
 				});
+				document.querySelector("#loginbutton").classList.remove("ohidden");
 			}, 150);
 		}
 	});
-	document.querySelector("#landing_page_cont").classList.remove("hidden");
 	
 	let url = new URL(location);
 
@@ -76,3 +76,4 @@ function safe_decode(uri) {
 		return decodeURIComponent(uri);
 	}
 }
+window.addEventListener("DOMContentLoaded", init);

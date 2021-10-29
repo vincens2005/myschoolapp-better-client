@@ -22,6 +22,11 @@
 		<div id="header" onwheel="scroll_horizontally(event)" class="tab-cont">
 			<!-- this will be filled with the template from templates/header.hbs -->
 		</div>
+		<noscript>
+			<div class="nagbar center">
+				portal++ requires JavaScript. Please enable it or upgrade your browser
+			</div>
+		</noscript>
 		<script id="schedule_template" type="text/x-handlebars-template">
 			{{#each schedule}}
 				<tr>
