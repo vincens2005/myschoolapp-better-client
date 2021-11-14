@@ -49,7 +49,9 @@ function init() {
 					backDelay: 780,
 					loopDelay: 12000
 				});
-				document.querySelector("#loginbutton").classList.remove("ohidden");
+				setTimeout(() => {
+					document.querySelector("#loginbutton").classList.remove("ohidden");
+				}, 1000)
 			}, 150);
 		}
 	});
