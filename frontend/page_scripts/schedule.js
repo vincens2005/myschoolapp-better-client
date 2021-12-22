@@ -20,12 +20,14 @@ async function init() {
 
 	var endpoint_url = "/api/schedule/MyDayCalendarStudentList";
 	if (schedule_date) {
-		current_view_date = dayjs(schedule_date, "MM/DD/YYYY");
-		if (current_view_date.isValid()) {
+		let new_date = dayjs(schedule_date, "MM/DD/YYYY");
+		if (new_date.isValid() && !new_date.isSame(current_view_date)) {
 			endpoint_url += "?scheduleDate=" + schedule_date;
+			current_view_date = new_date;
 		}
 		else {
-			current_view_date = dayjs();
+			url.searchParams.delete("date");
+			history.pushState({}, "", url);
 		}
 	}
 	document.querySelector("#date").innerHTML = "schedule for " + current_view_date.format("MM/DD/YYYY");

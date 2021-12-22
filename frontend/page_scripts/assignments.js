@@ -45,6 +45,10 @@ async function init() {
 			let tmp_send = possible_date.format("MM/DD/YYYY");
 			date_to_send.start = tmp_send;
 			date_to_send.end = tmp_send;
+			if (possible_date.isSame(date_today)) {
+				url.searchParams.delete("date");
+				history.pushState({}, "", url);
+			}
 		}
 	}
 
