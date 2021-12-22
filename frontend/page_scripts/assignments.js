@@ -113,9 +113,10 @@ function fill_in_assignments(assignments_raw) {
 			type: assign.assignment_type,
 			desc: assign.long_description,
 			id: assign.assignment_id,
+			index_id: assign.assignment_index_id,
 			is_special: assign.drop_box_ind || assign.discussion_ind || false,
 			special_type: assign.drop_box_ind ? "submission" : (assign.discussion_ind ? "discussion" : ""),
-			index_id: assign.assignment_index_id,
+			official_url: user.baseurl + `/app/student#assignmentdetail/${assign.assignment_id}/${assign.assignment_index_id}/0/assignmentdetail--${assign.assignment_id}--${assign.assignment_index_id}--0`,
 			indicator: status_ind.to_readable(assign.assignment_status),
 			user_task: assign.user_task_ind
 		});
