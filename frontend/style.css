@@ -272,7 +272,6 @@ input:not([type=submit]) {
 	background: transparent;
 	border-top: none;
 	border-left: none;
-	display: block;
 	outline: 0;
 	border-radius: 0;
 	border-right: none;
@@ -285,6 +284,10 @@ input:not([type=submit]) {
 
 input:not([type=submit]):focus {
 	border-bottom: 2px solid var(--theme-text-color);
+}
+
+input:not([type=submit]):not(.hidden) {
+	display: block;
 }
 
 /*
