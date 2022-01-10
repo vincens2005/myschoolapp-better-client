@@ -894,6 +894,11 @@ body::-webkit-scrollbar {
 	*/
 }
 
+.rounded-cont:not(.person) img {
+	max-width: 100%;
+	border-radius: 8px;
+}
+
 #topic_items {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(286px, 1fr)); 
