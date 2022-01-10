@@ -17,7 +17,7 @@ function init() {
 						"Reverse-engineered from the original webapp.",
 						"\"A godsend\" -Josh",
 						"Faster & lighter than the stock webapp.",
-						"Mobile friendly.",
+						"Mobile friendly :)",
 						"Proudly made with vanilla JS",
 						"Are you still reading this?",
 						"Click log in if you're ",
