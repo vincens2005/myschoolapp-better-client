@@ -13,19 +13,19 @@ function init() {
 			setTimeout(() => {
 				wiatal("#desc_span", {
 					strings: [
-						"A better client for MySchoolApp.",
+						"A better client for the Bush portal.",
 						"Reverse-engineered from the original webapp.",
 						"\"A godsend\" -Josh",
 						"Faster & lighter than the stock webapp.",
 						"Mobile friendly.",
 						"Proudly made with vanilla JS",
 						"Are you still reading this?",
-						"Click log in if your school uses BlackBaud's Learning Management System.",
+						"Click log in if you're ",
 						"Fine, whatever.",
 						"This thing is fast though.",
 						"The mobile site is better too.",
 						"It has dark mode.",
-						"Actually, it only has dark mode.",
+						"Actually, it only has dark mode (for now).",
 						"screw light mode.",
 						"haha it go brrrrrrrrrrrr.",
 						"no?",
