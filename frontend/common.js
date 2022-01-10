@@ -17,7 +17,7 @@ async function get_user() {
 	nuser = await localforage.getItem("user");
 	if (!nuser || !removehttp(nuser.baseurl)) {
 		nuser = {
-			baseurl: "",
+			baseurl: "https://bush.myschoolapp.com",
 			username: "",
 			last_page: "schedule.html",
 			// enabling debug mode allows the client to fetch test data and fill it in on blank templates
