@@ -111,3 +111,5 @@ function show_popup(text) {
 	document.querySelector("#popup").innerText = text;
 	document.querySelector("#popup").classList.remove("ohidden");
 }
+
+window.addEventListener("DOMContentLoaded", init);
