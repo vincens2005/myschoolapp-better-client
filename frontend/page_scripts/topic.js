@@ -84,3 +84,5 @@ function setup_handlebars_helper() {
 		return;
 	});
 }
+
+window.addEventListener("DOMContentLoaded", init);

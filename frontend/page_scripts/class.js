@@ -235,3 +235,6 @@ function toggle_announcement(id) {
 	element.classList.add("hidden");
 	element.parentElement.scrollIntoView();
 }
+
+window.addEventListener("DOMContentLoaded", init);
+window.addEventListener("hashchange", init);

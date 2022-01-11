@@ -680,3 +680,5 @@ async function try_login() {
 		document.querySelector("#actual_form").onsubmit = onsub_func;
 	});
 }
+
+window.addEventListener("DOMContentLoaded", init);

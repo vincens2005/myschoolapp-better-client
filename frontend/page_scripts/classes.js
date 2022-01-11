@@ -36,3 +36,5 @@ async function init() {
 	fill_template("class_template", {classes}, "output");
 	document.querySelector("#output").classList.remove("ohidden");
 }
+
+window.addEventListener("DOMContentLoaded", init);

@@ -98,3 +98,5 @@ function setschedule_date(date) {
 	history.pushState({}, "", "?date=" + date);
 	init();
 }
+
+window.addEventListener("DOMContentLoaded", init);
