@@ -63,3 +63,8 @@
 	[plugins.inputs.minifierOptions]
 	mangle = true
 	ecma = 9
+
+[[redirects]]
+	from = "*/theme.css"
+	to = "/.netlify/functions/theme"
+	status = 200

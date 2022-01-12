@@ -1,0 +1,25 @@
+:root {
+	--theme-button-color: #1b776a;
+	--theme-muted-highlight: #456a65;
+	--theme-background-color: #2c2c2c;
+	--theme-lighter-color: #3e3e3e;
+	--theme-medium-color: #2e2e2e;
+	--theme-darker-color: #202020;
+	--theme-muted-text: #b9b9b9;
+
+	--theme-text-color: white;
+	--theme-link-color: #619eb3;
+	--theme-dim-shadow-color: #212121;
+	--theme-shadow-color: #161616;
+	--theme-background: var(--theme-background-color);
+	--theme-nagbar-color: red;
+
+	/* indicator colors */
+	--theme-indicator-good: #7ba25c;
+	--theme-indicator-okay: #b7925c;
+	--theme-indicator-todo: #9e89c8;
+	--theme-indicator-bad: #da5858;
+	
+	--theme-main-font: 'Noto Sans', sans-serif;
+	--theme-main-font-size: 15.5px;
+}
