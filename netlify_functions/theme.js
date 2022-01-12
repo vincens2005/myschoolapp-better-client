@@ -1,6 +1,6 @@
 exports.handler = async (event, context) => {
 	let default_theme = "default.css"
-	let theme_name = event.headers.cookie.match(/(?<=theme=)[^;]+/g) || default_theme;
+	let theme_name = event.headers.cookie ? event.headers.cookie.match(/(?<=theme=)[^;]+/g) || default_theme : default_theme;
 	
 	return {
 		statusCode: 301,
