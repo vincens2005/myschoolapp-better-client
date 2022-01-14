@@ -97,14 +97,25 @@ body {
 	transition: 0.15s;
 	scrollbar-width: thin;
 	padding: 2px;
+	padding-bottom: 40px;
 	scrollbar-color: transparent transparent;
 }
 
 @media (min-width: 900px) {
 	.scrollable-col {
-		height: 70vh;	
+		height: calc(100vh - 210px);
+		--scroll-gradient: linear-gradient(to bottom, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 90%, rgba(0,0,0,0) 96%);
+		mask-image: var(--scroll-gradient);
+		-webkit-mask-image: var(--scroll-gradient); /* seriously chrome? I would expect this from safari maybe, but not chrome */
 	}
-	
+	.col-parent {
+		height: 100%;
+		overflow: visible;
+	}
+	#assignments_fullcont {
+		height: calc(100vh - 80px);
+		overflow: hidden;
+	}
 }
 
 @media (max-width: 900px) {
@@ -112,9 +123,6 @@ body {
 		height: auto;
 	}
 	
-	.assignment:last-child {
-		margin-bottom: 30px;
-	}
 	.col-parent {
 		width: 100%;
 		flex-basis: 100%;
