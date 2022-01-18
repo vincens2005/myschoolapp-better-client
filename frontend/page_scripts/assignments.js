@@ -68,7 +68,6 @@ async function init() {
 	document.querySelector("#date").innerHTML = "assignments for " + current_view_date;
 
 	// send the request
-	// TODO: figure out what the `persona` param does
 	var assignment_req = await fetch(base_endpoint + user.baseurl + "/api/DataDirect/AssignmentCenterAssignments/?format=json&filter=2&dateStart=" + date_to_send.start + "&dateEnd=" + date_to_send.end + "&persona=2");
 	var assignments_json = await assignment_req.json();
 	
@@ -99,13 +98,23 @@ function fill_in_assignments(assignments_raw) {
 		max_title_len = Math.max(max_title_len, 5);
 	}
 	let parser = new DOMParser();
-	for (var assign of assignments_raw) {
+	for (let assign of assignments_raw) {
 		// set user.default_description to something for testing capabilities
 		assign.long_description = assign.long_description || user.default_description;
 		assign.long_description = htmltotext(assign.long_description);
 		assign.long_description = assign.long_description.autoLink(autolink_options);
 		assign.text_title = htmltotext(assign.short_description);
 		let long_title = parser.parseFromString(assign.short_description, "text/html").body.innerHTML; // make sure HTML isn't broken
+		
+		// TODO: there is probably also a special page for assesments.
+		let official_url = "";
+		if (assign.discussion_ind) {
+			official_url = user.baseurl + `/app/student#discussiondetail/${assign.assignment_id}/${assign.assignment_index_id}/Assignments`;
+		}
+		else {
+			official_url = user.baseurl + `/app/student#assignmentdetail/${assign.assignment_id}/${assign.assignment_index_id}/0/assignmentdetail--${assign.assignment_id}--${assign.assignment_index_id}--0`;
+		}
+		
 		assignments_tmp.push({
 			short_class: assign.groupname.length > 21 ? assign.groupname.slice(0, 21) + "..." : assign.groupname,
 			long_class: assign.groupname,
@@ -120,7 +129,7 @@ function fill_in_assignments(assignments_raw) {
 			index_id: assign.assignment_index_id,
 			is_special: assign.drop_box_ind || assign.discussion_ind || assign.assessment_ind || false,
 			special_type: assign.drop_box_ind ? "submission" : (assign.discussion_ind ? "discussion" : (assign.assessment_ind ? "assessment" : "")),
-			official_url: user.baseurl + `/app/student#assignmentdetail/${assign.assignment_id}/${assign.assignment_index_id}/0/assignmentdetail--${assign.assignment_id}--${assign.assignment_index_id}--0`,
+			official_url,
 			indicator: status_ind.to_readable(assign.assignment_status),
 			user_task: assign.user_task_ind,
 			section_id: assign.section_id || false
