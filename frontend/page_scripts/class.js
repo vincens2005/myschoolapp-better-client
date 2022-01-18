@@ -125,6 +125,22 @@ async function fetch_bulletin(id) {
 				});
 			}
 		},
+		// syllabus section
+		{
+			url: `/api/syllabus/forsection/${id}/?format=json&active=true&future=false&expired=false`,
+			handler: data => {
+				let items = [];
+				for (let item of data) {
+					items.push({
+						short_desc: item.ShortDescription,
+						description: item.Description.replace(/(?<=style.*)color:\s*(#000000|black);?/g, "") // use default css color instead of black
+					})
+				}
+				fill_template("syllabus_template", {items}, "top-bulletin-sections", {
+					noEscape: true
+				});
+			}
+		},
 		// announcements endpoint
 		{
 			url: `/api/announcement/forsection/${id}/?format=json&active=true&future=false&expired=false&contextLabelId=2`,

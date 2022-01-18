@@ -108,10 +108,16 @@ body {
 		mask-image: var(--scroll-gradient);
 		-webkit-mask-image: var(--scroll-gradient); /* seriously chrome? I would expect this from safari maybe, but not chrome */
 	}
+	
+	.assignment:last-child {
+		margin-bottom: 50px;
+	}
+	
 	.col-parent {
 		height: 100%;
 		overflow: visible;
 	}
+	
 	#assignments_fullcont {
 		height: calc(100vh - 80px);
 		overflow: hidden;
@@ -430,7 +436,7 @@ input.button {
 /* landing page stuff */
 
 #landing_page_cont {
-	margin-top: calc(50vh - 200px);
+	margin-top: max(min(calc(50vh - 200px), 200px), 10px);
 }
 
 #landing_page_cont > h1 {

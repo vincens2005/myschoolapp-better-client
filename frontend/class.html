@@ -53,6 +53,23 @@
 				{{/each}}
 			</div>
 		</script>
+		
+		<script id="syllabus_template" type="text/x-handlebars-template">
+			<div class="rounded-cont bulletin-item">
+				<h3 class="title">
+					Syllabus
+				</h3>
+				{{#items}}
+					<span>
+						{{short_desc}}
+					</span>
+					<div>
+						{{description}}
+					</div>
+					<hr>
+				{{/items}}
+			</div>
+		</script>
 
 		<script id="news_template" type="text/x-handlebars-template">
 			<div class="rounded-cont bulletin-item">
