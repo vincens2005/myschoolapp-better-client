@@ -358,40 +358,31 @@ async function set_status(index_id, assign_id, user_task, to_status) {
 
 function queue_update(index_id, assign_id, user_task, event) {
 	event.stopPropagation(); // prevent from bubbling
-	var test_function = a => (!!a && a.assign_id == assign_id);
+	let test_function = a => (!!a && a.assign_id == assign_id);
 	if (assignment_queue.find(test_function)) {
-		var i = assignment_queue.findIndex(test_function);
+		let i = assignment_queue.findIndex(test_function);
 		clearTimeout(assignment_queue[i].timeout);
 		delete assignment_queue[i];
 	}
 	
-	var indicator = document.querySelector("#assignment-ind-" + assign_id);
-	var ind_text = indicator.innerText;
-	// cycle status (there's probably a better way to do this but idk)
-	switch(ind_text.toLowerCase()) {
-		case "done":
-			ind_text = "to do";
-			break;
-		case "in progress":
-			ind_text = "done";
-			break;
-		case "to do":
-			ind_text = "in progress";
-			break;
-		default:
-			return;
-	}
+	let indicator = document.querySelector("#assignment-ind-" + assign_id);
+	let ind_text = indicator.innerText.toLowerCase();
+	let statuses = ["to do", "in progress", "done"];
+	// cycle status
+	let new_status_index = statuses.findIndex(a => a == ind_text) + 1;
+	new_status_index = new_status_index < statuses.length ? new_status_index : 0;
+	ind_text = statuses[new_status_index];
+		
+	let to_status = status_ind.to_number(ind_text);
 	
-	var to_status = status_ind.to_number(ind_text);
-	
-	var timeout = setTimeout(() => {
+	let timeout = setTimeout(() => {
 		set_status(index_id, assign_id, user_task, to_status);
 	}, 500);
 	
 	assignment_queue.push({timeout, assign_id});
 	
 	// update css class
-	var new_status = status_ind.to_readable(to_status);
+	let new_status = status_ind.to_readable(to_status);
 	indicator.classList.remove(...indicator.classList);
 	indicator.classList.add("round-indicator", "indicator-" + new_status.class);
 	indicator.innerHTML = new_status.text;
