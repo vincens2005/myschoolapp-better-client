@@ -122,6 +122,15 @@ body {
 		height: calc(100vh - 80px);
 		overflow: hidden;
 	}
+	
+	#bulletin-sidebar {
+		position: sticky;
+		top: 10px;
+		max-width: max(25vw, 200px);
+		height: calc(100vh - 45px);
+		mask-image: none;
+		padding-top: 0;
+	}
 }
 
 @media (max-width: 900px) {
@@ -855,12 +864,6 @@ body::-webkit-scrollbar {
 	margin-bottom: 20px;
 	margin-right: 20px;
 	max-width: max(50vw, 400px);
-}
-
-#bulletin-sidebar {
-	position: sticky;
-	top: 10px;
-	max-width: max(20vw, 200px);
 }
 
 .link-cont a {
