@@ -108,13 +108,28 @@ body {
 		mask-image: var(--scroll-gradient);
 		-webkit-mask-image: var(--scroll-gradient); /* seriously chrome? I would expect this from safari maybe, but not chrome */
 	}
+	
+	.assignment:last-child {
+		margin-bottom: 50px;
+	}
+	
 	.col-parent {
 		height: 100%;
 		overflow: visible;
 	}
+	
 	#assignments_fullcont {
 		height: calc(100vh - 80px);
 		overflow: hidden;
+	}
+	
+	#bulletin-sidebar {
+		position: sticky;
+		top: 10px;
+		max-width: max(25vw, 200px);
+		height: calc(100vh - 45px);
+		mask-image: none;
+		padding-top: 0;
 	}
 }
 
@@ -430,7 +445,7 @@ input.button {
 /* landing page stuff */
 
 #landing_page_cont {
-	margin-top: calc(50vh - 200px);
+	margin-top: max(min(calc(50vh - 200px), 200px), 10px);
 }
 
 #landing_page_cont > h1 {
@@ -735,7 +750,7 @@ a:not([class]):hover, .link:hover {
 }
 
 #page-cont {
-	padding: max(20px, 10vh) 10vw 0;
+	padding: max(20px, 10vh) min(100px, 10vw) 0;
 	display: block;
 }
 
@@ -848,6 +863,7 @@ body::-webkit-scrollbar {
 	padding: 20px 35px;
 	margin-bottom: 20px;
 	margin-right: 20px;
+	max-width: max(50vw, 400px);
 }
 
 .link-cont a {

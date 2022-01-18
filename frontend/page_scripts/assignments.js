@@ -68,7 +68,6 @@ async function init() {
 	document.querySelector("#date").innerHTML = "assignments for " + current_view_date;
 
 	// send the request
-	// TODO: figure out what the `persona` param does
 	var assignment_req = await fetch(base_endpoint + user.baseurl + "/api/DataDirect/AssignmentCenterAssignments/?format=json&filter=2&dateStart=" + date_to_send.start + "&dateEnd=" + date_to_send.end + "&persona=2");
 	var assignments_json = await assignment_req.json();
 	
@@ -99,13 +98,23 @@ function fill_in_assignments(assignments_raw) {
 		max_title_len = Math.max(max_title_len, 5);
 	}
 	let parser = new DOMParser();
-	for (var assign of assignments_raw) {
+	for (let assign of assignments_raw) {
 		// set user.default_description to something for testing capabilities
 		assign.long_description = assign.long_description || user.default_description;
 		assign.long_description = htmltotext(assign.long_description);
 		assign.long_description = assign.long_description.autoLink(autolink_options);
 		assign.text_title = htmltotext(assign.short_description);
 		let long_title = parser.parseFromString(assign.short_description, "text/html").body.innerHTML; // make sure HTML isn't broken
+		
+		// TODO: there is probably also a special page for assesments.
+		let official_url = "";
+		if (assign.discussion_ind) {
+			official_url = user.baseurl + `/app/student#discussiondetail/${assign.assignment_id}/${assign.assignment_index_id}/Assignments`;
+		}
+		else {
+			official_url = user.baseurl + `/app/student#assignmentdetail/${assign.assignment_id}/${assign.assignment_index_id}/0/assignmentdetail--${assign.assignment_id}--${assign.assignment_index_id}--0`;
+		}
+		
 		assignments_tmp.push({
 			short_class: assign.groupname.length > 21 ? assign.groupname.slice(0, 21) + "..." : assign.groupname,
 			long_class: assign.groupname,
@@ -120,9 +129,10 @@ function fill_in_assignments(assignments_raw) {
 			index_id: assign.assignment_index_id,
 			is_special: assign.drop_box_ind || assign.discussion_ind || assign.assessment_ind || false,
 			special_type: assign.drop_box_ind ? "submission" : (assign.discussion_ind ? "discussion" : (assign.assessment_ind ? "assessment" : "")),
-			official_url: user.baseurl + `/app/student#assignmentdetail/${assign.assignment_id}/${assign.assignment_index_id}/0/assignmentdetail--${assign.assignment_id}--${assign.assignment_index_id}--0`,
+			official_url,
 			indicator: status_ind.to_readable(assign.assignment_status),
-			user_task: assign.user_task_ind
+			user_task: assign.user_task_ind,
+			section_id: assign.section_id || false
 		});
 	}
 
@@ -348,40 +358,31 @@ async function set_status(index_id, assign_id, user_task, to_status) {
 
 function queue_update(index_id, assign_id, user_task, event) {
 	event.stopPropagation(); // prevent from bubbling
-	var test_function = a => (!!a && a.assign_id == assign_id);
+	let test_function = a => (!!a && a.assign_id == assign_id);
 	if (assignment_queue.find(test_function)) {
-		var i = assignment_queue.findIndex(test_function);
+		let i = assignment_queue.findIndex(test_function);
 		clearTimeout(assignment_queue[i].timeout);
 		delete assignment_queue[i];
 	}
 	
-	var indicator = document.querySelector("#assignment-ind-" + assign_id);
-	var ind_text = indicator.innerText;
-	// cycle status (there's probably a better way to do this but idk)
-	switch(ind_text.toLowerCase()) {
-		case "done":
-			ind_text = "to do";
-			break;
-		case "in progress":
-			ind_text = "done";
-			break;
-		case "to do":
-			ind_text = "in progress";
-			break;
-		default:
-			return;
-	}
+	let indicator = document.querySelector("#assignment-ind-" + assign_id);
+	let ind_text = indicator.innerText.toLowerCase();
+	let statuses = ["to do", "in progress", "done"];
+	// cycle status
+	let new_status_index = statuses.findIndex(a => a == ind_text) + 1;
+	new_status_index = new_status_index < statuses.length ? new_status_index : 0;
+	ind_text = statuses[new_status_index];
+		
+	let to_status = status_ind.to_number(ind_text);
 	
-	var to_status = status_ind.to_number(ind_text);
-	
-	var timeout = setTimeout(() => {
+	let timeout = setTimeout(() => {
 		set_status(index_id, assign_id, user_task, to_status);
 	}, 500);
 	
 	assignment_queue.push({timeout, assign_id});
 	
 	// update css class
-	var new_status = status_ind.to_readable(to_status);
+	let new_status = status_ind.to_readable(to_status);
 	indicator.classList.remove(...indicator.classList);
 	indicator.classList.add("round-indicator", "indicator-" + new_status.class);
 	indicator.innerHTML = new_status.text;

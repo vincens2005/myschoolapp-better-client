@@ -53,6 +53,23 @@
 				{{/each}}
 			</div>
 		</script>
+		
+		<script id="syllabus_template" type="text/x-handlebars-template">
+			<div class="rounded-cont bulletin-item">
+				<h3 class="title">
+					{{title}}
+				</h3>
+				{{#items}}
+					<span>
+						{{short_desc}}
+					</span>
+					<div>
+						{{description}}
+					</div>
+					<hr>
+				{{/items}}
+			</div>
+		</script>
 
 		<script id="news_template" type="text/x-handlebars-template">
 			<div class="rounded-cont bulletin-item">
@@ -130,8 +147,10 @@
 							<!-- top sections (details, news) will go here -->
 						</div>
 						
-						<div id="bulletin-sidebar" class="ohidden standard_transition">
-							<!-- stuff on the side -->
+						<div id="random-id-so-this-doesnt-get-deleted">
+							<div id="bulletin-sidebar" class="ohidden standard_transition scrollable-col">
+								<!-- stuff on the side -->									
+							</div>
 						</div>
 					</div>
 
