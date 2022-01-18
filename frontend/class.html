@@ -57,7 +57,7 @@
 		<script id="syllabus_template" type="text/x-handlebars-template">
 			<div class="rounded-cont bulletin-item">
 				<h3 class="title">
-					Syllabus
+					{{title}}
 				</h3>
 				{{#items}}
 					<span>
@@ -147,8 +147,10 @@
 							<!-- top sections (details, news) will go here -->
 						</div>
 						
-						<div id="bulletin-sidebar" class="ohidden standard_transition">
-							<!-- stuff on the side -->
+						<div id="random-id-so-this-doesnt-get-deleted">
+							<div id="bulletin-sidebar" class="ohidden standard_transition">
+								<!-- stuff on the side -->									
+							</div>
 						</div>
 					</div>
 

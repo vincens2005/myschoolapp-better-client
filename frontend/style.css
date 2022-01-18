@@ -741,7 +741,7 @@ a:not([class]):hover, .link:hover {
 }
 
 #page-cont {
-	padding: max(20px, 10vh) 10vw 0;
+	padding: max(20px, 10vh) min(100px, 10vw) 0;
 	display: block;
 }
 
@@ -854,6 +854,13 @@ body::-webkit-scrollbar {
 	padding: 20px 35px;
 	margin-bottom: 20px;
 	margin-right: 20px;
+	max-width: max(50vw, 400px);
+}
+
+#bulletin-sidebar {
+	position: sticky;
+	top: 10px;
+	max-width: max(20vw, 200px);
 }
 
 .link-cont a {

@@ -64,6 +64,18 @@ async function init() {
 		});
 }
 
+function syllabus_and_expectations(title, data) {
+	let items = [];
+	for (let item of data) {
+		items.push({
+			short_desc: item.ShortDescription,
+			description: item.Description.replace(/(?<=style.*)color:\s*(#000000|black);?/g, "") // use default css color instead of black
+		})
+	}
+	fill_template("syllabus_template", {items, title}, "top-bulletin-sections", {
+		noEscape: true
+	});
+}
 
 async function fetch_bulletin(id) {
 	// this is basically a list of callback functions
@@ -128,18 +140,12 @@ async function fetch_bulletin(id) {
 		// syllabus section
 		{
 			url: `/api/syllabus/forsection/${id}/?format=json&active=true&future=false&expired=false`,
-			handler: data => {
-				let items = [];
-				for (let item of data) {
-					items.push({
-						short_desc: item.ShortDescription,
-						description: item.Description.replace(/(?<=style.*)color:\s*(#000000|black);?/g, "") // use default css color instead of black
-					})
-				}
-				fill_template("syllabus_template", {items}, "top-bulletin-sections", {
-					noEscape: true
-				});
-			}
+			handler: data => syllabus_and_expectations("Syllabus", data)
+		},
+		// expectations section
+		{
+			url: `/api/expectation/forsection/${id}/?format=json&active=true&future=false&expired=false`,
+			handler: data => syllabus_and_expectations("Expectations", data)
 		},
 		// announcements endpoint
 		{
