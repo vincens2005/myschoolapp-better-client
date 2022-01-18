@@ -122,7 +122,8 @@ function fill_in_assignments(assignments_raw) {
 			special_type: assign.drop_box_ind ? "submission" : (assign.discussion_ind ? "discussion" : (assign.assessment_ind ? "assessment" : "")),
 			official_url: user.baseurl + `/app/student#assignmentdetail/${assign.assignment_id}/${assign.assignment_index_id}/0/assignmentdetail--${assign.assignment_id}--${assign.assignment_index_id}--0`,
 			indicator: status_ind.to_readable(assign.assignment_status),
-			user_task: assign.user_task_ind
+			user_task: assign.user_task_ind,
+			section_id: assign.section_id || false
 		});
 	}
 

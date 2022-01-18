@@ -51,7 +51,15 @@
 								{{this.long_title}}
 							</h4>
 							<small>
+								{{#if this.section_id}}
+									<a href="class.html?class={{this.section_id}}" onclick="event.stopPropagation()">
+								{{/if}}
+								
 								{{this.long_class}}
+								
+								{{#if this.section_id}}
+									</a>
+								{{/if}}
 							</small>
 						</div>
 						
