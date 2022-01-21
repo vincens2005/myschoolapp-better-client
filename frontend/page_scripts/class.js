@@ -40,7 +40,8 @@ async function init() {
 		}
 	]
 
-	empty_all(document.querySelector("#class-display"))
+	empty_all(document.querySelector("#class-display"));
+	document.querySelector("#bulletin-sidebar").classList.add("hidden");
 	fill_template("tab-template", {
 		tabs
 	}, "tabs");
@@ -233,7 +234,7 @@ async function fetch_bulletin(id) {
 				endpoint.handler(a);
 			});
 	}
-	document.querySelector("#bulletin-sidebar").classList.remove("ohidden");
+	document.querySelector("#bulletin-sidebar").classList.remove("hidden");
 }
 
 async function fetch_roster(id) {
