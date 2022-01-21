@@ -117,6 +117,7 @@ async function get_header() {
 	header.setAttribute("data-loaded", "true");
 	
 	// feedback button
+	if (document.querySelector("#feedback")) return;
 	let feedback_button = document.createElement("a");
 	feedback_button.id = "feedback";
 	feedback_button.classList.add("round-button", "ohidden");
