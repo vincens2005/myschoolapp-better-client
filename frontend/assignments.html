@@ -43,7 +43,15 @@
 							{{this.title}}
 						</h4>
 						<small id="short-class-{{this.id}}">
+							{{#if this.section_id}}
+								<a href="class.html?class={{this.section_id}}" onclick="event.stopPropagation()">
+							{{/if}}
+								
 							{{this.short_class}}
+							
+							{{#if this.section_id}}
+								</a>
+							{{/if}}
 						</small>
 						
 						<div onclick="toggle_expand('{{this.id}}')" id="long-header-{{this.id}}" class="hidden long_header">	
