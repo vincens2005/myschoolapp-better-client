@@ -700,6 +700,10 @@ a:not([class]):hover, .link:hover {
 	margin-right: auto;
 }
 
+.assignment[data-expanded=true] > div:first-child {
+	width: 100%;
+}
+
 .assignment {
 	transition: margin 0s;
 	padding-top: 0;
@@ -710,7 +714,7 @@ a:not([class]):hover, .link:hover {
 }
 
 .assignment .rounded-cont + .rounded-cont {
-	margin: 0 5px 0 0;
+	margin: 0;
 }
 
 .indicator-bad {
