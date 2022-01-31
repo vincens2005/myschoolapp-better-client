@@ -70,8 +70,8 @@ function syllabus_and_expectations(title, data) {
 	for (let item of data) {
 		items.push({
 			short_desc: item.ShortDescription,
-			description: item.Description.replace(/(?<=style.*)color:\s*(#000000|black);?/g, "") // use default css color instead of black
-		})
+			description: item.Description.replace(/(?:style=.*){0}(?:color:\s*(#000000|black));?/g, "") // use default css color instead of black
+		});
 	}
 	fill_template("syllabus_template", {items, title}, "top-bulletin-sections", {
 		noEscape: true
