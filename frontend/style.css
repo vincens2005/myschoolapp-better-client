@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 @import url('theme.css');
 
 /* 
@@ -349,7 +348,7 @@ select, .select-cont::after {
 	cursor: pointer;
 	margin: 5px;
 	border-radius: 2em;
-	--width-and-height: max(min(1.5vw, 15px), 10px);
+	--width-and-height: clamp(10px, 1.5vw, 15px);
 	padding: calc(var(--width-and-height) / 5);
 	width: var(--width-and-height);
 	height: var(--width-and-height);
@@ -445,12 +444,12 @@ input.button {
 /* landing page stuff */
 
 #landing_page_cont {
-	margin-top: max(min(calc(50vh - 200px), 200px), 10px);
+	margin-top: clamp(10px, calc(50vh - 200px), 200px);
 }
 
 #landing_page_cont > h1 {
 	font-size: 3em;
-	font-size: max(min(50px, 4vw), 30px);
+	font-size: clamp(30px, 4vw, 50px);
 }
 
 .big-button {
@@ -628,7 +627,7 @@ input.button {
 }
 
 #date {
-	font-size: max(min(20px, 2vw), 12px);
+	font-size: clamp(12px, 2vw, 20px);
 }
 
 a:not([class]), .link {
@@ -876,7 +875,7 @@ body::-webkit-scrollbar {
 }
 
 .person * {
-	font-size: max(min(2.5vw, 14px), 12px);
+	font-size: clamp(12px, 2.5vw, 14px);
 }
 
 .person {
@@ -885,8 +884,9 @@ body::-webkit-scrollbar {
 	color: var(--theme-text-color);
 	text-decoration: none;
 	word-wrap: break-word;
-	width: max(min(30vw, 160px), 100px);
-	height: max(min(30vw, 160px), 100px);
+	--width-and-height: clamp(100px, 30vw, 160px);
+	width: var(--width-and-height);
+	height: var(--width-and-height);
 	object-fit: cover;
 }
 
@@ -895,13 +895,6 @@ body::-webkit-scrollbar {
 	object-fit: cover; /* crop to square */
 	width: 75%;
 	height: 75%;
-/*	
-	width: 150px;
-	width: max(min(20vw, 150px), 75px);
-	
-	height: 150px;
-	height: max(min(20vw, 150px), 75px);
-	*/
 }
 
 .rounded-cont:not(.person) img {
