@@ -234,11 +234,16 @@ function dnd_init() {
 		moves: (el, source, handle, sibling) => {
 			if (document.body.clientWidth < 900) return false;
 			if (key.isPressed("ctrl") || key.isPressed("alt") || key.isPressed("command")) return true;
-			return handle.tagName != "P" &&
-			(handle.parentElement.id == el.id || 
-				handle.parentElement.parentElement.id == el.id ||
-						handle == el ||
-							handle.parentElement.classList.contains("long_header"));
+			if (handle.tagName == "P") return false;
+			let parent = handle.parentNode;
+			while (parent.parentNode != document) {
+				if (parent.tagName == "P") return false;
+				if (parent == el) return true;
+				
+				parent = parent.parentNode;
+			}
+			return (handle == el ||
+				handle.parentElement.classList.contains("long_header"));
 		}
 	}
 	var drake = dragula(containers, options);
