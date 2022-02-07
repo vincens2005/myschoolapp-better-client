@@ -1,8 +1,9 @@
-var current_view_date = dayjs();
-var schedule_header = false;
+let current_view_date = dayjs();
+let today = dayjs();
+let schedule_header = false;
 async function init() {
-	var url = new URL(location);
-	var schedule_date = url.searchParams.get("date");
+	let url = new URL(location);
+	let schedule_date = url.searchParams.get("date");
 	schedule_date = safe_decode(schedule_date);
 
 	user = await get_user();
@@ -10,7 +11,7 @@ async function init() {
 	save_data(user);
 
 	// check if user is logged in
-	var loggedin = await logged_in();
+	let loggedin = await logged_in();
 	if (!loggedin) {
 		location = "login.html?redirect=" + encodeURIComponent(location);
 		return;
@@ -18,10 +19,10 @@ async function init() {
 
 	get_header();
 
-	var endpoint_url = "/api/schedule/MyDayCalendarStudentList";
+	let endpoint_url = "/api/schedule/MyDayCalendarStudentList";
 	if (schedule_date) {
 		let new_date = dayjs(schedule_date, "MM/DD/YYYY");
-		if (new_date.isValid() && !new_date.isSame(current_view_date)) {
+		if (new_date.isValid() && !new_date.isSame(today, "day")) {
 			endpoint_url += "?scheduleDate=" + schedule_date;
 			current_view_date = new_date;
 		}
@@ -31,8 +32,8 @@ async function init() {
 		}
 	}
 	document.querySelector("#date").innerHTML = "schedule for " + current_view_date.format("MM/DD/YYYY");
-	var request = await fetch(base_endpoint + user.baseurl + endpoint_url);
-	var data = await request.json();
+	let request = await fetch(base_endpoint + user.baseurl + endpoint_url);
+	let data = await request.json();
 
 	if (!data.length) {
 		console.log("no data!")
@@ -47,8 +48,8 @@ async function init() {
 		return;
 	}
 
-	var schedule = [];
-	for (var item of data) {
+	let schedule = [];
+	for (let item of data) {
 		schedule.push({
 			class_name: item.CourseTitle,
 			class_id: item.SectionId,
@@ -74,7 +75,7 @@ async function init() {
 }
 
 function attendance_to_color(ind) {
-	var indicators = {
+	let indicators = {
 		"1": "good",
 		"2": "okay",
 		"0": "blank"
@@ -87,7 +88,7 @@ function attendance_to_color(ind) {
  */
 function chschedule_date(fac) {
 	current_view_date = current_view_date.set("date", current_view_date.get("date") + fac);
-	var formatted_date = current_view_date.format("MM/DD/YYYY");
+	let formatted_date = current_view_date.format("MM/DD/YYYY");
 	setschedule_date(formatted_date);
 }
 
