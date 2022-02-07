@@ -1,3 +1,4 @@
+let association_id = 1;
 async function init() {
 	user = await get_user();
 
@@ -46,6 +47,23 @@ async function init() {
 		tabs
 	}, "tabs");
 
+	let context = await fetch(base_endpoint + user.baseurl + "/api/webapp/context").then(a => a.json());
+	let current_class = context.Groups.find((a) => a.SectionId == classid) || {};
+	association_id = current_class.Association || 1;
+	
+	let contextlabelid = { // TODO: more of these values
+		"1": 2,
+		"9": 12,
+		"3": 12
+	}[association_id];
+
+	fetch(base_endpoint + user.baseurl + `/api/datadirect/SectionInfoView/?format=json&SectionId=${classid}&associationId=${association_id}`).then(a => a.json())
+		.then(data => {
+			document.title = data[0].GroupName + " - portal++"
+			document.querySelector("#title").innerHTML = data[0].GroupName + " - " + data[0].Identifier + ` (${data[0].Block})`;
+			document.querySelector("#title").classList.remove("ohidden");
+		});
+		
 	switch (tab) {
 		case "topics":
 			fetch_topics(classid);
@@ -54,15 +72,8 @@ async function init() {
 			fetch_roster(classid);
 			break;
 		default:
-			fetch_bulletin(classid);
+			fetch_bulletin(classid, contextlabelid);
 	}
-
-	fetch(base_endpoint + user.baseurl + `/api/datadirect/SectionInfoView/?format=json&SectionId=${classid}&associationId=1`).then(a => a.json())
-		.then(data => {
-			document.title = data[0].GroupName + " - portal++"
-			document.querySelector("#title").innerHTML = data[0].GroupName + " - " + data[0].Identifier + ` (${data[0].Block})`;
-			document.querySelector("#title").classList.remove("ohidden");
-		});
 }
 
 function syllabus_and_expectations(title, data) {
@@ -78,13 +89,13 @@ function syllabus_and_expectations(title, data) {
 	});
 }
 
-async function fetch_bulletin(id) {
+async function fetch_bulletin(id, contextlabelid) {
 	// this is basically a list of callback functions
 	// TODO: add more endpoints because there are more.
 	var endpoints = [
 		// links endpoint
 		{
-			url: `/api/link/forsection/${id}/?format=json&editMode=false&active=false&future=false&expired=false&contextLabelId=2`,
+			url: `/api/link/forsection/${id}/?format=json&editMode=false&active=false&future=false&expired=false&contextLabelId=${contextlabelid}`,
 			handler: data => {
 				var links = []
 				for (let item of data) {
@@ -103,7 +114,7 @@ async function fetch_bulletin(id) {
 		},
 		//downloads endpoint
 		{
-			url: `/api/download/forsection/${id}/?format=json&editMode=false&active=false&future=false&expired=false&contextLabelId=2`,
+			url: `/api/download/forsection/${id}/?format=json&editMode=false&active=false&future=false&expired=false&contextLabelId=${contextlabelid}`,
 			handler: data => {
 				let downloads = []
 				for (let item of data) {
@@ -148,7 +159,7 @@ async function fetch_bulletin(id) {
 		},
 		// bulletin board text endpoint
 		{
-			url: `/api/text/forsection/${id}/?format=json&contextLabelId=2`,
+			url: `/api/text/forsection/${id}/?format=json&contextLabelId=${contextlabelid}`,
 			handler: data => {
 				if (!data[0].Description) return;
 
@@ -174,7 +185,7 @@ async function fetch_bulletin(id) {
 		},
 		// announcements endpoint
 		{
-			url: `/api/announcement/forsection/${id}/?format=json&active=true&future=false&expired=false&contextLabelId=2`,
+			url: `/api/announcement/forsection/${id}/?format=json&active=true&future=false&expired=false&contextLabelId=${contextlabelid}`,
 			handler: data => {
 				var announcements = [];
 				for (let item of data) {
@@ -197,7 +208,7 @@ async function fetch_bulletin(id) {
 		},
 		// news endpoint
 		{
-			url: `/api/news/forsection/${id}/?format=json&editMode=false&active=true&future=false&expired=false&contextLabelId=2`,
+			url: `/api/news/forsection/${id}/?format=json&editMode=false&active=true&future=false&expired=false&contextLabelId=${contextlabelid}`,
 			handler: data => {
 				let items = [];
 				
@@ -216,7 +227,7 @@ async function fetch_bulletin(id) {
 		},
 		// photos endpoint
 		{
-			url: `/api/media/sectionmediaget/${id}/?format=json&contentId=31&editMode=false&active=true&future=false&expired=false&contextLabelId=2`,
+			url: `/api/media/sectionmediaget/${id}/?format=json&contentId=31&editMode=false&active=true&future=false&expired=false&contextLabelId=${contextlabelid}`,
 			handler: data => {
 				fill_template("photos_template", {items: data}, "top-bulletin-sections", {
 					noEscape: true
