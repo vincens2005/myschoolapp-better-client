@@ -342,7 +342,7 @@ select, .select-cont::after {
 
 .round-button {
 	background: var(--theme-button-color);
-	color: var(--theme-text-color);
+	color: var(--theme-button-text-color);
 	text-decoration: none;
 	user-select: none;
 	cursor: pointer;
@@ -388,7 +388,7 @@ select, .select-cont::after {
 	margin: auto;
 	text-align: center;
 	text-decoration: none;
-	color: var(--theme-text-color);
+	color: var(--theme-button-text-color);
 	width: auto;
 	vertical-align: middle;
 	display: inline-block;
@@ -411,7 +411,7 @@ select, .select-cont::after {
 .bad_button:hover {
 	filter: unset !important;
 	background: var(--theme-indicator-bad);
-	color: var(--theme-text-color);
+	color: var(--theme-button-text-color);
 }
 
 input.button {
@@ -775,7 +775,7 @@ a:not([class]):hover, .link:hover {
 	margin: 0 3px 3px 0;
 	cursor: pointer;
 	text-decoration: none;
-	color: var(--theme-text-color);
+	color: var(--theme-button-text-color);
 	user-select: none;
 }
 
