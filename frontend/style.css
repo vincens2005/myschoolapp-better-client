@@ -395,10 +395,15 @@ select, .select-cont::after {
 	padding: 5px 20px 5px 20px;
 	transition: 0.3s;
 	border: none;
-	font-size: 16px;
+	font-size: var(--theme-main-font-size);
 }
 
-.button + .button {
+.button input {
+	font-size: var(--theme-main-font-size);
+	padding: 0;
+}
+
+.button:not(.nomargin) + .button {
 	margin-left: 10px;
 }
 
@@ -433,6 +438,10 @@ input.button {
 
 .hidden {
 	display: none;
+}
+
+.nomargin {
+	margin: 0;
 }
 
 .center {

@@ -33,7 +33,7 @@ async function init() {
 
 	get_header();
 
-	var date_today = dayjs().format("MM/DD/YYYY");
+	var date_today = dayjs();
 	var date_to_send = {
 		start: date_today,
 		end: date_today
@@ -42,7 +42,7 @@ async function init() {
 	if (assign_date) {
 		var possible_date = dayjs(assign_date, "MM/DD/YYYY");
 		if (possible_date.isValid()) {
-			let tmp_send = possible_date.format("MM/DD/YYYY");
+			let tmp_send = possible_date;
 			date_to_send.start = tmp_send;
 			date_to_send.end = tmp_send;
 			if (possible_date.isSame(date_today)) {
@@ -58,17 +58,17 @@ async function init() {
 			end: dayjs(end_date, "MM/DD/YYYY")
 		}
 		if (tmp_send.start.isValid() && tmp_send.end.isValid()) {
-			date_to_send.start = tmp_send.start.format("MM/DD/YYYY");
-			date_to_send.end = tmp_send.end.format("MM/DD/YYYY");
+			date_to_send.start = tmp_send.start;
+			date_to_send.end = tmp_send.end;
 		}
 	}
 
 	current_view_date = "";
-	current_view_date = date_to_send.start == date_to_send.end ? date_to_send.start : date_to_send.start + " - " + date_to_send.end;
+	current_view_date = date_to_send.start.isSame(date_to_send.end, "day") ? date_to_send.start.format(user.date_format) : date_to_send.start.format(user.date_format) + " - " + date_to_send.end.format(user.date_format);
 	document.querySelector("#date").innerHTML = "assignments for " + current_view_date;
 
 	// send the request
-	var assignment_req = await fetch(base_endpoint + user.baseurl + "/api/DataDirect/AssignmentCenterAssignments/?format=json&filter=2&dateStart=" + date_to_send.start + "&dateEnd=" + date_to_send.end + "&persona=2");
+	var assignment_req = await fetch(base_endpoint + user.baseurl + "/api/DataDirect/AssignmentCenterAssignments/?format=json&filter=2&dateStart=" + date_to_send.start.format("MM/DD/YYYY") + "&dateEnd=" + date_to_send.end.format("MM/DD/YYYY") + "&persona=2");
 	var assignments_json = await assignment_req.json();
 	
 	if (!assignments_json.length) {

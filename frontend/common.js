@@ -14,18 +14,24 @@ function save_data(nuser) {
 
 /** returns a user object */
 async function get_user() {
-	nuser = await localforage.getItem("user");
-	if (!nuser || !removehttp(nuser.baseurl)) {
-		nuser = {
-			baseurl: "",
-			username: "",
-			last_page: "schedule.html",
-			// enabling debug mode allows the client to fetch test data and fill it in on blank templates
-			debug_mode: false,
-			default_description: "",
-			token: ""
-		};
+	let default_user = {
+		baseurl: "",
+		username: "",
+		last_page: "schedule.html",
+		date_format: "MM/DD/YYYY",
+		token: "",
+		
+		// enabling debug mode allows the client to fetch test data and fill it in on blank templates
+		debug_mode: false,
+		default_description: ""
+	};
+	let nuser = await localforage.getItem("user");
+	if (!nuser || !removehttp(nuser.baseurl)) return default_user;
+	
+	for (let i in default_user) {
+		nuser[i] = nuser[i] || default_user[i];
 	}
+	
 	return nuser;
 }
 
