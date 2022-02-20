@@ -242,7 +242,7 @@ img.rounded-cont {
 
 .input-label {
 	text-align: left;
-	font-size: 18px;
+	font-size: calc(var(--theme-main-font-size) * 1.125);
 	user-select: none;
 }
 
@@ -259,7 +259,7 @@ input[type=date] {
 }
 
 .form-title {
-	font-size: 30px;
+	font-size: calc(var(--theme-main-font-size) * 1.9);
 	margin-bottom: 0;
 	padding: 0;
 }
@@ -278,7 +278,7 @@ input:not([type=submit]) {
 	border-right: none;
 	border-bottom: 1px solid var(--theme-muted-text);
 	color: var(--theme-text-color);
-	font-size: 20px;
+	font-size: calc(var(--theme-main-font-size) * 1.25);
 	transition: 0.3s;
 	max-width: 100%;
 }
@@ -307,7 +307,7 @@ select {
 	outline: 0;
 	border: none;
 	color: var(--theme-text-color);
-	font-size: 20px;
+	font-size: calc(var(--theme-main-font-size) * 1.25);
 	padding-right: 1em;
 	z-index: 1;
 	cursor: inherit;
@@ -348,7 +348,7 @@ select, .select-cont::after {
 	cursor: pointer;
 	margin: 5px;
 	border-radius: 2em;
-	--width-and-height: clamp(10px, 1.5vw, 15px);
+	--width-and-height: clamp(10px, 1.5vw, var(--theme-main-font-size));
 	padding: calc(var(--width-and-height) / 5);
 	width: var(--width-and-height);
 	height: var(--width-and-height);
@@ -457,12 +457,12 @@ input.button {
 }
 
 #landing_page_cont > h1 {
-	font-size: 3em;
-	font-size: clamp(30px, 4vw, 50px);
+	font-size: calc(var(--theme-main-font-size) * 3);
+	font-size: clamp(calc(var(--theme-main-font-size) * 1.9), 4vw, calc(var(--theme-main-font-size) * 3.125));
 }
 
 .big-button {
-	font-size: 20px;
+	font-size: calc(var(--theme-main-font-size) * 1.25);
 }
 
 .ohidden {
@@ -636,7 +636,7 @@ input.button {
 }
 
 #date {
-	font-size: clamp(12px, 2vw, 20px);
+	font-size: clamp(calc(var(--theme-main-font-size) * 0.75), 2vw, calc(var(--theme-main-font-size) * 1.25));
 }
 
 a:not([class]), .link {
@@ -886,7 +886,7 @@ body::-webkit-scrollbar {
 }
 
 .person * {
-	font-size: clamp(12px, 2.5vw, 14px);
+	font-size: clamp(calc(var(--theme-main-font-size) * 0.75), 2.5vw, calc(var(--theme-main-font-size) * 0.875));
 }
 
 .person {
