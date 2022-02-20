@@ -7,7 +7,7 @@ let settings = [];
 async function change_theme(id) {
 	Cookies.set("theme", themes[id].file, {expires: 100000});
 	let url = "themes/" + themes[id].file;
-	let theme_text = themes[id].cached ?? await fetch(url).then(a => a.text());
+	let theme_text = themes[id].cached || await fetch(url).then(a => a.text());
 	themes[id].cached = theme_text;
 	
 	if (theme_element) theme_element.remove();
