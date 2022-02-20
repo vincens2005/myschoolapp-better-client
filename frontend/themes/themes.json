@@ -14,5 +14,9 @@
 	{
 		"name": "Dracula",
 		"file": "dracula.css"
+	},
+	{
+		"name": "Discord",
+		"file": "discord.css"
 	}
 ]
