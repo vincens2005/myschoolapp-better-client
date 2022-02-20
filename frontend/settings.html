@@ -13,6 +13,7 @@
 		<script src="common.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7"></script>
 		<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1"></script>
 		<script src="page_scripts/settings.js"></script>
 	</head>
@@ -45,6 +46,9 @@
 				<h2>
 					{{this.name}}
 				</h2>
+				<h4 id="{{this.example_id}}">
+					{{this.example}}
+				</h4>
 				{{#if this.is_radio}}
 					<div class="flex flex-wrap small-gap" id="">
 						{{#each this.options}}

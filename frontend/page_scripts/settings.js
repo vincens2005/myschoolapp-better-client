@@ -30,7 +30,11 @@ function init_settings() {
 			name: "Date Format",
 			type: "radio", // currenly the only type
 			can_have_custom: true,
-			options: ["MM/DD/YYYY", "M/D/YY", "DD/MM/YYYY", "D/M/YY", "YYYY/MM/DD", "YY/M/D"]
+			options: ["MM/DD/YYYY", "M/D/YY", "DD/MM/YYYY", "D/M/YY", "YYYY/MM/DD", "YY/M/D"],
+			example_id: "date_elem",
+			make_example: () => {
+				return dayjs().format(user.date_format);
+			}
 		},
 	];
 	
@@ -47,17 +51,25 @@ function init_settings() {
 				};
 			}
 		}
+		if (!setting.make_example) {
+			setting.make_example = () => {return};
+		}
+		else {
+			setting.example = setting.make_example();
+		}
 		// TODO: more types
 	}
 }
 
 function change_setting(e) {
+	let setting_index;
 	if (e.target.classList.contains("button")) {
-		let setting_index = e.target.id.split("_")[0].replace("setting", "");
+		setting_index = e.target.id.split("_")[0].replace("setting", "");
 		let value_index = e.target.id.split("_")[1];
 		if (value_index == "custom" && !e.target.querySelector("input").value) return
 		if (e.target.classList.contains("indicator-blank")) {
 			e.target.classList.remove("indicator-blank");
+
 			let old_value = settings[setting_index].options.findIndex(a => a.current);
 			old_value = old_value >= 0 ? old_value : "custom";
 			console.log(old_value)
@@ -73,7 +85,7 @@ function change_setting(e) {
 		}
 	}
 	else if (e.target.nodeName == "INPUT") {
-		let setting_index = e.target.id.replace("input", "");
+		setting_index = e.target.id.replace("input", "");
 		if (!e.target.value && settings[setting_index].type == "radio") {
 			if (!e.target.parentNode.classList.contains("indicator-blank")) {
 				document.querySelector("#setting" + setting_index + "_0").click();
@@ -88,6 +100,9 @@ function change_setting(e) {
 		}
 		
 		user[settings[setting_index].key] = e.target.value;
+	}
+	if (settings[setting_index].example) {
+		document.querySelector(`#${settings[setting_index].example_id}`).innerHTML = settings[setting_index].make_example();
 	}
 	save_data(user);
 }
