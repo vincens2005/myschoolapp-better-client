@@ -1,0 +1,14 @@
+[
+	{
+		"name": "Default Dark",
+		"file": "default.css"
+	},
+	{
+		"name": "Outlook Pink Dark",
+		"file": "red.css"
+	},
+	{
+		"name": "Dracula",
+		"file": "dracula.css"
+	}
+]
