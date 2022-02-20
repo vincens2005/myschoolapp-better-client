@@ -110,7 +110,8 @@ function change_setting(e) {
 async function init() {
 	get_header();
 	themes = await fetch("themes/themes.json").then(a => a.json());
-	current_theme = themes.findIndex(a => a.file == Cookies.get("theme")) || 0;
+	current_theme = themes.findIndex(a => a.file == Cookies.get("theme"));
+	current_theme = current_theme >= 0 ? current_theme : 0;
 	themes[current_theme].current = true;
 	
 	user = await get_user();
