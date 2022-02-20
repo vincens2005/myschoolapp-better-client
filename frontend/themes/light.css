@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+:root {
+	--theme-button-color: #07a48e;
+	--theme-muted-highlight: #499186;
+	--theme-background-color: #fff;
+	--theme-lighter-color: #bfbfbf;
+	--theme-medium-color: #d2d2d2;
+	--theme-darker-color: #f0f0f0;
+	--theme-muted-text: #2e2e2e;
+
+	--theme-text-color: #202020;
+	--theme-button-text-color: #fff;
+	--theme-link-color: #0995cc;
+	--theme-dim-shadow-color: #acacac;
+	--theme-shadow-color: #a4a4a4;
+	--theme-background: var(--theme-background-color);
+	--theme-nagbar-color: red;
+
+	/* indicator colors */
+	--theme-indicator-good: #69bd26;
+	--theme-indicator-okay: #e8b76f;
+	--theme-indicator-todo: #9e89c8;
+	--theme-indicator-bad: #da5858;
+	
+	--theme-main-font: 'Noto Sans', sans-serif;
+	--theme-main-font-size: 15.5px;
+}

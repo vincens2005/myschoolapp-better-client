@@ -4,6 +4,10 @@
 		"file": "default.css"
 	},
 	{
+		"name": "Default Light",
+		"file": "light.css"
+	},
+	{
 		"name": "Outlook Pink Dark",
 		"file": "red.css"
 	},

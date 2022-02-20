@@ -644,6 +644,7 @@ a:not([class]):hover, .link:hover {
 
 /* indicator styles */
 .round-indicator {
+	color: var(--theme-button-text-color);
 	border-radius: 10rem;
 	display: inline;
 	white-space: nowrap;
@@ -775,7 +776,7 @@ a:not([class]):hover, .link:hover {
 	margin: 0 3px 3px 0;
 	cursor: pointer;
 	text-decoration: none;
-	color: var(--theme-button-text-color);
+	color: var(--theme-text-color);
 	user-select: none;
 }
 
@@ -860,6 +861,7 @@ body::-webkit-scrollbar {
 
 .current-tab {
 	background: var(--theme-muted-highlight);
+	color: var(--theme-button-text-color);
 }
 
 .bulletin-item {
