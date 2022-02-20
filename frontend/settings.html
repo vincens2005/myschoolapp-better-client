@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+	<head>
+		<title>
+			Settings - portal++
+		</title>
+		<link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
+		<link rel="manifest" href="manifest.webmanifest">
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
+		<script src="common.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1"></script>
+		<script src="page_scripts/settings.js"></script>
+	</head>
+
+	<body>
+		<div id="header" onwheel="scroll_horizontally(event)" class="tab-cont">
+			<!-- this will be filled with the template from templates/header.hbs -->
+		</div>
+
+		<noscript>
+			<div class="nagbar center">
+				portal++ requires JavaScript. Please enable it or upgrade your browser
+			</div>
+		</noscript>
+		
+		<script type="text/x-handlebars-template" id="class_template">
+			{{#each classes}}
+				<div class="rounded-cont list_thingy">
+					<div>
+						<a href="class.html?class={{this.id}}">{{this.name}}</a>
+					</div>
+					<div>
+						<span>
+							{{this.teacher}}
+						</span>
+					</div>
+				</div>
+				<hr class="flex-break">
+			{{/each}}
+		</script>
+
+		<div id="output" class="header-offset left-offset flex flex-left flex-wrap">
+			<h1 id="title">
+				Settings
+			</h1>
+			<hr class="flex-break">
+			<!-- classes go here -->
+		</div>
+	</body>
+
+</html>
