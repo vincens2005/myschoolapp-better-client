@@ -6,6 +6,9 @@ let settings = [];
 
 async function change_theme(id) {
 	Cookies.set("theme", themes[id].file, {expires: 100000});
+	user.theme = themes[id].file;
+	save_data(user);
+	
 	let url = "themes/" + themes[id].file;
 	let theme_text = themes[id].cached || await fetch(url).then(a => a.text());
 	themes[id].cached = theme_text;
@@ -108,13 +111,20 @@ function change_setting(e) {
 }
 
 async function init() {
+	let cookie_theme = Cookies.get("theme");
 	get_header();
 	themes = await fetch("themes/themes.json").then(a => a.json());
-	current_theme = themes.findIndex(a => a.file == Cookies.get("theme"));
+	current_theme = themes.findIndex(a => a.file == cookie_theme);
 	current_theme = current_theme >= 0 ? current_theme : 0;
 	themes[current_theme].current = true;
 	
+	
 	user = await get_user();
+	if (cookie_theme != user.theme) {
+		user.theme = cookie_theme;
+		save_data(user);
+	}
+	
 	init_settings();
 	fill_template("settings_template", {themes, settings}, "output");
 	document.querySelector("#output").classList.remove("ohidden");

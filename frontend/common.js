@@ -20,6 +20,7 @@ async function get_user() {
 		last_page: "schedule.html",
 		date_format: "MM/DD/YYYY",
 		token: "",
+		theme: "default.css",
 		
 		// enabling debug mode allows the client to fetch test data and fill it in on blank templates
 		debug_mode: false,
@@ -222,3 +223,10 @@ function htmltotext(html) {
 	text = text.replace(/>/g, "&gt;");
 	return text;
 }
+
+// service worker
+window.addEventListener("DOMContentLoaded", () => {
+	if ("serviceWorker" in navigator) {
+		navigator.serviceWorker.register("serviceworker.js");
+	}
+});
