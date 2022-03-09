@@ -115,12 +115,14 @@ function fill_in_assignments(assignments_raw) {
 			official_url = user.baseurl + `/app/student#assignmentdetail/${assign.assignment_id}/${assign.assignment_index_id}/0/assignmentdetail--${assign.assignment_id}--${assign.assignment_index_id}--0`;
 		}
 		
+		let raw_due_date = dayjs(assign.date_due, "M/DD/YYYY").valueOf();
+
 		assignments_tmp.push({
 			short_class: assign.groupname.length > 21 ? assign.groupname.slice(0, 21) + "..." : assign.groupname,
 			long_class: assign.groupname,
 			assign_date: dayjs(assign.date_assigned, "M/DD/YYYY").fromNow(),
-			due_date: dayjs(assign.date_due, "M/DD/YYYY").fromNow(),
-			raw_due_date: dayjs(assign.date_due, "M/DD/YYYY").unix(),
+			due_date: raw_due_date - Date.now() <= 1000 * 60 * 60 * 24 * 3 ? dayjs(assign.date_due, "M/DD/YYYY").fromNow() : dayjs(assign.date_due, "M/DD/YYYY").format(user.date_format),
+			raw_due_date,
 			title: assign.text_title.length > max_title_len - 1 ? assign.text_title.slice(0, max_title_len) + "..." : assign.text_title,
 			long_title,
 			type: assign.assignment_type,
