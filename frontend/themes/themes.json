@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Default Dark",
+		"file": "default.css"
+	},
+	{
+		"name": "Default Light",
+		"file": "light.css"
+	},
+	{
+		"name": "Sunset Dark",
+		"file": "red.css"
+	},
+	{
+		"name": "Dracula",
+		"file": "dracula.css"
+	},
+	{
+		"name": "Discord",
+		"file": "discord.css"
+	}
+]

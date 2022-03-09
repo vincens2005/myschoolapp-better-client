@@ -31,7 +31,7 @@ async function init() {
 			history.pushState({}, "", url);
 		}
 	}
-	document.querySelector("#date").innerHTML = "schedule for " + current_view_date.format("MM/DD/YYYY");
+	document.querySelector("#date").innerHTML = "schedule for " + current_view_date.format(user.date_format);
 	let request = await fetch(base_endpoint + user.baseurl + endpoint_url);
 	let data = await request.json();
 
@@ -42,7 +42,7 @@ async function init() {
 		}
 		document.querySelector("#schedule_tbody").innerHTML = schedule_header;
 		fill_template("nodata_template", {
-			date: current_view_date.format("MM/DD/YYYY")
+			date: current_view_date.format(user.date_format)
 		}, "schedule_tbody");
 		document.querySelector("#schedule_cont").classList.remove("ohidden");
 		return;

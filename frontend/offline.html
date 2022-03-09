@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>
+			Offline - portal++
+		</title>
+		<link rel="manifest" href="manifest.webmanifest">
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
+	</head>
+
+	<body>
+		<div id="landing_page_cont" class="left-offset">
+			<h1 id="title">
+				oh no!
+			</h1>
+			<div id="desc_cont">
+				<span id="desc_span">
+					You're offline, so we can't load this page right now
+				</span>
+			</div>
+			<br>
+			<a class="button big-button" href="">
+				reload
+			</a>
+		</div>
+		<script>
+			window.addEventListener('online', (event) => {
+				window.location = window.location
+			});
+		</script>
+	</body>
+
+</html>

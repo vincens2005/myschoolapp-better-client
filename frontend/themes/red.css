@@ -9,6 +9,7 @@
 	--theme-muted-text: #b9b9b9;
 
 	--theme-text-color: white;
+	--theme-button-text-color: white;
 	--theme-link-color: #dd6464;
 	--theme-dim-shadow-color: #212121;
 	--theme-shadow-color: #161616;
@@ -22,5 +23,5 @@
 	--theme-indicator-bad: #5a7fd5;
 	
 	--theme-main-font: 'Noto Sans', sans-serif;
-	--theme-main-font-size: 15.5px;
+	--theme-main-font-size: 16px;
 }
