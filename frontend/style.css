@@ -889,7 +889,7 @@ body::-webkit-scrollbar {
 	margin-top: 6px;
 }
 
-.person * {
+.person {
 	font-size: clamp(calc(var(--theme-main-font-size) * 0.75), 2.5vw, calc(var(--theme-main-font-size) * 0.875));
 }
 
@@ -910,6 +910,16 @@ body::-webkit-scrollbar {
 	object-fit: cover; /* crop to square */
 	width: 75%;
 	height: 75%;
+}
+
+.class h3 {
+	color: var(--theme-link-color);
+	transition: 0.1s;
+	margin-top: 0;
+}
+
+.class:hover h3 {
+	filter: brightness(1.1);
 }
 
 .rounded-cont:not(.person) img {
