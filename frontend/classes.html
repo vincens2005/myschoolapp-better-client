@@ -31,17 +31,17 @@
 		
 		<script type="text/x-handlebars-template" id="class_template">
 			{{#each classes}}
-				<div class="rounded-cont list_thingy">
+				<a class="rounded-cont person class" href="class.html?class={{this.id}}">
+					<h3>
+						{{this.name}}
+					</h3>
+					<h4>
+						{{this.teacher}}
+					</h4>
 					<div>
-						<a href="class.html?class={{this.id}}">{{this.name}}</a>
+						{{this.category}}
 					</div>
-					<div>
-						<span>
-							{{this.teacher}}
-						</span>
-					</div>
-				</div>
-				<hr class="flex-break">
+				</a>
 			{{/each}}
 		</script>
 
