@@ -11,7 +11,7 @@
   - [x] Kanban-style assignment center
   - [x] Dark mode
   - [x] Better mobile UI
-  - [x] Easily themable by injecting CSS
+  - [x] Multiple themes, which use CSS variables
   - [x] No jQuery
   - [x] Remembers last visited page
   - [x] username autofill
