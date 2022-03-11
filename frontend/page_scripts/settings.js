@@ -110,6 +110,24 @@ function change_setting(e) {
 	save_data(user);
 }
 
+async function handle_feedback(e) {
+	document.querySelector("#feedbackform").classList.add("ohidden");
+	let body = new FormData(e.target);
+	let response = await fetch("https://formspree.io/f/mbjwyvvq", {
+		method: "POST",
+		body,
+		headers: {
+			accept: "application/json"
+		}
+	}).then(a => a.json());
+	let feedback_text = "Thanks for your feedback :)";
+	if (response.error) {
+		feedback_text = "There was an error submitting the form. Please try again";
+	}
+	document.querySelector("#feedbackform").innerHTML = `<h4>${feedback_text}</h4>`;
+	document.querySelector("#feedbackform").classList.remove("ohidden");
+}
+
 async function init() {
 	let cookie_theme = Cookies.get("theme");
 	get_header();
@@ -127,7 +145,7 @@ async function init() {
 	
 	init_settings();
 	fill_template("settings_template", {themes, settings}, "output");
-	document.querySelector("#output").classList.remove("ohidden");
+	document.querySelector("#main-div").classList.remove("ohidden");
 
 }
 window.addEventListener("DOMContentLoaded", init);

@@ -123,17 +123,16 @@ async function get_header() {
 	header.classList.remove("ohidden");
 	header.setAttribute("data-loaded", "true");
 	
-	// feedback button
-	if (document.querySelector("#feedback")) return;
-	let feedback_button = document.createElement("a");
-	feedback_button.id = "feedback";
-	feedback_button.classList.add("round-button", "ohidden");
-	feedback_button.href = "https://forms.gle/t2XREwBjHR5dGtfD9";
-	feedback_button.innerText = "feedback";
-	feedback_button.target = "_blank";
-	document.body.appendChild(feedback_button);
+	// settings button
+	if (document.querySelector("#settings") || window.location.pathname.endsWith("settings") || window.location.pathname.endsWith("settings.html")) return;
+	let settings_button = document.createElement("a");
+	settings_button.id = "settings";
+	settings_button.classList.add("round-button", "ohidden");
+	settings_button.href = "settings.html";
+	settings_button.innerText = "settings";
+	document.body.appendChild(settings_button);
 	setTimeout(() => {
-		feedback_button.classList.remove("ohidden");
+		settings_button.classList.remove("ohidden");
 	}, 100);
 }
 

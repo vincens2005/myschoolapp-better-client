@@ -67,12 +67,46 @@
 			{{/each}}
 		</script>
 
-		<div id="output" class="header-offset left-offset ohidden standard_transition">
+		<div id="main-div" class="header-offset left-offset ohidden standard_transition">
 			<h1 id="title">
 				Settings
 			</h1>
 			<hr class="flex-break">
-			<!-- classes go here -->
+			<div id="output">
+				<!-- settings go here -->
+			</div>
+			<div>
+				<h2>
+					Feedback
+				</h2>
+				<div class="form standard_transition" id="feedbackform">
+					<form onsubmit="handle_feedback(event); return false;">
+						<div class="rounded-cont list_thingy">
+							<label>What do you like about portal++?
+								<input name="likes" placeholder="your answer here">
+							</label>
+						
+							<label>
+								What do you hate about portal++?
+								<input name="dislikes" placeholder="WHAT ANGERS YOU?">
+							</label>
+						</div>
+						
+						<div class="rounded-cont list_thingy"
+							<label>
+								Notice any bugs?
+								<input name="bugs" placeholder="please">
+							</label>
+						
+							<label>
+								Have any suggestions?
+								<input name="suggestions" placeholder="tell me">
+							</label>
+						</div>
+						<input type="submit" class="button" value="submit">
+					</form>
+				</div>
+			</div>
 		</div>
 	</body>
 
