@@ -487,12 +487,6 @@ input.button {
 
 .schedule {
 	border-collapse: collapse;
-	border-radius: 10px;
-	margin: 30px;
-}
-
-.schedule * {
-	transition: 0.3s;
 }
 
 .schedule th {
@@ -919,7 +913,7 @@ body::-webkit-scrollbar {
 }
 
 .class:hover h3 {
-	filter: brightness(1.1);
+	filter: brightness(1.13);
 }
 
 .rounded-cont:not(.person) img {
