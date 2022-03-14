@@ -87,10 +87,10 @@ function scroll_horizontally(e) {
 
 /** fills in the header from the template */
 async function get_header() {
-	var header = document.querySelector("#header");
+	let header = document.querySelector("#header");
 	if (!header.getAttribute("data-loaded")) header.classList.add("ohidden", "standard_transition");
-	var template_data = await fetch("templates/header.hbs").then(a => a.text());
-	var tabs = [
+	let template_data = await fetch("templates/header.hbs").then(a => a.text());
+	let tabs = [
 		{
 			title: "schedule", // the text that goes in the tab
 			url: "schedule.html",
@@ -106,26 +106,24 @@ async function get_header() {
 			url: "assignments.html",
 			url_matches: ["assignments"]
 		}
-	]
-	for (var tab of tabs) {
-		var cur_url = new URL(location);
-		var cur_path = cur_url.pathname.split("/");
-		cur_path = cur_path[cur_path.length - 1];
-		cur_path = cur_path.split(".")[0];
-		cur_path = cur_path.toLowerCase();
-		tab.class_name = "";
-		if (tab.url_matches.some((a) => a == cur_path)) {
-			tab.class_name = "current-tab"; // add class name if URL matches the `url_matches` key
-		}
+	];
+	
+	let cur_path = location.pathname.split("/");
+	cur_path = cur_path[cur_path.length - 1];
+	cur_path = cur_path.split(".")[0];
+	cur_path = cur_path.toLowerCase();
+	
+	for (let tab of tabs) {
+		tab.is_current = tab.url_matches.some((a) => a == cur_path); // this is the current tab if one of its URLs matches the current one
 	}
-	var template = Handlebars.compile(template_data);
-	var html = template({tabs});
+	let template = Handlebars.compile(template_data);
+	let html = template({tabs});
 	header.innerHTML = html;
 	header.classList.remove("ohidden");
 	header.setAttribute("data-loaded", "true");
 	
 	// settings button
-	if (document.querySelector("#settings") || window.location.pathname.endsWith("settings") || window.location.pathname.endsWith("settings.html")) return;
+	if (document.querySelector("#settings") || cur_path.endsWith("settings")) return;
 	let settings_button = document.createElement("a");
 	settings_button.id = "settings";
 	settings_button.classList.add("round-button", "ohidden");
@@ -141,8 +139,8 @@ async function get_header() {
 	* @param {Object} element - the element to empty
 */
 function empty_all(element) {
-	var children = Array.from(element.childNodes); // Array.from makes it so indexes won't change during deletion
-	for (var node of children) {
+	let children = Array.from(element.childNodes); // Array.from makes it so indexes won't change during deletion
+	for (let node of children) {
 		if (!node.id) {
 			node.remove();
 			continue;
