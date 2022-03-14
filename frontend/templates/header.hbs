@@ -1,6 +1,5 @@
 {{#each tabs}}
-  {{! the class name thing is either an empty string or "current-tab"}}
-  <a class="tab flipped-tab {{this.class_name}}" href="{{this.url}}">
+  <a class="tab flipped-tab {{#if this.is_current}}current-tab{{/if}}" href="{{this.url}}" {{#if this.is_current}} aria-current="page"{{/if}}>
     {{this.title}}
 	</a>
 {{/each}}
