@@ -906,6 +906,11 @@ body::-webkit-scrollbar {
 	height: 75%;
 }
 
+.class {
+	--width-and-height: clamp(120px, 35vw, 160px);
+	--person-margin: min(15px, 2vw);
+}
+
 .class h3 {
 	color: var(--theme-link-color);
 	transition: 0.1s;
