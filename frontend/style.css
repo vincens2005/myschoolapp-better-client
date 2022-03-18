@@ -182,7 +182,7 @@ a {
 
 .left-offset {
 	padding-left: 110px;
-	padding-left: min(110px, 15vw);
+	padding-left: min(110px, 8vw);
 }
 
 .rounded-cont {
@@ -248,6 +248,10 @@ img.rounded-cont {
 	text-align: left;
 	font-size: calc(var(--theme-main-font-size) * 1.125);
 	user-select: none;
+}
+
+label:not(:last-child) > input {
+	margin-bottom: 20px;
 }
 
 
@@ -487,6 +491,7 @@ input.button {
 
 .schedule {
 	border-collapse: collapse;
+	margin: 8px;
 }
 
 .schedule th {
@@ -635,6 +640,11 @@ input.button {
 
 #date {
 	font-size: clamp(calc(var(--theme-main-font-size) * 0.75), 2vw, calc(var(--theme-main-font-size) * 1.25));
+}
+
+#feedbackform {
+	max-width: 800px;
+	margin-right: 20px;
 }
 
 a:not([class]), .link {
