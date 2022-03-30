@@ -1,10 +1,10 @@
-var assignment_queue = [];
-var drake_started = false;
-var current_view_date;
-var autolink_options = {target: "_blank", onclick: "event.stopPropagation();"};
-var expanded_assignments = [];
-var lastfocused_assign = null;
-var user_id = null;
+let assignment_queue = [];
+let drake_started = false;
+let current_view_date;
+let autolink_options = {target: "_blank", onclick: "event.stopPropagation();"};
+let expanded_assignments = [];
+let lastfocused_assign = null;
+let user_id = null;
 async function init() {
 	// reset element transitions
 	document.querySelector("#noassignments").classList.add("ohidden");
@@ -104,7 +104,9 @@ function fill_in_assignments(assignments_raw) {
 		assign.long_description = htmltotext(assign.long_description);
 		assign.long_description = assign.long_description.autoLink(autolink_options);
 		assign.text_title = htmltotext(assign.short_description);
-		let long_title = parser.parseFromString(assign.short_description, "text/html").body.innerHTML; // make sure HTML isn't broken
+		let long_title = parser.parseFromString(assign.short_description, "text/html");
+		Array.from(long_title.querySelectorAll("a")).forEach(a => a.setAttribute("target", "_blank")); // make links open in new tabs
+		long_title = long_title.body.innerHTML;
 		
 		// TODO: there is probably also a special page for assesments.
 		let official_url = "";
@@ -248,7 +250,7 @@ function dnd_init() {
 				handle.parentElement.classList.contains("long_header"));
 		}
 	}
-	var drake = dragula(containers, options);
+	let drake = dragula(containers, options);
 
 	drake.on("drop", async (el, target, source, sibling) => {
 		if (!target) return;
@@ -465,6 +467,11 @@ async function toggle_expand(assign_id) {
 				links: [],
 				downloads: []
 			}
+			
+			let parser = new DOMParser();
+			let desc_html = parser.parseFromString(assignment_data.description, "text/html");
+			Array.from(desc_html.querySelectorAll("a")).forEach(a => a.setAttribute("target", "_blank"));
+			assignment_data.description = desc_html.body.innerHTML;
 			
 			for (let link of response.LinkItems) {
 				assignment_data.links.push({
