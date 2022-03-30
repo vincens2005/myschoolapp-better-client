@@ -33,19 +33,19 @@ async function init() {
 
 	get_header();
 
-	var date_today = dayjs();
-	var date_to_send = {
+	let date_today = dayjs();
+	let date_to_send = {
 		start: date_today,
 		end: date_today
 	};
 
 	if (assign_date) {
-		var possible_date = dayjs(assign_date, "MM/DD/YYYY");
+		let possible_date = dayjs(assign_date, "MM/DD/YYYY");
 		if (possible_date.isValid()) {
 			let tmp_send = possible_date;
 			date_to_send.start = tmp_send;
 			date_to_send.end = tmp_send;
-			if (possible_date.isSame(date_today)) {
+			if (possible_date.isSame(date_today, "day")) {
 				url.searchParams.delete("date");
 				history.pushState({}, "", url);
 			}
