@@ -15,7 +15,7 @@ function save_data(nuser) {
 /** returns a user object */
 async function get_user() {
 	let default_user = {
-		baseurl: "",
+		baseurl: "https://bush.myschoolapp.com",
 		username: "",
 		last_page: "schedule.html",
 		date_format: "MM/DD/YYYY",
@@ -31,7 +31,6 @@ async function get_user() {
 	
 	for (let i in default_user) {
 		nuser[i] = nuser[i] || default_user[i];
-
 	}
 	
 	return nuser;
