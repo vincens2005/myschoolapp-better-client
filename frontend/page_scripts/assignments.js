@@ -42,7 +42,7 @@ async function init() {
 	if (assign_date) {
 		let possible_date = dayjs(assign_date, "MM/DD/YYYY");
 		if (possible_date.isValid()) {
-			let tmp_send = possible_date.format("MM/DD/YYYY");
+			let tmp_send = possible_date;
 			date_to_send.start = tmp_send;
 			date_to_send.end = tmp_send;
 			if (possible_date.isSame(date_today, "day")) {
@@ -58,17 +58,17 @@ async function init() {
 			end: dayjs(end_date, "MM/DD/YYYY")
 		}
 		if (tmp_send.start.isValid() && tmp_send.end.isValid()) {
-			date_to_send.start = tmp_send.start.format("MM/DD/YYYY");
-			date_to_send.end = tmp_send.end.format("MM/DD/YYYY");
+			date_to_send.start = tmp_send.start;
+			date_to_send.end = tmp_send.end;
 		}
 	}
 
 	current_view_date = "";
-	current_view_date = date_to_send.start == date_to_send.end ? date_to_send.start : date_to_send.start + " - " + date_to_send.end;
+	current_view_date = date_to_send.start.isSame(date_to_send.end, "day") ? date_to_send.start.format(user.date_format) : date_to_send.start.format(user.date_format) + " - " + date_to_send.end.format(user.date_format);
 	document.querySelector("#date").innerHTML = "assignments for " + current_view_date;
 
 	// send the request
-	var assignment_req = await fetch(base_endpoint + user.baseurl + "/api/DataDirect/AssignmentCenterAssignments/?format=json&filter=2&dateStart=" + date_to_send.start + "&dateEnd=" + date_to_send.end + "&persona=2");
+	var assignment_req = await fetch(base_endpoint + user.baseurl + "/api/DataDirect/AssignmentCenterAssignments/?format=json&filter=2&dateStart=" + date_to_send.start.format("MM/DD/YYYY") + "&dateEnd=" + date_to_send.end.format("MM/DD/YYYY") + "&persona=2");
 	var assignments_json = await assignment_req.json();
 	
 	if (!assignments_json.length) {
@@ -117,12 +117,14 @@ function fill_in_assignments(assignments_raw) {
 			official_url = user.baseurl + `/app/student#assignmentdetail/${assign.assignment_id}/${assign.assignment_index_id}/0/assignmentdetail--${assign.assignment_id}--${assign.assignment_index_id}--0`;
 		}
 		
+		let raw_due_date = dayjs(assign.date_due, "M/DD/YYYY").valueOf();
+
 		assignments_tmp.push({
 			short_class: assign.groupname.length > 21 ? assign.groupname.slice(0, 21) + "..." : assign.groupname,
 			long_class: assign.groupname,
 			assign_date: dayjs(assign.date_assigned, "M/DD/YYYY").fromNow(),
-			due_date: dayjs(assign.date_due, "M/DD/YYYY").fromNow(),
-			raw_due_date: dayjs(assign.date_due, "M/DD/YYYY").unix(),
+			due_date: raw_due_date - Date.now() <= 1000 * 60 * 60 * 24 * 3 ? dayjs(assign.date_due, "M/DD/YYYY").fromNow() : dayjs(assign.date_due, "M/DD/YYYY").format(user.date_format),
+			raw_due_date,
 			title: assign.text_title.length > max_title_len - 1 ? assign.text_title.slice(0, max_title_len) + "..." : assign.text_title,
 			long_title,
 			type: assign.assignment_type,
