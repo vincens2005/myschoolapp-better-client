@@ -1,16 +1,20 @@
 let association_id = 1;
+
+function strip_css_color(text) {
+	return text.replace(/(?:style=.*){0}(?:color:\s*(#000000|black));?/g, "");
+}
 async function init() {
 	user = await get_user();
 
 	// check if user is logged in
-	var loggedin = await logged_in();
+	let loggedin = await logged_in();
 	if (!loggedin) {
 		location = "login.html?redirect=" + encodeURIComponent(location);
 		return;
 	}
 
-	var url = new URL(location);
-	var classid = url.searchParams.get("class");
+	let url = new URL(location);
+	let classid = url.searchParams.get("class");
 	if (!classid) {
 		location = user.last_page;
 		return;
@@ -21,10 +25,10 @@ async function init() {
 	user.last_page = location.toString();
 	save_data(user);
 
-	var tab = url.hash.replace(/#/gi, "");
+	let tab = url.hash.replace(/#/gi, "");
 	tab = tab.toLowerCase();
 
-	var tabs = [{
+	let tabs = [{
 			hash: "bboard",
 			label: "Bulletin Board",
 			class_name: ((tab == "bboard" || !tab) ? "current-tab" : "")
@@ -81,7 +85,7 @@ function syllabus_and_expectations(title, data) {
 	for (let item of data) {
 		items.push({
 			short_desc: item.ShortDescription,
-			description: item.Description.replace(/(?:style=.*){0}(?:color:\s*(#000000|black));?/g, "") // use default css color instead of black
+			description: strip_css_color(item.Description)
 		});
 	}
 	fill_template("syllabus_template", {items, title}, "top-bulletin-sections", {
@@ -92,12 +96,12 @@ function syllabus_and_expectations(title, data) {
 async function fetch_bulletin(id, contextlabelid) {
 	// this is basically a list of callback functions
 	// TODO: add more endpoints because there are more.
-	var endpoints = [
+	let endpoints = [
 		// links endpoint
 		{
 			url: `/api/link/forsection/${id}/?format=json&editMode=false&active=false&future=false&expired=false&contextLabelId=${contextlabelid}`,
 			handler: data => {
-				var links = []
+				let links = []
 				for (let item of data) {
 					links.push({
 						url: item.Url,
@@ -141,11 +145,11 @@ async function fetch_bulletin(id, contextlabelid) {
 				for (let item of data) {
 					rubric.push({
 						is_link: false,
-						short_desc: item.ShortDescription
+						short_desc: strip_css_color(item.ShortDescription)
 					});
 					rubric.push({
 						is_link: false,
-						short_desc: item.Description
+						short_desc: strip_css_color(item.Description)
 					});
 				}
 					fill_template("links_template", {
@@ -163,9 +167,9 @@ async function fetch_bulletin(id, contextlabelid) {
 			handler: data => {
 				if (!data[0].Description) return;
 
-				var forsection = { // what is a forsection?
+				let forsection = { // what is a forsection?
 					title: data[0].Description,
-					desc: data[0].LongText
+					desc: strip_css_color(data[0].LongText)
 				}; // i have no idea
 
 				fill_template("main-template", forsection, "top-bulletin-sections", {
@@ -187,7 +191,7 @@ async function fetch_bulletin(id, contextlabelid) {
 		{
 			url: `/api/announcement/forsection/${id}/?format=json&active=true&future=false&expired=false&contextLabelId=${contextlabelid}`,
 			handler: data => {
-				var announcements = [];
+				let announcements = [];
 				for (let item of data) {
 					announcements.push({
 						is_link: !!item.Description,
@@ -249,13 +253,13 @@ async function fetch_bulletin(id, contextlabelid) {
 }
 
 async function fetch_roster(id) {
-	var ftp_image_path = await get_image_path();
+	let ftp_image_path = await get_image_path();
 	console.log(ftp_image_path)
 
-	var roster = await fetch(base_endpoint + user.baseurl + `/api/datadirect/sectionrosterget/${id}/?format=json`).then(a => a.json());
-	var people = [];
+	let roster = await fetch(base_endpoint + user.baseurl + `/api/datadirect/sectionrosterget/${id}/?format=json`).then(a => a.json());
+	let people = [];
 
-	for (var person of roster) {
+	for (let person of roster) {
 		people.push({
 			name: person.name,
 			image: ftp_image_path + "/user/" + person.userPhotoLarge,
@@ -269,11 +273,11 @@ async function fetch_roster(id) {
 }
 
 async function fetch_topics(id) {
-	var ftp_image_path = await get_image_path();
+	let ftp_image_path = await get_image_path();
 
-	var topics_raw = await fetch(base_endpoint + user.baseurl + `/api/datadirect/sectiontopicsget/${id}/?format=json&active=true&future=false&expired=false&sharedTopics=false`).then(a => a.json());
-	var topics = [];
-	for (var topic of topics_raw) {
+	let topics_raw = await fetch(base_endpoint + user.baseurl + `/api/datadirect/sectiontopicsget/${id}/?format=json&active=true&future=false&expired=false&sharedTopics=false`).then(a => a.json());
+	let topics = [];
+	for (let topic of topics_raw) {
 		topics.push({
 			name: topic.Name,
 			image: ftp_image_path + "topics/" + topic.ThumbFilename,

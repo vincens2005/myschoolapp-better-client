@@ -29,7 +29,7 @@ async function init() {
 		classes.push({
 			id: group.SectionId,
 			name: group.GroupName,
-			teacher: group.OwnerName || "nobody",
+			teacher: group.OwnerName,
 			category: group.Category
 		});
 	}
