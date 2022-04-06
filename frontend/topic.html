@@ -47,7 +47,13 @@
 							class="list_thingy"
 						{{/if}} >
 							{{#if url}}
-								<a href="{{url}}" target="_blank">
+								<a href="{{url}}"
+									{{#if download}}
+										download="{{filename}}"
+									{{else}}
+										target="_blank"
+									{{/if}}
+								>
 							{{/if}}
 							{{title}}
 							{{#if url}}

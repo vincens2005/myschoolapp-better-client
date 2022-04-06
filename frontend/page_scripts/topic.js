@@ -34,10 +34,11 @@ async function init() {
 		if (item.ShortDescription || item.LongDescription) {
 			let full_len = (item.LongDescription || "" + item.ShortDescription || "").length
 			topic_items_tmp.push({
-				title: item.ShortDescription || "",
-				description: item.LongDescription || "",
-				url: item.Url,
-				download: item.AllowDownload,
+				title: item.ShortDescription,
+				description: item.LongDescription,
+				url: item.FileName ? (item.FileName ? download_endpoint + user.baseurl + item.FilePath + item.FileName : "") : item.Url,
+				download: !!item.FileName,
+				filename: item.FriendlyFileName || item.FileName,
 				size: full_len >= 100 ? Math.min(Math.round(full_len / 120), 4) : 1 // magic algorithm
 			});
 		}
