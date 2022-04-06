@@ -132,6 +132,7 @@ async function get_header() {
 	setTimeout(() => {
 		settings_button.classList.remove("ohidden");
 	}, 100);
+	fetch(`https://cukmekerb.goatcounter.com/count?p=${cur_path}.html&t=${document.title}&s=${window.innerWidth},${window.innerHeight}&rnd=${Math.random()}`);
 }
 
 /** empties element while preserving children with ids
