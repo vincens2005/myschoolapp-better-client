@@ -659,29 +659,17 @@ async function try_login() {
 		// the function to be given to the log in form's onsubmit
 		let onsub_func = async (e) => {
 			e.preventDefault();
-			user.token = await get_verification_token(); // this token needs to be regenerated per session
-			save_data(user);
-			let post_data = {
-				From: "",
-				InterfaceSource: "WebApp",
-				Username: user.username,
-				Password: document.querySelector("#password").value
-			};
-			if (!post_data.Password) return false;
+
+			let password = document.querySelector("#password").value;
+			if (!password) return false;
 			
 			document.querySelector("#loginbutton").classList.add("greyedout");
 			document.querySelector("#loginbutton").value = "loading...";
 			
-			let login_response = await fetch(base_endpoint + user.baseurl + "/api/SignIn", {
-				method: "POST",
-				body: JSON.stringify(post_data),
-				headers: {
-					"RequestVerificationToken": user.token
-				}
-			});
-			login_response = await login_response.json();
+			let success = await login(user.username, password);
+
 			
-			resolve(login_response.LoginSuccessful); // resolve the promise
+			resolve(success); // resolve the promise
 			
 			document.querySelector("#password").blur();
 			document.querySelector("#loginform").classList.add("ohidden");
