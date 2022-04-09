@@ -127,7 +127,8 @@ async function get_header() {
 	for (let tab of tabs) {
 		tab.is_current = tab.url_matches.some((a) => a == cur_path); // this is the current tab if one of its URLs matches the current one
 	}
-	fill_template("templates/header.hbs", {tabs}, "header", {}, true);
+	header.innerHTML = "";
+	await fill_template("templates/header.hbs", {tabs}, "header", {}, true);
 	header.classList.remove("ohidden");
 	header.setAttribute("data-loaded", "true");
 	

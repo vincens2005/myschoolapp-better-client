@@ -1,0 +1,27 @@
+<!-- this template is placed into the <p id="desc-ASSIGN_ID"> of an assignment when it is expanded -->
+{{description}}
+
+{{#if links}}
+	<div class="rounded-cont medium-background link-cont">
+		<h3 class="title">
+			Links
+		</h3>
+		{{#each links}}
+			<a href="{{this.url}}" target="_blank">
+				{{this.title}}
+			</a>
+		{{/each}}
+	</div>
+{{/if}}
+{{#if downloads}}
+	<div class="rounded-cont medium-background link-cont">
+		<h3 class="title">
+			Downloads
+		</h3>
+		{{#each downloads}}
+			<a href="{{this.url}}" download="{{this.filename}}">
+				{{this.title}}
+			</a>
+		{{/each}}
+	</div>
+{{/if}}

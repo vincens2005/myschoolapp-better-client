@@ -11,7 +11,6 @@
 		<link rel="stylesheet" href="style.css">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
-		<script src="utilities/common.js"></script>
 
 		<!-- dragula -->
 		<script src="https://cdn.jsdelivr.net/gh/bevacqua/dragula@3.7.3/dist/dragula.min.js"></script>
@@ -24,6 +23,8 @@
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/autolink-js@1.0.2/autolink-min.js"></script>
 		<script src="page_scripts/assignments.js"></script>
+		<script src="utilities/assignments.js"></script>
+		<script src="utilities/common.js"></script>
 		<script src="utilities/login.js"></script>
 	</head>
 
@@ -36,104 +37,6 @@
 				portal++ requires JavaScript. Please enable it or upgrade your browser
 			</div>
 		</noscript>
-		<script id="assignment_template" type="text/x-handlebars-template">
-			{{#each assignments}}
-				<div class="assignment list_thingy rounded-cont flex flex-v-center text-left" id="assignment-{{this.id}}" data-assign-id="{{this.id}}" data-index-id="{{this.index_id}}" data-user-task="{{this.user_task}}" onclick="toggle_expand('{{this.id}}')" data-expanded="false">
-					<div>
-						<h4 id="assign-title-{{this.id}}">
-							{{this.title}}
-						</h4>
-						<small id="short-class-{{this.id}}">
-							{{#if this.section_id}}
-								<a href="class.html?class={{this.section_id}}" onclick="event.stopPropagation()">
-							{{/if}}
-								
-							{{this.short_class}}
-							
-							{{#if this.section_id}}
-								</a>
-							{{/if}}
-						</small>
-						
-						<div onclick="toggle_expand('{{this.id}}')" id="long-header-{{this.id}}" class="hidden long_header">	
-							<h4>
-								{{this.long_title}}
-							</h4>
-							<small>
-								{{#if this.section_id}}
-									<a href="class.html?class={{this.section_id}}" onclick="event.stopPropagation()">
-								{{/if}}
-								
-								{{this.long_class}}
-								
-								{{#if this.section_id}}
-									</a>
-								{{/if}}
-							</small>
-						</div>
-						
-						<p class="standard_transition hidden" id="desc-{{this.id}}">
-							{{this.desc}}
-						</p>
-						<h5 class="assigned">
-							Assigned {{assign_date}}
-						</h5>
-						<h5>
-							Due {{due_date}}
-						</h5>
-						<div class="hidden" style="padding-top: 5px;" id="edit-div-{{this.id}}">
-							{{#if this.user_task}}
-								<span class="link" onclick="show_add_popup({{this.id}})" id="edit-button-{{this.id}}"> edit</span>
-							{{/if}}
-							{{#if this.is_special}}
-								<br>
-								{{this.special_type}} assignments are not currently supported. to submit this assignment, use the
-								<a href="{{this.official_url}}" target="_blank">
-									official client
-								</a>
-							{{/if}}
-						</div>
-					</div>
-
-					<div>
-						<span class="round-indicator indicator-{{this.indicator.class}}" id="assignment-ind-{{this.id}}" onclick="queue_update('{{this.index_id}}', {{this.id}}, {{this.user_task}}, event)">
-							{{this.indicator.text}}
-						</span>
-					</div>
-				</div>
-			{{/each}}
-		</script>
-
-		<script id="assignment_expanded_template" type="text/x-handlebars-template">
-			<!-- this template is placed into the <p id="desc-ASSIGN_ID"> of an assignment when it is expanded -->
-			{{description}}
-
-			{{#if links}}
-				<div class="rounded-cont medium-background link-cont">
-					<h3 class="title">
-						Links
-					</h3>
-					{{#each links}}
-						<a href="{{this.url}}" target="_blank">
-							{{this.title}}
-						</a>
-					{{/each}}
-				</div>
-			{{/if}}
-			{{#if downloads}}
-				<div class="rounded-cont medium-background link-cont">
-					<h3 class="title">
-						Downloads
-					</h3>
-					{{#each downloads}}
-						<a href="{{this.url}}" download="{{this.filename}}">
-							{{this.title}}
-						</a>
-					{{/each}}
-				</div>
-			{{/if}}
-
-		</script>
 
 		<script id="usertaskadd_template" type="text/x-handlebars-template">
 			<span class="round-button close-button" onclick="hide_add_popup({{assign_id}})">

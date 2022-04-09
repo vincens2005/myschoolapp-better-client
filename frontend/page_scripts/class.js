@@ -28,7 +28,8 @@ async function init() {
 	let tab = url.hash.replace(/#/gi, "");
 	tab = tab.toLowerCase();
 
-	let tabs = [{
+	let tabs = [
+		{
 			hash: "bboard",
 			label: "Bulletin Board",
 			class_name: ((tab == "bboard" || !tab) ? "current-tab" : "")
@@ -37,6 +38,11 @@ async function init() {
 			hash: "topics",
 			label: "Topics",
 			class_name: ((tab == "topics") ? "current-tab" : "")
+		},
+		{
+			hash: "assignments",
+			label: "Assignments",
+			class_name: ((tab == "assignments") ? "current-tab" : "")
 		},
 		{
 			hash: "roster",
@@ -74,6 +80,9 @@ async function init() {
 			break;
 		case "roster":
 			fetch_roster(classid);
+			break;
+		case "assignments":
+			fetch_assignments(classid);
 			break;
 		default:
 			fetch_bulletin(classid, contextlabelid);
@@ -290,6 +299,28 @@ async function fetch_topics(id) {
 		people: topics
 	}, "roster-container");
 }
+
+async function fetch_assignments(id) {
+	dayjs.extend(window.dayjs_plugin_relativeTime);
+	let assignment_req = await fetch(base_endpoint + user.baseurl + "/api/DataDirect/AssignmentCenterAssignments/?format=json&filter=2&dateStart=1/1/1977&dateEnd=" + dayjs().format("MM/DD/YYYY") + "&persona=2&sectionList="+id);
+	let assignments_json = await assignment_req.json();
+	let assignments = process_assignments(assignments_json, false, true);
+	
+	fill_template("templates/assignment_template.hbs", {assignments}, "assignments", {
+			noEscape: true // there is no escape.
+		}, true);
+}
+
+async function try_login() {
+	let loggedin = await logged_in();
+	if (!loggedin) {
+		location = "login.html?redirect=" + encodeURIComponent(location) + "&popup=" + encodeURIComponent("please log in and try again");
+		return false;
+	}
+	return true
+}
+
+let queue_update = () => false;
 
 function toggle_announcement(id) {
 	let element = document.querySelector("#toggle_announcement-" + id);

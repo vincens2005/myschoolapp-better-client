@@ -6,7 +6,10 @@
 			Class - portal++
 		</title>
 		<script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7"></script>
+		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/autolink-js@1.0.2/autolink-min.js"></script>
 		<link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
 		<link rel="manifest" href="manifest.webmanifest">
 		<link rel="shortcut icon" href="favicon.ico">
@@ -14,6 +17,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
 		<script src="utilities/common.js"></script>
+		<script src="utilities/assignments.js"></script>
 		<script src="page_scripts/class.js"></script>
 	</head>
 
@@ -156,6 +160,14 @@
 
 					<div id="roster-container" class="flex flex-wrap flex-top-align">
 						<!-- roster -->
+					</div>
+					
+					<div id="assignment-container">
+						<div class="col-parent" id="assign-col-par">
+							<div id="assignments" class="scrollable-col">
+		
+							</div>
+						</div>
 					</div>
 
 				</div>
