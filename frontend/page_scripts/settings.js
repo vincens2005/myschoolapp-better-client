@@ -113,13 +113,10 @@ function change_setting(e) {
 async function handle_feedback(e) {
 	document.querySelector("#feedbackform").classList.add("ohidden");
 	let body = new FormData(e.target);
-	let response = await fetch("https://formspree.io/f/mbjwyvvq", {
+	let response = await fetch("https://formsubmit.co/vincentsingernotfinger+portalfeedback@gmail.com", {
 		method: "POST",
-		body,
-		headers: {
-			accept: "application/json"
-		}
-	}).then(a => a.json());
+		body
+	}).then(a => a.text());
 	let feedback_text = "Thanks for your feedback :)";
 	if (response.error) {
 		feedback_text = "There was an error submitting the form. Please try again";
