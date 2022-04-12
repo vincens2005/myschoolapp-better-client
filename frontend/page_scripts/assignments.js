@@ -107,7 +107,7 @@ async function init() {
 	document.querySelector("#progress").innerHTML = "";
 	document.querySelector("#done").innerHTML = "";
 
-	templates["templates/assignment_template.hbs"] = await fetch("templates/assignment_template.hbs").then(a => a.text());
+	if(!templates["templates/assignment_template.hbs"]) templates["templates/assignment_template.hbs"] = await fetch("templates/assignment_template.hbs").then(a => a.text());
 	for (let i in assignments) {
 		fill_template("templates/assignment_template.hbs", {
 			assignments: assignments[i]
@@ -397,6 +397,7 @@ async function show_add_popup(assign_id) {
 	
 	document.querySelector("#add_task").innerHTML = "";
 	fill_template("usertaskadd_template", template_data, "add_task");
+	customselect.init();
 	document.querySelector("#add_task_name").focus();
 	
 	if (editing && template_data.classid) document.querySelector("#edit-option-" + template_data.class_id).setAttribute("selected", "true");
