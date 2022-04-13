@@ -36,7 +36,7 @@
 			
 			<div class="flex flex-wrap small-gap">
 				{{#each themes}}
-					<div class="button nomargin {{#if this.current}} {{else}} indicator-blank {{/if}}" onclick="change_theme({{@index}})" id="theme-{{@index}}">
+					<div class="button nomargin {{#unless this.current}} indicator-blank {{/unless}}" onclick="change_theme({{@index}})" id="theme-{{@index}}">
 						{{this.name}}
 					</div>
 			{{/each}}
@@ -52,12 +52,12 @@
 				{{#if this.is_radio}}
 					<div class="flex flex-wrap small-gap" id="">
 						{{#each this.options}}
-							<div class="button nomargin {{#if this.current}} {{else}} indicator-blank {{/if}}" onclick="change_setting(event)" id="setting{{@../index}}_{{@index}}">
+							<div class="button nomargin {{#unless this.current}} indicator-blank {{/unless}}" onclick="change_setting(event)" id="setting{{@../index}}_{{@index}}">
 								{{this.value}}
 							</div>
 					{{/each}}
 					{{#if this.can_have_custom}}
-						<div class="button nomargin {{#if this.custom_value}} {{else}} indicator-blank {{/if}}" onclick="change_setting(event)" id="setting{{@index}}_custom">
+						<div class="button nomargin {{#unless this.custom_value}}  indicator-blank {{/unless}}" onclick="change_setting(event)" id="setting{{@index}}_custom">
 							<input placeholder="custom (be careful)" onkeyup="change_setting(event)" value="{{this.custom_value}}" id="input{{@index}}">
 						</div>
 					{{/if}}
