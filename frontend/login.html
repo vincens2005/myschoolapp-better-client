@@ -11,9 +11,10 @@
 		<link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
-		<script src="common.js"></script>
+		<script src="utilities/common.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
 		<script src="page_scripts/login.js"></script>
+		<script src="utilities/login.js"></script>
 	</head>
 
 	<body>
@@ -27,7 +28,7 @@
 		</noscript>
 		<div id="loginform" class="fixed-center rounded-cont form">
 			<!-- form tag to appease password managers. -->
-			<form onsubmit="login(); return false;" id="actual_form">
+			<form onsubmit="do_login(); return false;" id="actual_form">
 
 				<span class="form-title">
 					Log In

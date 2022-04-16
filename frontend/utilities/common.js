@@ -1,7 +1,8 @@
 const base_endpoint = "/.netlify/functions/cors/"; // this is a const because we don't want the risk of a man in the middle attack
 // this endpoint is for non-plaintext. for plaintext, always use base_endpoint
 const download_endpoint = "/.netlify/functions/download/"; // this is a const for the same reason
-var user;
+let user;
+let templates = {};
 
 /** saves data 
  * @param {Object} user - the `user` object
@@ -37,20 +38,32 @@ async function get_user() {
 }
 
 /** automatically fills out handlebars template
- * @param {String} template_id - the id of the template element
+ * @param {String} template_name - the id of the template element or URL of the template
  * @param {Object} data - the data to fill.
  * @param {String} target_id - the id of the element to put the final HTML
  * @param {Object} handlebar_options - extra handlebars config
+ * @param {Boolean} is_url - fetch or use elem ID?
  */
-function fill_template(template_id, data, target_id, handlebar_options) {
+async function fill_template(template_name, data, target_id, handlebar_options, is_url) {
 	if (typeof data != "object") {
 		return;
 	}
 	if (!handlebar_options) {
 		handlebar_options = {};
 	}
-	var template = Handlebars.compile(document.querySelector("#" + template_id).innerHTML, handlebar_options);
-	var html = template(data);
+	let template_string;
+	if (is_url) {
+		template_string = templates[template_name];
+		if (!template_string) {
+			template_string = await fetch(template_name).then(a => a.text());
+			templates[template_name] = template_string;
+		}
+	}
+	else {
+		template_string = document.querySelector("#" + template_name).innerHTML;
+	}
+	let template = Handlebars.compile(template_string, handlebar_options);
+	let html = template(data);
 	document.querySelector("#" + target_id).innerHTML += html;
 }
 
@@ -59,8 +72,8 @@ async function logged_in() {
 	if (!user.baseurl) {
 		return false;
 	}
-	var req = await fetch(base_endpoint + user.baseurl + "/api/webapp/userstatus/");
-	var data = await req.json();
+	let req = await fetch(base_endpoint + user.baseurl + "/api/webapp/userstatus/");
+	let data = await req.json();
 	return data.TokenValid;
 }
 
@@ -88,7 +101,6 @@ function scroll_horizontally(e) {
 async function get_header() {
 	let header = document.querySelector("#header");
 	if (!header.getAttribute("data-loaded")) header.classList.add("ohidden", "standard_transition");
-	let template_data = await fetch("templates/header.hbs").then(a => a.text());
 	let tabs = [
 		{
 			title: "schedule", // the text that goes in the tab
@@ -115,11 +127,12 @@ async function get_header() {
 	for (let tab of tabs) {
 		tab.is_current = tab.url_matches.some((a) => a == cur_path); // this is the current tab if one of its URLs matches the current one
 	}
-	let template = Handlebars.compile(template_data);
-	let html = template({tabs});
-	header.innerHTML = html;
+	header.innerHTML = "";
+	await fill_template("templates/header.hbs", {tabs}, "header", {}, true);
 	header.classList.remove("ohidden");
 	header.setAttribute("data-loaded", "true");
+	
+	fetch(`https://cukmekerb.goatcounter.com/count?p=${cur_path}.html&t=${document.title}&s=${window.innerWidth},${window.innerHeight}&rnd=${Math.random()}`);
 	
 	// settings button
 	if (document.querySelector("#settings") || cur_path.endsWith("settings")) return;

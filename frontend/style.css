@@ -308,7 +308,7 @@ input::-webkit-calendar-picker-indicator {
 	display: none;
 }
 
-select {
+select, .select-selected {
 	appearance: none;
 	background: transparent;
 	display: inline-block;
@@ -322,6 +322,7 @@ select {
 	transition: 0.3s;
 	font-family: inherit;
 	line-height: inherit;
+	grid-area: select;
 }
 
 .select-cont {
@@ -333,8 +334,8 @@ select {
 	overflow-x: hidden;
 }
 
-select, .select-cont::after {
-	grid-area: select;
+.select-selected {
+	margin: 0 50px 0 5px;
 }
 
 /* this is stolen from the internet */
@@ -346,6 +347,25 @@ select, .select-cont::after {
   justify-self: end;
   background: var(--theme-text-color);
   clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  grid-area: select;
+}
+
+.select-items {
+	position: absolute;
+	z-index: 12;
+	min-width: 200px;
+	font-size: calc(var(--theme-main-font-size) * 1.25);
+	padding: 0;
+}
+
+.select-items > div {
+	padding: 4px 10px;
+	transition: 0.1s;
+	border-radius: 10px;
+}
+
+.select-items > div:hover {
+	background: var(--theme-medium-color);
 }
 
 .round-button {

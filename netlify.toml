@@ -21,6 +21,9 @@
 	targetPort = 5500
 	framework = "#custom"
 	publish = "frontend/"
+	
+[functions]
+	node_bundler = "esbuild"
 
 [[plugins]]
 	package = "@netlify/plugin-local-install-core"
