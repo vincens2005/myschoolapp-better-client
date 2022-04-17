@@ -400,7 +400,7 @@ select, .select-selected {
 	left: 3px;
 	bottom: 3px;
 	filter: brightness(1) drop-shadow(1px 1px 1px var(--theme-shadow-color));
-	--width-and-height: 12px;
+	--width-and-height: clamp(calc(var(--theme-main-font-size) * 0.65), 1.5vw, calc(var(--theme-main-font-size) * 0.8));
 	background: var(--theme-muted-highlight);
 }
 
