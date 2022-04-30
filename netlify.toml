@@ -67,7 +67,10 @@
 	mangle = true
 	ecma = 9
 
-[[redirects]]
-	from = "*/theme.css"
-	to = "/.netlify/functions/theme"
-	status = 200
+[[edge_functions]]
+	path = "*/theme.css"
+	function = "theme"
+
+[[edge_functions]]
+	path = "/proxy/*"
+	function = "proxy"

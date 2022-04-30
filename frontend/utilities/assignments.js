@@ -190,7 +190,7 @@ async function toggle_expand(assign_id) {
 			
 			for(let dl of response.DownloadItems) {
 				assignment_data.downloads.push({
-					url: download_endpoint + user.baseurl + dl.DownloadUrl,
+					url: base_endpoint + user.baseurl + dl.DownloadUrl,
 					title: dl.ShortDescription,
 					filename: dl.FriendlyFileName
 				});

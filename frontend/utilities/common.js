@@ -1,6 +1,4 @@
-const base_endpoint = "/.netlify/functions/cors/"; // this is a const because we don't want the risk of a man in the middle attack
-// this endpoint is for non-plaintext. for plaintext, always use base_endpoint
-const download_endpoint = "/.netlify/functions/download/"; // this is a const for the same reason
+const base_endpoint = "/proxy/"; // this is a const because we don't want the risk of a man in the middle attack
 let user;
 let templates = {};
 

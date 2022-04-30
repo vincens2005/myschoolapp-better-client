@@ -36,7 +36,7 @@ async function init() {
 			topic_items_tmp.push({
 				title: item.ShortDescription,
 				description: item.LongDescription,
-				url: item.FileName ? (item.FileName ? download_endpoint + user.baseurl + item.FilePath + item.FileName : "") : item.Url,
+				url: item.FileName ? (item.FileName ? base_endpoint + user.baseurl + item.FilePath + item.FileName : "") : item.Url,
 				download: !!item.FileName,
 				filename: item.FriendlyFileName || item.FileName,
 				size: full_len >= 100 ? Math.min(Math.round(full_len / 120), 4) : 1 // magic algorithm
