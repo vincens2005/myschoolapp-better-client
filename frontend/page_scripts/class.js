@@ -132,7 +132,7 @@ async function fetch_bulletin(id, contextlabelid) {
 				let downloads = []
 				for (let item of data) {
 					downloads.push({
-						url: download_endpoint + user.baseurl + item.DownloadUrl,
+						url: base_endpoint + user.baseurl + item.DownloadUrl,
 						short_desc: item.Description,
 						desc: item.Description,
 						is_link: true,
