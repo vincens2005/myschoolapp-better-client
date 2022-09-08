@@ -1,6 +1,7 @@
 const base_endpoint = "/proxy/"; // this is a const because we don't want the risk of a man in the middle attack
 let user;
 let templates = {};
+window.is_portalplus = true; // this makes it such that the browser extension knows where we are
 
 /** saves data 
  * @param {Object} user - the `user` object
