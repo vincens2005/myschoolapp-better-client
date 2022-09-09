@@ -9,7 +9,7 @@ async function init() {
 	setTimeout(() => {
 		document.querySelector("#noassignments").classList.add("hidden");
 	}, 300);
-	
+
 	dayjs.extend(window.dayjs_plugin_relativeTime);
 	let url = new URL(location);
 	let assign_date = url.searchParams.get("date");
@@ -68,7 +68,7 @@ async function init() {
 	// send the request
 	let assignment_req = await fetch(base_endpoint + user.baseurl + "/api/DataDirect/AssignmentCenterAssignments/?format=json&filter=2&dateStart=" + date_to_send.start.format("MM/DD/YYYY") + "&dateEnd=" + date_to_send.end.format("MM/DD/YYYY") + "&persona=2");
 	let assignments_json = await assignment_req.json();
-	
+
 	if (!assignments_json.length) {
 		document.querySelector("#noassignments").classList.remove("hidden");
 		document.querySelector("#assignment_container").classList.add("ohidden");
@@ -77,15 +77,15 @@ async function init() {
 		}, 50);
 		return;
 	}
-	
+
 	let assignments_tmp = process_assignments(assignments_json, true); // this is in utilies/assignments.js
-	
+
 	let assignments = {
 		todo: [],
 		progress: [],
 		done: []
 	};
-	
+
 	for (let assign of assignments_tmp) {
 		if (assign.indicator.class == "good") {
 			assignments.done.push(assign);
@@ -115,13 +115,13 @@ async function init() {
 			noEscape: true // there is no escape.
 		}, true);
 	}
-	
+
 	for (let assignment of expanded_assignments) {
 		if (assignment.currently_expanded) toggle_expand(assignment.assign_id);
 	}
-	
+
 	document.querySelector("#assignment_container").classList.remove("ohidden");
-	
+
 	// enable drag and drop and initialize keymap
 	if (!drake_started) {
 		dnd_init();
@@ -142,7 +142,7 @@ function dnd_init() {
 			while (parent.parentNode != document) {
 				if (parent.tagName == "P") return false;
 				if (parent == el) return true;
-				
+
 				parent = parent.parentNode;
 			}
 			return (handle == el ||
@@ -159,9 +159,9 @@ function dnd_init() {
 		to_status = to_status == "done" ? "done" : to_status;
 		to_status = status_ind.to_number(to_status);
 		var user_task = el.getAttribute("data-user-task") == "true";
-		
+
 		set_status(index_id, assign_id, user_task, to_status);
-		
+
 		var indicator = document.querySelector("#assignment-ind-" + assign_id);
 		var new_status = status_ind.to_readable(to_status);
 		indicator.classList.remove(...indicator.classList);
@@ -186,10 +186,10 @@ function setup_keymaster() {
 			action: () => {
 				hide_add_popup(lastfocused_assign);
 			}
-		}, 
+		},
 		{
 			key: "enter",
-			scope: "edittask", 
+			scope: "edittask",
 			action: () => {
 				save_assignment(user_id, lastfocused_assign);
 			}
@@ -243,7 +243,7 @@ function queue_update(index_id, assign_id, user_task, event) {
 		clearTimeout(assignment_queue[i].timeout);
 		delete assignment_queue[i];
 	}
-	
+
 	let indicator = document.querySelector("#assignment-ind-" + assign_id);
 	let ind_text = indicator.innerText.toLowerCase();
 	let statuses = ["to do", "in progress", "done"];
@@ -251,15 +251,15 @@ function queue_update(index_id, assign_id, user_task, event) {
 	let new_status_index = statuses.findIndex(a => a == ind_text) + 1;
 	new_status_index = new_status_index < statuses.length ? new_status_index : 0;
 	ind_text = statuses[new_status_index];
-		
+
 	let to_status = status_ind.to_number(ind_text);
-	
+
 	let timeout = setTimeout(() => {
 		set_status(index_id, assign_id, user_task, to_status);
 	}, 500);
-	
+
 	assignment_queue.push({timeout, assign_id});
-	
+
 	// update css class
 	let new_status = status_ind.to_readable(to_status);
 	indicator.classList.remove(...indicator.classList);
@@ -302,29 +302,30 @@ async function save_assignment(user_id, assign_id, second_try) {
 	document.querySelector("#add_button").classList.remove("greyedout");
 	document.querySelector("#save_assign").classList.add("greyedout");
 	document.querySelector("#save_assign").value = "loading...";
-	
+
 	var fetch_url = base_endpoint + user.baseurl + "/api/usertask/edit" + (assign_id ? "/" + assign_id : "");
-	
+
 	var body = {
 		AssignedDate: dayjs(document.querySelector("#add_assign_date").value, "YYYY-MM-DD").format("MM/DD/YYYY"),
 		DueDate: dayjs(document.querySelector("#add_due_date").value, "YYYY-MM-DD").format("MM/DD/YYYY"),
 		ShortDescription: document.querySelector("#add_task_name").value,
 		UserId: user_id
 	}
-	
+
 	if (assign_id) body.UserTaskId = assign_id;
 	if (document.querySelector("#add_classname").value != "null") body.SectionId = Number(document.querySelector("#add_classname").value);
-	
+
 	var response = await fetch(fetch_url, {
 		method: assign_id ? "PUT" : "POST",
 		body: JSON.stringify(body),
 		headers: {
+			"Content-Type": "application/json",
 			"RequestVerificationToken": user.token
 		}
 	}).then(a => a.json());
-	
+
 	hide_add_popup();
-	
+
 	if (response.Error) {
 		if (second_try) location = "login.html?popup=" + encodeURIComponent("this is a huge error that you should never see") + "&redirect=" + encodeURIComponent(location); return;
 		let loggedin = await try_login();
@@ -332,49 +333,49 @@ async function save_assignment(user_id, assign_id, second_try) {
 		location = "login.html?popup=" + encodeURIComponent("please log in and try again") + "&redirect=" + encodeURIComponent(location);
 		return;
 	}
-	
+
 	init();
 }
 
 async function show_add_popup(assign_id) {
 	var editing = !!assign_id;
-	
+
 	fake_addinput(editing);
 	if (editing) {
 		lastfocused_assign = assign_id;
 		document.querySelector("#edit-button-" + assign_id).innerHTML = "loading...";
 		document.querySelector("#edit-button-" + assign_id).classList.add("greyedout");
 	}
-	
+
 	document.querySelector("#add_button").classList.add("greyedout");
 	document.querySelector("#add_task").classList.remove("hidden");
 	setTimeout(() => {
 		document.querySelector("#add_task").classList.remove("ohidden");
 	}, 50);
 	key.setScope("edittask");
-	
+
 	// check if user is logged in
 	var loggedin = await try_login();
 	if (!loggedin) {
 		location = "login.html?redirect=" + encodeURIComponent(location);
 		return;
 	}
-	
+
 	var context_endpoint_url = "/api/webapp/context";
 	var context = await fetch(base_endpoint + user.baseurl + context_endpoint_url).then(a => a.json());
 
 	user_id = context.UserInfo.UserId;
 	var classes = [];
-	
+
 	for (var group of context.Groups) {
 		if (!group.PublishGroupToUser || !group.CurrentEnrollment /* this only shows you your current classes */) continue;
-		
+
 		classes.push({
 			id: group.SectionId,
 			name: group.GroupName.slice(0, 20)
 		});
 	}
-	
+
 	var template_data = {
 		classes,
 		editing,
@@ -383,7 +384,7 @@ async function show_add_popup(assign_id) {
 		assign_date: dayjs().format("YYYY-MM-DD"),
 		due_date: dayjs().add(1, "d").format("YYYY-MM-DD") // default due date is +1 days
 	}
-	
+
 	if (editing) {
 		var edit_endpoint_url = "/api/usertask/edit/" + assign_id;
 		var assignment_data = await fetch(base_endpoint + user.baseurl + edit_endpoint_url).then(a => a.json());
@@ -394,12 +395,12 @@ async function show_add_popup(assign_id) {
 		document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";
 		document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
 	}
-	
+
 	document.querySelector("#add_task").innerHTML = "";
 	fill_template("usertaskadd_template", template_data, "add_task");
 	customselect.init();
 	document.querySelector("#add_task_name").focus();
-	
+
 	if (editing && template_data.classid) document.querySelector("#edit-option-" + template_data.class_id).setAttribute("selected", "true");
 }
 
@@ -421,7 +422,7 @@ function hide_add_popup(assign_id) {
 	key.setScope("default");
 	// if there's no edit button then return
 	if (!document.querySelector("#edit-button-" + assign_id)) return;
-	
+
 	// make edit button go back to normal
 	document.querySelector("#edit-button-" + assign_id).innerHTML = "edit";
 	document.querySelector("#edit-button-" + assign_id).classList.remove("greyedout");
@@ -432,13 +433,13 @@ async function try_login() {
 	key.setScope("loginform");
 	let loggedin = await logged_in();
 	if (loggedin) return key.setScope(old_scope), loggedin;
-	
+
 	document.querySelector("#loginform").classList.remove("hidden");
 	setTimeout(() => {
 		document.querySelector("#loginform").classList.remove("ohidden");
 		document.querySelector("#password").focus();
 	}, 50);
-	
+
 	return new Promise(async (resolve, reject) => {
 		// the function to be given to the log in form's onsubmit
 		let onsub_func = async (e) => {
@@ -446,15 +447,15 @@ async function try_login() {
 
 			let password = document.querySelector("#password").value;
 			if (!password) return false;
-			
+
 			document.querySelector("#loginbutton").classList.add("greyedout");
 			document.querySelector("#loginbutton").value = "loading...";
-			
+
 			let success = await login(user.username, password);
 
-			
+
 			resolve(success); // resolve the promise
-			
+
 			document.querySelector("#password").blur();
 			document.querySelector("#loginform").classList.add("ohidden");
 			setTimeout(() => {
