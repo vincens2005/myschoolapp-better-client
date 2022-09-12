@@ -1,6 +1,6 @@
 @import url('theme.css');
 
-/* 
+/*
 	theme moved to /frontend/themes/
 */
 
@@ -107,21 +107,21 @@ body {
 		mask-image: var(--scroll-gradient);
 		-webkit-mask-image: var(--scroll-gradient); /* seriously chrome? I would expect this from safari maybe, but not chrome */
 	}
-	
+
 	.assignment:last-child {
 		margin-bottom: 50px;
 	}
-	
+
 	.col-parent {
 		height: 100%;
 		overflow: visible;
 	}
-	
+
 	#assignments_fullcont {
 		height: calc(100vh - 80px);
 		overflow: hidden;
 	}
-	
+
 	#bulletin-sidebar {
 		position: sticky;
 		top: 10px;
@@ -136,7 +136,7 @@ body {
 	.scrollable-col {
 		height: auto;
 	}
-	
+
 	.col-parent {
 		width: 100%;
 		flex-basis: 100%;
@@ -300,7 +300,7 @@ input:not([type=submit]):not(.hidden) {
 }
 
 /*
-	why is chrome so stupid???? 
+	why is chrome so stupid????
 	it took me like an hour to find this pseudoelement
 	AND IT'S NOT DOCUMENTED
 */
@@ -356,6 +356,7 @@ select, .select-selected {
 	min-width: 200px;
 	font-size: calc(var(--theme-main-font-size) * 1.25);
 	padding: 0;
+	overflow: scroll;
 }
 
 .select-items > div {
@@ -390,7 +391,7 @@ select, .select-selected {
 }
 
 .round-button:hover {
-	filter: brightness(1.25); 
+	filter: brightness(1.25);
 }
 
 #settings {
@@ -958,7 +959,7 @@ body::-webkit-scrollbar {
 
 #topic_items {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(286px, 1fr)); 
+	grid-template-columns: repeat(auto-fit, minmax(286px, 1fr));
 	padding-bottom: 50px;
 }
 

@@ -28,12 +28,12 @@
 				portal++ requires JavaScript. Please enable it or upgrade your browser
 			</div>
 		</noscript>
-		
+
 		<script type="text/x-handlebars-template" id="settings_template">
 			<h2>
 				Theme
 			</h2>
-			
+
 			<div class="flex flex-wrap small-gap">
 				{{#each themes}}
 					<div class="button nomargin {{#unless this.current}} indicator-blank {{/unless}}" onclick="change_theme({{@index}})" id="theme-{{@index}}">
@@ -41,7 +41,7 @@
 					</div>
 			{{/each}}
 			</div>
-			
+
 			{{#each settings}}
 				<h2>
 					{{this.name}}
@@ -50,7 +50,7 @@
 					{{this.example}}
 				</h4>
 				{{#if this.is_radio}}
-					<div class="flex flex-wrap small-gap" id="">
+					<div class="flex flex-wrap small-gap">
 						{{#each this.options}}
 							<div class="button nomargin {{#unless this.current}} indicator-blank {{/unless}}" onclick="change_setting(event)" id="setting{{@../index}}_{{@index}}">
 								{{this.value}}
@@ -63,7 +63,7 @@
 					{{/if}}
 					</div>
 				{{/if}}
-				
+
 			{{/each}}
 		</script>
 
@@ -86,29 +86,29 @@
 								What do you like about portal++?
 								<input name="likes" placeholder="your answer here" autocomplete="off">
 							</label>
-						
+
 							<label>
 								What do you hate about portal++?
 								<input name="dislikes" placeholder="WHAT ANGERS YOU?" autocomplete="off">
 							</label>
 						</div>
-						
+
 						<div class="rounded-cont list_thingy">
 							<label>
 								Notice any bugs?
 								<input name="bugs" placeholder="please" autocomplete="off">
 							</label>
-						
+
 							<label>
 								Have any suggestions?
 								<input name="suggestions" placeholder="tell me" autocomplete="off">
 							</label>
 						</div>
 						<input type="submit" class="button" value="submit">
-						
+
 						<!-- form config -->
 						<input type="hidden" name="_captcha" value="false">
-						
+
 					</form>
 				</div>
 			</div>

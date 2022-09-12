@@ -21,7 +21,7 @@
 	targetPort = 5500
 	framework = "#custom"
 	publish = "frontend/"
-	
+
 [functions]
 	node_bundler = "esbuild"
 
@@ -68,7 +68,11 @@
 	ecma = 9
 
 [[edge_functions]]
-	path = "*/theme.css"
+	path = "/theme.css"
+	function = "theme"
+
+[[edge_functions]]
+	path = "/frontend/theme.css"
 	function = "theme"
 
 [[edge_functions]]

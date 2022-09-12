@@ -1,46 +1,36 @@
 export default async (request, context) => {
 	let url = request.url.split("/proxy/");
 	url.shift(); // remove first element
-	url = url.join(""); // combine other ones. now we've removes the first instance of /proxy/
+	url = url.join(""); // combine other ones. now we've removed the first instance of /proxy/
 	url = decodeURIComponent(url);
-	
+
 	if (!url) return new Response("error: no url provided");
-	
-	context.log(url)
+
+	console.log(url)
 	url = new URL(url);
-	
+
 	let req = await replicate_request(request, url, {
-		headers: {
 			host: url.host,
 			referer: url.origin + "/app/student"
-		}
-	});
-	
-	let response = await fetch(req)
-	
+		});
+
+	let response = await fetch(req);
+
 
 	return response;
 };
 
 // mostly stolen from https://stackoverflow.com/a/48713509/15317442
-async function replicate_request(request, url, options) {
-	options = options || {};
-	url = url || request.url;
-	let init = {}
-	Object.keys(Request.prototype).forEach(value => {
-		init[value] = options[value] ?? request[value];
-	});
-	
-	delete init.url;
-	init.headers = {};
-	
-	for (let pair of request.headers.entries()) {
-		init.headers[pair[0]] = options.headers[pair[0]] ?? pair[1];
-	}	
-		
-	let blob = await request.blob();
-	if (request.method.toUpperCase() !== 'HEAD' && request.method.toUpperCase() !== 'GET' && blob.size > 0) {
-		init.body = blob;
+async function replicate_request(request, url, headers) {
+	let new_headers = new Headers(request.headers);
+
+	for (let i in headers) {
+		new_headers.set(i, headers[i]);
 	}
-	return new Request(url, init);
+
+	return new Request(url, {
+		headers: new_headers,
+		method: request.method,
+		body: request.body
+	});
 }

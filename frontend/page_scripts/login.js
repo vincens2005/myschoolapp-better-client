@@ -1,39 +1,71 @@
-var redirect;
+let redirect;
 async function do_login() {
 	// grey out login button
 	document.querySelector("#loginbutton").classList.add("greyedout");
 	document.querySelector("#loginbutton").value = "loading...";
-	
+
 	let baseurl = addhttp(document.querySelector("#baseurl").value);
 	let username = document.querySelector("#username").value;
 	let password = document.querySelector("#password").value;
-	
+
 	if (!validurl(baseurl)) {
 		shake_login();
 		show_popup("please enter your base URL");
 		return;
 	}
-	
+
 	if (!username) {
 		shake_login();
 		show_popup("please enter your username");
 		return;
 	}
-	
-	if (!password) {
-		shake_login();
-		show_popup("please enter your password");
-		return;
-	}
-	
+
 	if (user.username != username) {
 		localforage.removeItem("user"); // clear data if different user
+		user = await get_user();
 	}
 	// store form data for future speed
 	user.username = username;
 	user.baseurl = baseurl;
 
-	let success = await login(username, password); // we're not saving user data here because login() saves it
+	let success = false;
+
+	if (!user.blackbaud_login) {
+		let response_json = await fetch(base_endpoint + baseurl + "/api/Bbid/StatusByName", {
+			method: "POST",
+			body: JSON.stringify({
+				userName: username,
+				rememberType: 2 // idk
+			}),
+			headers: {
+				"content-type": "application/json"
+			}
+		}).then(a => a.json());
+		if (response_json.Linked) user.blackbaud_login = true;
+	}
+
+	if (user.blackbaud_login && !window.bb_login) {
+		document.querySelector("#extension_popup").classList.remove("hidden");
+		setTimeout(() => {
+			document.querySelector("#extension_popup").classList.remove("ohidden");
+		}, 50);
+		return;
+	}
+
+	if (user.blackbaud_login && window.bb_login) {
+		user.token = await get_verification_token();
+		save_data(user);
+		success = await window.bb_login(username, baseurl);
+	}
+
+	if (!password && !success && !user.blackbaud_login) {
+		shake_login();
+		show_popup("please enter your password");
+		return;
+	}
+
+
+	success = success || await login(username, password); // we're not saving user data here because login() saves it
 
 	if (!success) {
 		console.log("login unsucessful!");
@@ -44,7 +76,9 @@ async function do_login() {
 		return;
 	}
 
-	// redirect to page. 
+	console.log("we did it!")
+
+	// redirect to page.
 	location = redirect || user.last_page || "schedule.html";
 }
 

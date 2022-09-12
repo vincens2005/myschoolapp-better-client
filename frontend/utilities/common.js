@@ -1,8 +1,9 @@
 const base_endpoint = "/proxy/"; // this is a const because we don't want the risk of a man in the middle attack
 let user;
 let templates = {};
+window.is_portalplus = true; // this makes it such that the browser extension knows where we are
 
-/** saves data 
+/** saves data
  * @param {Object} user - the `user` object
  */
 function save_data(nuser) {
@@ -20,18 +21,19 @@ async function get_user() {
 		date_format: "MM/DD/YYYY",
 		token: "",
 		theme: "default.css",
-		
+		blackbaud_login: false, // is using the browser extension?
+
 		// enabling debug mode allows the client to fetch test data and fill it in on blank templates
 		debug_mode: false,
 		default_description: ""
 	};
 	let nuser = await localforage.getItem("user");
 	if (!nuser || !removehttp(nuser.baseurl)) return default_user;
-	
+
 	for (let i in default_user) {
 		nuser[i] = nuser[i] || default_user[i];
 	}
-	
+
 	return nuser;
 }
 
@@ -116,12 +118,12 @@ async function get_header() {
 			url_matches: ["assignments"]
 		}
 	];
-	
+
 	let cur_path = location.pathname.split("/");
 	cur_path = cur_path[cur_path.length - 1];
 	cur_path = cur_path.split(".")[0];
 	cur_path = cur_path.toLowerCase();
-	
+
 	for (let tab of tabs) {
 		tab.is_current = tab.url_matches.some((a) => a == cur_path); // this is the current tab if one of its URLs matches the current one
 	}
@@ -129,9 +131,9 @@ async function get_header() {
 	await fill_template("templates/header.hbs", {tabs}, "header", {}, true);
 	header.classList.remove("ohidden");
 	header.setAttribute("data-loaded", "true");
-	
+
 	fetch(`https://cukmekerb.goatcounter.com/count?p=${cur_path}.html&t=${document.title}&s=${window.innerWidth},${window.innerHeight}&rnd=${Math.random()}`);
-	
+
 	// settings button
 	if (document.querySelector("#settings") || cur_path.endsWith("settings")) return;
 	let settings_button = document.createElement("a");
@@ -164,26 +166,26 @@ async function get_image_path() {
 //  uses es9, which mobile safari doesn't support, ugh
 //  supporting the old thing adds three extra lines. ew
 //  es9 code:
-//  var pattern = /(?<=\"FtpImagePath\"\s*:\s*\")([^\'*\"*\,*\}*]*)/g;
+//  let pattern = /(?<=\"FtpImagePath\"\s*:\s*\")([^\'*\"*\,*\}*]*)/g;
 //  why doesn't apple just update their stupid browser?
 
-	var pattern = /(\"FtpImagePath\"\s*:\s*\")([^\'*\,*\}*]*)/g
-	var rosterpage = await fetch(base_endpoint + user.baseurl + "/app/student#academicclass/").then(a => a.text());
-	var ftp_image_path = rosterpage.match(pattern);
+	let pattern = /(\"FtpImagePath\"\s*:\s*\")([^\'*\,*\}*]*)/g
+	let rosterpage = await fetch(base_endpoint + user.baseurl + "/app/student#academicclass/").then(a => a.text());
+	let ftp_image_path = rosterpage.match(pattern);
 	ftp_image_path = ftp_image_path[0];
 	ftp_image_path = "{" + ftp_image_path + "}";
 	ftp_image_path = JSON.parse(ftp_image_path);
-	
+
 	return ftp_image_path.FtpImagePath;
 }
 
 async function get_verification_token() {
 	// parse the response to get the token
-  var token_get = await fetch(base_endpoint + user.baseurl + "/app/");
-  var token_plaintext = await token_get.text();
-  var token_dom = (new DOMParser()).parseFromString(token_plaintext, "text/html");
-  var antiforge_div = token_dom.querySelector("#__AjaxAntiForgery");
-  var token = antiforge_div.firstElementChild.value;
+  let token_get = await fetch(base_endpoint + user.baseurl + "/app/");
+  let token_plaintext = await token_get.text();
+  let token_dom = (new DOMParser()).parseFromString(token_plaintext, "text/html");
+  let antiforge_div = token_dom.querySelector("#__AjaxAntiForgery");
+  let token = antiforge_div.firstElementChild.value;
   return token;
 }
 
@@ -212,7 +214,7 @@ function removehttp(url) {
 */
 function validurl(url) {
 	try {
-		var new_url = new URL(url);
+		let new_url = new URL(url);
 		return true;
 	}
 	catch (error) {
