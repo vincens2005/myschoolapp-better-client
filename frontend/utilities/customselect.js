@@ -42,7 +42,6 @@ window.customselect = {
 
 				options_div.style.top = e.target.offsetTop + "px";
 				options_div.style.left = e.target.offsetLeft + "px";
-				options_div.style.maxHeight = (window.innerHeight - e.target.offsetTop - e.target.offsetParent.offsetTop + 140) + "px";
 
 				if (options_div.classList.contains("ohidden")) {
 					setTimeout(() => options_div.classList.toggle("ohidden"), 10);

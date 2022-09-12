@@ -21,7 +21,7 @@ async function get_user() {
 		date_format: "MM/DD/YYYY",
 		token: "",
 		theme: "default.css",
-		blackbaud_login: false, // is using the browser extension?
+		blackbaud_login: true, // is using the browser extension?
 
 		// enabling debug mode allows the client to fetch test data and fill it in on blank templates
 		debug_mode: false,
