@@ -1,7 +1,7 @@
 export default async (request, context) => {
 	let url = request.url.split("/proxy/");
 	url.shift(); // remove first element
-	url = url.join(""); // combine other ones. now we've removes the first instance of /proxy/
+	url = url.join(""); // combine other ones. now we've removed the first instance of /proxy/
 	url = decodeURIComponent(url);
 
 	if (!url) return new Response("error: no url provided");

@@ -20,20 +20,49 @@ async function do_login() {
 		return;
 	}
 
-	if (!password) {
-		shake_login();
-		show_popup("please enter your password");
-		return;
-	}
-
 	if (user.username != username) {
 		localforage.removeItem("user"); // clear data if different user
+		user = await get_user();
 	}
 	// store form data for future speed
 	user.username = username;
 	user.baseurl = baseurl;
 
-	let success = await login(username, password); // we're not saving user data here because login() saves it
+	let success = false;
+
+	if (!user.blackbaud_login) {
+		let response_json = await fetch(base_endpoint + baseurl + "/api/Bbid/StatusByName", {
+			method: "POST",
+			body: JSON.stringify({
+				userName: username,
+				rememberType: 2 // idk
+			}),
+			headers: {
+				"content-type": "application/json"
+			}
+		}).then(a => a.json());
+		if (response_json.Linked) user.blackbaud_login = true;
+	}
+
+	if (user.blackbaud_login && !window.bb_login) {
+		// TODO: tell the user to get the extension
+		return;
+	}
+
+	if (user.blackbaud_login && window.bb_login) {
+		user.token = await get_verification_token();
+		save_data(user);
+		success = await window.bb_login(username, baseurl);
+	}
+
+	if (!password && !success && !user.blackbaud_login) {
+		shake_login();
+		show_popup("please enter your password");
+		return;
+	}
+
+
+	success = success || await login(username, password); // we're not saving user data here because login() saves it
 
 	if (!success) {
 		console.log("login unsucessful!");
@@ -43,6 +72,8 @@ async function do_login() {
 		document.querySelector("#loginbutton").value = "log in";
 		return;
 	}
+
+	console.log("we did it!")
 
 	// redirect to page.
 	location = redirect || user.last_page || "schedule.html";

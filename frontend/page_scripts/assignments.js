@@ -287,8 +287,9 @@ async function set_status(index_id, assign_id, user_task, to_status) {
 			"content-type": "application/json",
 			"RequestVerificationToken": user.token
 		}
-	}).then(a => a.json());
-	if (response.Error) {
+	});
+	let response_json = response.status == 200 ? response.json() : {Error: true};
+	if (response_json.Error) {
 		let loggedin = await try_login();
 		if (loggedin) return set_status(index_id, assign_id, user_task, to_status);
 		location = "login.html?popup=" + encodeURIComponent("please log in and try again") + "&redirect=" + encodeURIComponent(location);
@@ -429,10 +430,28 @@ function hide_add_popup(assign_id) {
 }
 
 async function try_login() {
+
 	let old_scope = key.getScope();
 	key.setScope("loginform");
 	let loggedin = await logged_in();
-	if (loggedin) return key.setScope(old_scope), loggedin;
+	if (loggedin) {
+		key.setScope(old_scope);
+		user.token = await get_verification_token();
+		save_data(user);
+		return loggedin;
+	}
+
+	if (window.bb_login && user.blackbaud_login) {
+		let success = await bb_login(user.username, user.baseurl);
+		return new Promise((resolve, reject) => {
+			setTimeout(async () => {
+				key.setScope(old_scope);
+				user.token = await get_verification_token();
+				save_data(user);
+				resolve(success);
+			}, 200);
+		})
+	}
 
 	document.querySelector("#loginform").classList.remove("hidden");
 	setTimeout(() => {
