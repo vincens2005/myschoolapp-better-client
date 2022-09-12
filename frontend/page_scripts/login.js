@@ -45,7 +45,10 @@ async function do_login() {
 	}
 
 	if (user.blackbaud_login && !window.bb_login) {
-		// TODO: tell the user to get the extension
+		document.querySelector("#extension_popup").classList.remove("hidden");
+		setTimeout(() => {
+			document.querySelector("#extension_popup").classList.remove("ohidden");
+		}, 50);
 		return;
 	}
 
