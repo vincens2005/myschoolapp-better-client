@@ -132,8 +132,8 @@ async function init() {
 
 function dnd_init() {
 	drake_started = true;
-	var containers = [document.querySelector("#todo"), document.querySelector("#progress"), document.querySelector("#done")];
-	var options = {
+	let containers = [document.querySelector("#todo"), document.querySelector("#progress"), document.querySelector("#done")];
+	let options = {
 		moves: (el, source, handle, sibling) => {
 			if (document.body.clientWidth < 900) return false;
 			if (key.isPressed("ctrl") || key.isPressed("alt") || key.isPressed("command")) return true;
@@ -153,17 +153,17 @@ function dnd_init() {
 
 	drake.on("drop", async (el, target, source, sibling) => {
 		if (!target) return;
-		var assign_id = el.getAttribute("data-assign-id");
-		var index_id = el.getAttribute("data-index-id");
-		var to_status = target.id == "progress" ? "in progress" : target.id;
+		let assign_id = el.getAttribute("data-assign-id");
+		let index_id = el.getAttribute("data-index-id");
+		let to_status = target.id == "progress" ? "in progress" : target.id;
 		to_status = to_status == "done" ? "done" : to_status;
 		to_status = status_ind.to_number(to_status);
-		var user_task = el.getAttribute("data-user-task") == "true";
+		let user_task = el.getAttribute("data-user-task") == "true";
 
 		set_status(index_id, assign_id, user_task, to_status);
 
-		var indicator = document.querySelector("#assignment-ind-" + assign_id);
-		var new_status = status_ind.to_readable(to_status);
+		let indicator = document.querySelector("#assignment-ind-" + assign_id);
+		let new_status = status_ind.to_readable(to_status);
 		indicator.classList.remove(...indicator.classList);
 		indicator.classList.add("round-indicator", "indicator-" + new_status.class);
 		indicator.innerHTML = new_status.text;
@@ -228,9 +228,9 @@ function fake_addinput(editing) {
 	* @param {Number} fac - factor in days to change the date by
 	*/
 function change_date(fac) {
-	var tmp_view_date = dayjs(current_view_date, "MM/DD/YYYY");
+	let tmp_view_date = dayjs(current_view_date, "MM/DD/YYYY");
 	tmp_view_date = tmp_view_date.set("date", tmp_view_date.get("date") + fac);
-	var formatted_date = tmp_view_date.format("MM/DD/YYYY");
+	let formatted_date = tmp_view_date.format("MM/DD/YYYY");
 	history.pushState({}, "", "?date=" + formatted_date);
 	init();
 }
@@ -303,9 +303,9 @@ async function save_assignment(user_id, assign_id, second_try) {
 	document.querySelector("#save_assign").classList.add("greyedout");
 	document.querySelector("#save_assign").value = "loading...";
 
-	var fetch_url = base_endpoint + user.baseurl + "/api/usertask/edit" + (assign_id ? "/" + assign_id : "");
+	let fetch_url = base_endpoint + user.baseurl + "/api/usertask/edit" + (assign_id ? "/" + assign_id : "");
 
-	var body = {
+	let body = {
 		AssignedDate: dayjs(document.querySelector("#add_assign_date").value, "YYYY-MM-DD").format("MM/DD/YYYY"),
 		DueDate: dayjs(document.querySelector("#add_due_date").value, "YYYY-MM-DD").format("MM/DD/YYYY"),
 		ShortDescription: document.querySelector("#add_task_name").value,
@@ -315,7 +315,7 @@ async function save_assignment(user_id, assign_id, second_try) {
 	if (assign_id) body.UserTaskId = assign_id;
 	if (document.querySelector("#add_classname").value != "null") body.SectionId = Number(document.querySelector("#add_classname").value);
 
-	var response = await fetch(fetch_url, {
+	let response = await fetch(fetch_url, {
 		method: assign_id ? "PUT" : "POST",
 		body: JSON.stringify(body),
 		headers: {
@@ -338,7 +338,7 @@ async function save_assignment(user_id, assign_id, second_try) {
 }
 
 async function show_add_popup(assign_id) {
-	var editing = !!assign_id;
+	let editing = !!assign_id;
 
 	fake_addinput(editing);
 	if (editing) {
@@ -355,19 +355,19 @@ async function show_add_popup(assign_id) {
 	key.setScope("edittask");
 
 	// check if user is logged in
-	var loggedin = await try_login();
+	let loggedin = await try_login();
 	if (!loggedin) {
 		location = "login.html?redirect=" + encodeURIComponent(location);
 		return;
 	}
 
-	var context_endpoint_url = "/api/webapp/context";
-	var context = await fetch(base_endpoint + user.baseurl + context_endpoint_url).then(a => a.json());
+	let context_endpoint_url = "/api/webapp/context";
+	let context = await fetch(base_endpoint + user.baseurl + context_endpoint_url).then(a => a.json());
 
 	user_id = context.UserInfo.UserId;
-	var classes = [];
+	let classes = [];
 
-	for (var group of context.Groups) {
+	for (let group of context.Groups) {
 		if (!group.PublishGroupToUser || !group.CurrentEnrollment /* this only shows you your current classes */) continue;
 
 		classes.push({
@@ -376,7 +376,7 @@ async function show_add_popup(assign_id) {
 		});
 	}
 
-	var template_data = {
+	let template_data = {
 		classes,
 		editing,
 		user_id,
@@ -386,8 +386,8 @@ async function show_add_popup(assign_id) {
 	}
 
 	if (editing) {
-		var edit_endpoint_url = "/api/usertask/edit/" + assign_id;
-		var assignment_data = await fetch(base_endpoint + user.baseurl + edit_endpoint_url).then(a => a.json());
+		let edit_endpoint_url = "/api/usertask/edit/" + assign_id;
+		let assignment_data = await fetch(base_endpoint + user.baseurl + edit_endpoint_url).then(a => a.json());
 		template_data.assign_name = assignment_data.ShortDescription;
 		template_data.due_date = dayjs(assignment_data.DueDate, "M/DD/YYYY").format("YYYY-MM-DD");
 		template_data.assign_date = dayjs(assignment_data.AssignedDate, "M/DD/YYYY").format("YYYY-MM-DD");

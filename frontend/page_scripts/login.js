@@ -1,31 +1,31 @@
-var redirect;
+let redirect;
 async function do_login() {
 	// grey out login button
 	document.querySelector("#loginbutton").classList.add("greyedout");
 	document.querySelector("#loginbutton").value = "loading...";
-	
+
 	let baseurl = addhttp(document.querySelector("#baseurl").value);
 	let username = document.querySelector("#username").value;
 	let password = document.querySelector("#password").value;
-	
+
 	if (!validurl(baseurl)) {
 		shake_login();
 		show_popup("please enter your base URL");
 		return;
 	}
-	
+
 	if (!username) {
 		shake_login();
 		show_popup("please enter your username");
 		return;
 	}
-	
+
 	if (!password) {
 		shake_login();
 		show_popup("please enter your password");
 		return;
 	}
-	
+
 	if (user.username != username) {
 		localforage.removeItem("user"); // clear data if different user
 	}
@@ -44,7 +44,7 @@ async function do_login() {
 		return;
 	}
 
-	// redirect to page. 
+	// redirect to page.
 	location = redirect || user.last_page || "schedule.html";
 }
 
