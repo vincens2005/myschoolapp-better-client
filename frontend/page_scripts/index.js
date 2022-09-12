@@ -15,7 +15,7 @@ function init() {
 					strings: [
 						"A better client for MySchoolApp.",
 						"Reverse-engineered from the original webapp.",
-						"\"A godsend\" -Josh",
+						"\"A godsend\" -Aspen",
 						"Faster & lighter than the stock webapp.",
 						"Mobile friendly.",
 						"Not your grandma's portal",
@@ -55,7 +55,7 @@ function init() {
 			}, 150);
 		}
 	});
-	
+
 	let url = new URL(location);
 
 	let baseurl = url.searchParams.get("baseurl");
