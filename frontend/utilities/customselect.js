@@ -7,13 +7,13 @@ window.customselect = {
 			container.setAttribute("customselect", "yes");
 			let select = container.querySelector("select");
 			select.classList.add("hidden");
-			
+
 			let selected = document.createElement("div");
 			selected.classList.add("select-selected");
 			selected.innerHTML = select.options[select.selectedIndex].innerHTML;
-			
+
 			container.appendChild(selected);
-			
+
 			let options_div = document.createElement("div");
 			options_div.classList.add("select-items", "hidden", "ohidden", "rounded-cont", "standard_transition", "popup");
 			for (let i in select.options) {
@@ -39,10 +39,11 @@ window.customselect = {
 			container.addEventListener("click", e => {
 				e.stopPropagation();
 				let options_div = e.target.parentNode.querySelector(".select-items");
-				
+
 				options_div.style.top = e.target.offsetTop + "px";
 				options_div.style.left = e.target.offsetLeft + "px";
-							
+				options_div.style.maxHeight = (window.innerHeight - e.target.offsetTop - e.target.offsetParent.offsetTop + 140) + "px";
+
 				if (options_div.classList.contains("ohidden")) {
 					setTimeout(() => options_div.classList.toggle("ohidden"), 10);
 					options_div.classList.toggle("hidden");

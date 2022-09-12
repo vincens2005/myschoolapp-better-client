@@ -356,6 +356,7 @@ select, .select-selected {
 	min-width: 200px;
 	font-size: calc(var(--theme-main-font-size) * 1.25);
 	padding: 0;
+	overflow: scroll;
 }
 
 .select-items > div {
