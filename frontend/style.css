@@ -666,6 +666,7 @@ input.button {
 #feedbackform {
 	max-width: 800px;
 	margin-right: 20px;
+	margin-bottom: 50px;
 }
 
 a:not([class]), .link {
