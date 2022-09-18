@@ -106,7 +106,7 @@ let status_ind = {
 };
 
 async function toggle_expand(assign_id) {
-	if (!assign_id) return;
+	if (!assign_id || (key && key.isPressed("ctrl"))) return;
 
 	lastfocused_assign = assign_id; // for keymap
 

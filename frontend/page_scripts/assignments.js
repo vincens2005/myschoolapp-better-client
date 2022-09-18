@@ -136,15 +136,11 @@ function dnd_init() {
 	let options = {
 		moves: (el, source, handle, sibling) => {
 			if (document.body.clientWidth < 900) return false;
-			if (key.isPressed("ctrl") || key.isPressed("alt") || key.isPressed("command")) return true;
+			if (key.isPressed("ctrl")) return false;
+			if (key.isPressed("alt") || key.isPressed("command")) return true;
 			if (handle.tagName == "P") return false;
-			let parent = handle.parentNode;
-			while (parent.parentNode != document) {
-				if (parent.tagName == "P") return false;
-				if (parent == el) return true;
-
-				parent = parent.parentNode;
-			}
+			let closest = handle.closest("p");
+			if (closest && closest.contains(handle)) return false;
 			return (handle == el ||
 				handle.parentElement.classList.contains("long_header"));
 		}
