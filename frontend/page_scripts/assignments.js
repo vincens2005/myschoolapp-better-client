@@ -141,8 +141,9 @@ function dnd_init() {
 			if (handle.tagName == "P") return false;
 			let closest = handle.closest("p");
 			if (closest && closest.contains(handle)) return false;
+			let closest_header = handle.closest(".long_header");
 			return (handle == el ||
-				handle.parentElement.classList.contains("long_header"));
+				(closest_header && closest_header.contains(handle)) || handle.tagName == "H4");
 		}
 	}
 	let drake = dragula(containers, options);
