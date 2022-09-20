@@ -7,6 +7,7 @@
 	--theme-medium-color: #d2d2d2;
 	--theme-darker-color: #f0f0f0;
 	--theme-muted-text: #6a6a6a;
+	--theme-more-muted: #d0d0d0;
 
 	--theme-text-color: #202020;
 	--theme-button-text-color: #fff;
@@ -21,7 +22,7 @@
 	--theme-indicator-okay: #e8b76f;
 	--theme-indicator-todo: #9e89c8;
 	--theme-indicator-bad: #da5858;
-	
+
 	--theme-main-font: 'Noto Sans', sans-serif;
 	--theme-main-font-size: 1rem;
 }

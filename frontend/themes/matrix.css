@@ -7,21 +7,22 @@
 	--theme-medium-color: #0f1f0f;
 	--theme-darker-color: #101710;
 	--theme-muted-text: #009900;
+	--theme-more-muted: #244d24;
 
 	--theme-text-color: #00ff00;
 	--theme-button-text-color: #009900;
 	--theme-link-color: #afff99;
 	--theme-dim-shadow-color: #00350d8a;
-	--theme-shadow-color: #076000;
+	--theme-shadow-color: #0737075e;
 	--theme-background: var(--theme-background-color);
 	--theme-nagbar-color: red;
 
 	/* indicator colors */
-	--theme-indicator-good: #05240d;
+	--theme-indicator-good: #092f12;
 	--theme-indicator-okay: #95ff6f;
-	--theme-indicator-todo: #204424;
-	--theme-indicator-bad: #44460a;
-	
+	--theme-indicator-todo: #033e17;
+	--theme-indicator-bad: #444607;
+
 	--theme-main-font: 'IBM Plex Mono', sans-serif;
-	--theme-main-font-size: 1rem;
+	--theme-main-font-size: 0.95rem;
 }
