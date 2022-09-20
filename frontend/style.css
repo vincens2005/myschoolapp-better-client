@@ -275,6 +275,7 @@ input[type=date] {
  .title_sep {
 	width: 70%;
 	margin: 5px 0 15px 0;
+	color: var(--theme-more-muted);
 }
 
 input:not([type=submit]) {
