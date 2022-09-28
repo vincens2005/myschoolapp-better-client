@@ -60,7 +60,7 @@ async function init() {
 	let context = await fetch(base_endpoint + user.baseurl + "/api/webapp/context").then(a => a.json());
 	let current_class = context.Groups.find((a) => a.SectionId == classid) || {};
 	association_id = current_class.Association || 1;
-	
+
 	let contextlabelid = { // TODO: more of these values
 		"1": 2,
 		"9": 12,
@@ -73,7 +73,7 @@ async function init() {
 			document.querySelector("#title").innerHTML = data[0].GroupName + " - " + data[0].Identifier + ` (${data[0].Block})`;
 			document.querySelector("#title").classList.remove("ohidden");
 		});
-		
+
 	switch (tab) {
 		case "topics":
 			fetch_topics(classid);
@@ -224,7 +224,7 @@ async function fetch_bulletin(id, contextlabelid) {
 			url: `/api/news/forsection/${id}/?format=json&editMode=false&active=true&future=false&expired=false&contextLabelId=${contextlabelid}`,
 			handler: data => {
 				let items = [];
-				
+
 				for (let item of data) {
 					items.push({
 						name: item.Name,
@@ -232,7 +232,7 @@ async function fetch_bulletin(id, contextlabelid) {
 						desc: item.Description
 					});
 				}
-				
+
 				fill_template("news_template", {items}, "top-bulletin-sections", {
 					noEscape: true
 				});
@@ -302,10 +302,11 @@ async function fetch_topics(id) {
 
 async function fetch_assignments(id) {
 	dayjs.extend(window.dayjs_plugin_relativeTime);
+	dayjs.extend(window.dayjs_plugin_isTomorrow);
 	let assignment_req = await fetch(base_endpoint + user.baseurl + "/api/DataDirect/AssignmentCenterAssignments/?format=json&filter=2&dateStart=1/1/1977&dateEnd=" + dayjs().format("MM/DD/YYYY") + "&persona=2&sectionList="+id);
 	let assignments_json = await assignment_req.json();
 	let assignments = process_assignments(assignments_json, false, true);
-	
+
 	fill_template("templates/assignment_template.hbs", {assignments}, "assignments", {
 			noEscape: true // there is no escape.
 		}, true);

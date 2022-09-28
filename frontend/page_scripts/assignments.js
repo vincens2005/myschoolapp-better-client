@@ -11,6 +11,7 @@ async function init() {
 	}, 300);
 
 	dayjs.extend(window.dayjs_plugin_relativeTime);
+	dayjs.extend(window.dayjs_plugin_isTomorrow);
 	let url = new URL(location);
 	let assign_date = url.searchParams.get("date");
 	assign_date = safe_decode(assign_date);

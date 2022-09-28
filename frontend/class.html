@@ -8,6 +8,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7"></script>
 		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/isTomorrow.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/autolink-js@1.0.2/autolink-min.js"></script>
 		<link rel="apple-touch-icon" href="apple-touch-icon.png" rel="preload">
@@ -25,13 +26,13 @@
 		<div id="header" onwheel="scroll_horizontally(event)" class="tab-cont">
 			<!-- this will be filled with the template from templates/header.hbs -->
 		</div>
-		
+
 		<noscript>
 			<div class="nagbar center">
 				portal++ requires JavaScript. Please enable it or upgrade your browser
 			</div>
 		</noscript>
-		
+
 		<script id="links_template" type="text/x-handlebars-template">
 			<!-- this template is used by multiple sections, including links, downloads, and announcements. -->
 			<div class="rounded-cont bulletin-item link-cont">
@@ -44,8 +45,8 @@
 						download="{{this.filename}}"
 					{{else if this.func}}
 						onclick="{{this.func}}({{@index}})"
-					{{else}} 
-						target="_blank" 
+					{{else}}
+						target="_blank"
 					{{/if}}>
 						{{this.short_desc}} {{#if this.date}} - {{this.date}} {{/if}}
 					</{{#if this.is_link}}a {{else}}div{{/if}}>
@@ -57,7 +58,7 @@
 				{{/each}}
 			</div>
 		</script>
-		
+
 		<script id="syllabus_template" type="text/x-handlebars-template">
 			<div class="rounded-cont bulletin-item">
 				<h3 class="title">
@@ -92,7 +93,7 @@
 				{{/items}}
 			</div>
 		</script>
-		
+
 		<script id="photos_template" type="text/x-handlebars-template">
 			<div class="rounded-cont bulletin-item">
 				<h3 class="title center">
@@ -150,10 +151,10 @@
 						<div id="top-bulletin-sections">
 							<!-- top sections (details, news) will go here -->
 						</div>
-						
+
 						<div id="random-id-so-this-doesnt-get-deleted">
 							<div id="bulletin-sidebar" class="hidden standard_transition scrollable-col">
-								<!-- stuff on the side -->									
+								<!-- stuff on the side -->
 							</div>
 						</div>
 					</div>
@@ -161,11 +162,11 @@
 					<div id="roster-container" class="flex flex-wrap flex-top-align">
 						<!-- roster -->
 					</div>
-					
+
 					<div id="assignment-container">
 						<div class="col-parent" id="assign-col-par">
 							<div id="assignments" class="scrollable-col">
-		
+
 							</div>
 						</div>
 					</div>
