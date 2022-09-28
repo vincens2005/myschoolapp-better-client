@@ -106,8 +106,9 @@ let status_ind = {
 };
 
 async function toggle_expand(assign_id) {
-	if (!assign_id || (key && key.isPressed("ctrl"))) return;
+	if (!assign_id || (typeof key !== "undefined" && key.isPressed("ctrl"))) return;
 
+	
 	lastfocused_assign = assign_id; // for keymap
 
 	let is_user_task = document.querySelector("#assignment-"+ assign_id).getAttribute("data-user-task") == "true";
