@@ -36,7 +36,7 @@ function process_assignments(assignments_raw, sort_ascending, ignore_screenwidth
 			short_class: assign.groupname.length > 21 ? assign.groupname.slice(0, 21) + "..." : assign.groupname,
 			long_class: assign.groupname,
 			assign_date: dayjs(assign.date_assigned, "M/DD/YYYY").fromNow(),
-			due_date: raw_due_date - Date.now() <= 1000 * 60 * 60 * 24 * 3 ? dayjs(assign.date_due, "M/DD/YYYY").fromNow() : dayjs(assign.date_due, "M/DD/YYYY").format(user.date_format),
+			due_date: date_formatter(raw_due_date, assign.date_due),
 			raw_due_date,
 			title: assign.text_title.length > max_title_len - 1 ? assign.text_title.slice(0, max_title_len) + "..." : assign.text_title,
 			long_title,
@@ -62,6 +62,14 @@ function process_assignments(assignments_raw, sort_ascending, ignore_screenwidth
 	});
 
 	return assignments_tmp;
+}
+
+function date_formatter(raw_date, date) {
+	let now = Date.now();
+	let day = dayjs(date, "M/DD/YYYY");
+	if (raw_date - now >= 1000 * 60 * 60 * 24 * 3) return day.format(user.date_format);
+	if (day.isTomorrow()) return "tomorrow";
+	return day.fromNow();
 }
 
 
@@ -108,7 +116,7 @@ let status_ind = {
 async function toggle_expand(assign_id) {
 	if (!assign_id || (typeof key !== "undefined" && key.isPressed("ctrl"))) return;
 
-	
+
 	lastfocused_assign = assign_id; // for keymap
 
 	let is_user_task = document.querySelector("#assignment-"+ assign_id).getAttribute("data-user-task") == "true";

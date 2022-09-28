@@ -20,6 +20,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7"></script>
 		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/isTomorrow.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/autolink-js@1.0.2/autolink-min.js"></script>
 		<script src="page_scripts/assignments.js"></script>
@@ -53,8 +54,8 @@
 				Task
 			</span>
 			<hr class="title_sep">
-			
-			<input id="add_task_name" placeholder="do stuff" autocomplete="off" type="text" maxlength="500" 
+
+			<input id="add_task_name" placeholder="do stuff" autocomplete="off" type="text" maxlength="500"
 			{{#if editing}}
 				{{#if fakedata}}
 					value="...................."
@@ -81,26 +82,26 @@
 					</select>
 				</div>
 			</div>
-			
+
 			<div>
 				<span class="input-label">
 					assign date
 				</span>
 				<input type="date" id="add_assign_date" class="inline-input" value="{{assign_date}}" required>
 			</div>
-			
+
 			<div>
 				<span class="input-label">
 					due date
 				</span>
 				<input type="date" id="add_due_date" class="inline-input" value="{{due_date}}" required>
 			</div>
-			
-			<div class="button {{#if fakedata}} greyedout {{/if}}" 
+
+			<div class="button {{#if fakedata}} greyedout {{/if}}"
 				{{#if editing}}
 					onclick="save_assignment({{user_id}}, {{assign_id}})"
 				{{else}}
-					onclick="save_assignment({{user_id}})" 
+					onclick="save_assignment({{user_id}})"
 				{{/if}}
 			id="save_assign">
 				save
@@ -115,7 +116,7 @@
 		<div id="add_task" class="rounded-cont fixed-center form ohidden hidden standard_transition popup">
 			<!-- this will be filled in with the template in #usertaskadd_template -->
 		</div>
-		
+
 		<div id="loginform" class="fixed-center rounded-cont standard_transition popup form hidden ohidden">
 			<!-- form tag to appease password managers. -->
 			<form onsubmit="return false;" id="actual_form">
