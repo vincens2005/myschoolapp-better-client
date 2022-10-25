@@ -204,7 +204,7 @@ function setup_keymaster() {
 		key(action.key, action.scope, action.action);
 	}
 	key.setScope("default");
-	key.filter = () => true; // allow keypresses on inputs
+	window.key.filter = () => true; // allow keypresses on inputs
 }
 
 function fake_addinput(editing) {
