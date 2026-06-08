@@ -183,10 +183,16 @@ async function get_verification_token() {
 	// parse the response to get the token
   let token_get = await fetch(base_endpoint + user.baseurl + "/app/");
   let token_plaintext = await token_get.text();
-  let token_dom = (new DOMParser()).parseFromString(token_plaintext, "text/html");
-  let antiforge_div = token_dom.querySelector("#__AjaxAntiForgery");
-  let token = antiforge_div.firstElementChild.value;
-  return token;
+  try {
+		let token_dom = (new DOMParser()).parseFromString(token_plaintext, "text/html");
+		let antiforge_div = token_dom.querySelector("#__AjaxAntiForgery");
+		let token = antiforge_div.firstElementChild.value;
+		return token;
+  }
+  catch (err) {
+  	console.log(err);
+  	return "";
+  }
 }
 
 // stolen from staccoverflow
